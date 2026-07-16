@@ -1,0 +1,461 @@
+@use "../../styles/global/global.scss" as *;
+
+:host {
+  --dockv-button-extra-small-height: 24px;
+  --dockv-button-small-height: 28px;
+  --dockv-button-medium-height: 32px;
+  --dockv-button-large-height: 36px;
+  --dockv-button-extra-large-height: 40px;
+  --dockv-button-padding-top: 0;
+  --dockv-button-padding-bottom: 0;
+  --dockv-button-padding-left: var(--dockv-button-medium-padding-x, 12px);
+  --dockv-button-padding-right: var(--dockv-button-medium-padding-x, 12px);
+  --dockv-button-gap: 6px;
+  --dockv-button-border-radius: var(--dockv-border-radius-small);
+
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.dockv-button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none; // 禁止复制文字
+
+  color: var(--dockv-color-black);
+  border: 1px solid transparent;
+  border-radius: var(--dockv-button-border-radius);
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+
+  cursor: pointer;
+  gap: var(--dockv-button-gap);
+  padding: var(--dockv-button-padding-top) var(--dockv-button-padding-right) var(--dockv-button-padding-bottom) var(--dockv-button-padding-left);
+}
+
+.dockv-button__icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.dockv-button-primary{
+  // solid 深色填充
+  --dockv-button-solid-font-color: var(--dockv-color-white);
+  --dockv-button-solid-bg-color: var(--dockv-color-primary);
+  --dockv-button-solid-bg-color-hover: var(--dockv-color-primary-hover);
+  --dockv-button-solid-bg-color-active: var(--dockv-color-primary-active);
+  --dockv-button-solid-ol-color-focus: var(--dockv-color-primary-light-active);
+  --dockv-button-solid-border-color: transparent;
+
+  // light 浅色填充
+  --dockv-button-light-font-color: var(--dockv-color-primary);
+  --dockv-button-light-bg-color: var(--dockv-color-primary-light-default);
+  --dockv-button-light-bg-color-hover: var(--dockv-color-primary-light-hover);
+  --dockv-button-light-bg-color-active: var(--dockv-color-primary-light-active);
+  --dockv-button-light-ol-color-focus: var(--dockv-color-primary-light-active);
+  --dockv-button-light-border-color: transparent;
+
+  // ghost 无背景
+  --dockv-button-ghost-font-color: var(--dockv-color-primary);
+  --dockv-button-ghost-bg-color: transparent;
+  --dockv-button-ghost-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-ghost-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-ghost-ol-color-focus: var(--dockv-color-primary-light-active);
+  --dockv-button-ghost-border-color: transparent;
+
+  // outline 透明背景 + 边框
+  --dockv-button-outline-font-color: var(--dockv-color-primary);
+  --dockv-button-outline-bg-color: transparent;
+  --dockv-button-outline-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-outline-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-outline-ol-color-focus: var(--dockv-color-primary-light-active);
+  --dockv-button-outline-border-color: var(--dockv-color-primary);
+
+  // soft 浅色背景 + 边框
+  --dockv-button-soft-font-color: var(--dockv-color-primary);
+  --dockv-button-soft-bg-color: var(--dockv-color-primary-light-default);
+  --dockv-button-soft-bg-color-hover: var(--dockv-color-primary-light-hover);
+  --dockv-button-soft-bg-color-active: var(--dockv-color-primary-light-active);
+  --dockv-button-soft-ol-color-focus: var(--dockv-color-primary-light-active);
+  --dockv-button-soft-border-color: var(--dockv-color-primary);
+  
+  // neutral 单色填充
+  --dockv-button-neutral-font-color: var(--dockv-color-primary);
+  --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
+  --dockv-button-neutral-bg-color-hover: var(--dockv-color-fill-1);
+  --dockv-button-neutral-bg-color-active: var(--dockv-color-fill-2);
+  --dockv-button-neutral-ol-color-focus: var(--dockv-color-primary-light-active);
+  --dockv-button-neutral-border-color: transparent;
+}
+.dockv-button-secondary{
+  // solid 深色填充
+  --dockv-button-solid-font-color: var(--dockv-color-white);
+  --dockv-button-solid-bg-color: var(--dockv-color-secondary);
+  --dockv-button-solid-bg-color-hover: var(--dockv-color-secondary-hover);
+  --dockv-button-solid-bg-color-active: var(--dockv-color-secondary-active);
+  --dockv-button-solid-ol-color-focus: var(--dockv-color-secondary-light-active);
+  --dockv-button-solid-border-color: transparent;
+
+  // light 浅色填充
+  --dockv-button-light-font-color: var(--dockv-color-secondary);
+  --dockv-button-light-bg-color: var(--dockv-color-secondary-light-default);
+  --dockv-button-light-bg-color-hover: var(--dockv-color-secondary-light-hover);
+  --dockv-button-light-bg-color-active: var(--dockv-color-secondary-light-active);
+  --dockv-button-light-ol-color-focus: var(--dockv-color-secondary-light-active);
+  --dockv-button-light-border-color: transparent;
+
+  // ghost 无背景
+  --dockv-button-ghost-font-color: var(--dockv-color-secondary);
+  --dockv-button-ghost-bg-color: transparent;
+  --dockv-button-ghost-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-ghost-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-ghost-ol-color-focus: var(--dockv-color-secondary-light-active);
+  --dockv-button-ghost-border-color: transparent;
+
+  // outline 透明背景 + 边框
+  --dockv-button-outline-font-color: var(--dockv-color-secondary);
+  --dockv-button-outline-bg-color: transparent;
+  --dockv-button-outline-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-outline-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-outline-ol-color-focus: var(--dockv-color-secondary-light-active);
+  --dockv-button-outline-border-color: var(--dockv-color-secondary);
+
+  // soft 浅色背景 + 边框
+  --dockv-button-soft-font-color: var(--dockv-color-secondary);
+  --dockv-button-soft-bg-color: var(--dockv-color-secondary-light-default);
+  --dockv-button-soft-bg-color-hover: var(--dockv-color-secondary-light-hover);
+  --dockv-button-soft-bg-color-active: var(--dockv-color-secondary-light-active);
+  --dockv-button-soft-ol-color-focus: var(--dockv-color-secondary-light-active);
+  --dockv-button-soft-border-color: var(--dockv-color-secondary);
+  
+  // neutral 单色填充
+  --dockv-button-neutral-font-color: var(--dockv-color-secondary);
+  --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
+  --dockv-button-neutral-bg-color-hover: var(--dockv-color-fill-1);
+  --dockv-button-neutral-bg-color-active: var(--dockv-color-fill-2);
+  --dockv-button-neutral-ol-color-focus: var(--dockv-color-secondary-light-active);
+  --dockv-button-neutral-border-color: transparent;
+}
+.dockv-button-tertiary{
+  // solid 深色填充
+  --dockv-button-solid-font-color: var(--dockv-color-white);
+  --dockv-button-solid-bg-color: var(--dockv-color-tertiary);
+  --dockv-button-solid-bg-color-hover: var(--dockv-color-tertiary-hover);
+  --dockv-button-solid-bg-color-active: var(--dockv-color-tertiary-active);
+  --dockv-button-solid-ol-color-focus: var(--dockv-color-tertiary-light-active);
+  --dockv-button-solid-border-color: transparent;
+
+  // light 浅色填充
+  --dockv-button-light-font-color: var(--dockv-color-tertiary);
+  --dockv-button-light-bg-color: var(--dockv-color-tertiary-light-default);
+  --dockv-button-light-bg-color-hover: var(--dockv-color-tertiary-light-hover);
+  --dockv-button-light-bg-color-active: var(--dockv-color-tertiary-light-active);
+  --dockv-button-light-ol-color-focus: var(--dockv-color-tertiary-light-active);
+  --dockv-button-light-border-color: transparent;
+
+  // ghost 无背景
+  --dockv-button-ghost-font-color: var(--dockv-color-tertiary);
+  --dockv-button-ghost-bg-color: transparent;
+  --dockv-button-ghost-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-ghost-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-ghost-ol-color-focus: var(--dockv-color-tertiary-light-active);
+  --dockv-button-ghost-border-color: transparent;
+
+  // outline 透明背景 + 边框
+  --dockv-button-outline-font-color: var(--dockv-color-tertiary);
+  --dockv-button-outline-bg-color: transparent;
+  --dockv-button-outline-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-outline-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-outline-ol-color-focus: var(--dockv-color-tertiary-light-active);
+  --dockv-button-outline-border-color: var(--dockv-color-tertiary);
+
+  // soft 浅色背景 + 边框
+  --dockv-button-soft-font-color: var(--dockv-color-tertiary);
+  --dockv-button-soft-bg-color: var(--dockv-color-tertiary-light-default);
+  --dockv-button-soft-bg-color-hover: var(--dockv-color-tertiary-light-hover);
+  --dockv-button-soft-bg-color-active: var(--dockv-color-tertiary-light-active);
+  --dockv-button-soft-ol-color-focus: var(--dockv-color-tertiary-light-active);
+  --dockv-button-soft-border-color: var(--dockv-color-tertiary);
+  
+  // neutral 单色填充
+  --dockv-button-neutral-font-color: var(--dockv-color-tertiary);
+  --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
+  --dockv-button-neutral-bg-color-hover: var(--dockv-color-fill-1);
+  --dockv-button-neutral-bg-color-active: var(--dockv-color-fill-2);
+  --dockv-button-neutral-ol-color-focus: var(--dockv-color-tertiary-light-active);
+  --dockv-button-neutral-border-color: transparent;
+}
+.dockv-button-success{
+  // solid 深色填充
+  --dockv-button-solid-font-color: var(--dockv-color-white);
+  --dockv-button-solid-bg-color: var(--dockv-color-success);
+  --dockv-button-solid-bg-color-hover: var(--dockv-color-success-hover);
+  --dockv-button-solid-bg-color-active: var(--dockv-color-success-active);
+  --dockv-button-solid-ol-color-focus: var(--dockv-color-success-light-active);
+  --dockv-button-solid-border-color: transparent;
+
+  // light 浅色填充
+  --dockv-button-light-font-color: var(--dockv-color-success);
+  --dockv-button-light-bg-color: var(--dockv-color-success-light-default);
+  --dockv-button-light-bg-color-hover: var(--dockv-color-success-light-hover);
+  --dockv-button-light-bg-color-active: var(--dockv-color-success-light-active);
+  --dockv-button-light-ol-color-focus: var(--dockv-color-success-light-active);
+  --dockv-button-light-border-color: transparent;
+
+  // ghost 无背景
+  --dockv-button-ghost-font-color: var(--dockv-color-success);
+  --dockv-button-ghost-bg-color: transparent;
+  --dockv-button-ghost-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-ghost-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-ghost-ol-color-focus: var(--dockv-color-success-light-active);
+  --dockv-button-ghost-border-color: transparent;
+
+  // outline 透明背景 + 边框
+  --dockv-button-outline-font-color: var(--dockv-color-success);
+  --dockv-button-outline-bg-color: transparent;
+  --dockv-button-outline-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-outline-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-outline-ol-color-focus: var(--dockv-color-success-light-active);
+  --dockv-button-outline-border-color: var(--dockv-color-success);
+
+  // soft 浅色背景 + 边框
+  --dockv-button-soft-font-color: var(--dockv-color-success);
+  --dockv-button-soft-bg-color: var(--dockv-color-success-light-default);
+  --dockv-button-soft-bg-color-hover: var(--dockv-color-success-light-hover);
+  --dockv-button-soft-bg-color-active: var(--dockv-color-success-light-active);
+  --dockv-button-soft-ol-color-focus: var(--dockv-color-success-light-active);
+  --dockv-button-soft-border-color: var(--dockv-color-success);
+  
+  // neutral 单色填充
+  --dockv-button-neutral-font-color: var(--dockv-color-success);
+  --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
+  --dockv-button-neutral-bg-color-hover: var(--dockv-color-fill-1);
+  --dockv-button-neutral-bg-color-active: var(--dockv-color-fill-2);
+  --dockv-button-neutral-ol-color-focus: var(--dockv-color-success-light-active);
+  --dockv-button-neutral-border-color: transparent;
+}
+.dockv-button-warning{
+  // solid 深色填充
+  --dockv-button-solid-font-color: var(--dockv-color-white);
+  --dockv-button-solid-bg-color: var(--dockv-color-warning);
+  --dockv-button-solid-bg-color-hover: var(--dockv-color-warning-hover);
+  --dockv-button-solid-bg-color-active: var(--dockv-color-warning-active);
+  --dockv-button-solid-ol-color-focus: var(--dockv-color-warning-light-active);
+  --dockv-button-solid-border-color: transparent;
+
+  // light 浅色填充
+  --dockv-button-light-font-color: var(--dockv-color-warning);
+  --dockv-button-light-bg-color: var(--dockv-color-warning-light-default);
+  --dockv-button-light-bg-color-hover: var(--dockv-color-warning-light-hover);
+  --dockv-button-light-bg-color-active: var(--dockv-color-warning-light-active);
+  --dockv-button-light-ol-color-focus: var(--dockv-color-warning-light-active);
+  --dockv-button-light-border-color: transparent;
+
+  // ghost 无背景
+  --dockv-button-ghost-font-color: var(--dockv-color-warning);
+  --dockv-button-ghost-bg-color: transparent;
+  --dockv-button-ghost-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-ghost-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-ghost-ol-color-focus: var(--dockv-color-warning-light-active);
+  --dockv-button-ghost-border-color: transparent;
+
+  // outline 透明背景 + 边框
+  --dockv-button-outline-font-color: var(--dockv-color-warning);
+  --dockv-button-outline-bg-color: transparent;
+  --dockv-button-outline-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-outline-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-outline-ol-color-focus: var(--dockv-color-warning-light-active);
+  --dockv-button-outline-border-color: var(--dockv-color-warning);
+
+  // soft 浅色背景 + 边框
+  --dockv-button-soft-font-color: var(--dockv-color-warning);
+  --dockv-button-soft-bg-color: var(--dockv-color-warning-light-default);
+  --dockv-button-soft-bg-color-hover: var(--dockv-color-warning-light-hover);
+  --dockv-button-soft-bg-color-active: var(--dockv-color-warning-light-active);
+  --dockv-button-soft-ol-color-focus: var(--dockv-color-warning-light-active);
+  --dockv-button-soft-border-color: var(--dockv-color-warning);
+  
+  // neutral 单色填充
+  --dockv-button-neutral-font-color: var(--dockv-color-warning);
+  --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
+  --dockv-button-neutral-bg-color-hover: var(--dockv-color-fill-1);
+  --dockv-button-neutral-bg-color-active: var(--dockv-color-fill-2);
+  --dockv-button-neutral-ol-color-focus: var(--dockv-color-warning-light-active);
+  --dockv-button-neutral-border-color: transparent;
+}
+.dockv-button-danger{
+  // solid 深色填充
+  --dockv-button-solid-font-color: var(--dockv-color-white);
+  --dockv-button-solid-bg-color: var(--dockv-color-danger);
+  --dockv-button-solid-bg-color-hover: var(--dockv-color-danger-hover);
+  --dockv-button-solid-bg-color-active: var(--dockv-color-danger-active);
+  --dockv-button-solid-ol-color-focus: var(--dockv-color-danger-light-active);
+  --dockv-button-solid-border-color: transparent;
+
+  // light 浅色填充
+  --dockv-button-light-font-color: var(--dockv-color-danger);
+  --dockv-button-light-bg-color: var(--dockv-color-danger-light-default);
+  --dockv-button-light-bg-color-hover: var(--dockv-color-danger-light-hover);
+  --dockv-button-light-bg-color-active: var(--dockv-color-danger-light-active);
+  --dockv-button-light-ol-color-focus: var(--dockv-color-danger-light-active);
+  --dockv-button-light-border-color: transparent;
+
+  // ghost 无背景
+  --dockv-button-ghost-font-color: var(--dockv-color-danger);
+  --dockv-button-ghost-bg-color: transparent;
+  --dockv-button-ghost-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-ghost-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-ghost-ol-color-focus: var(--dockv-color-danger-light-active);
+  --dockv-button-ghost-border-color: transparent;
+
+  // outline 透明背景 + 边框
+  --dockv-button-outline-font-color: var(--dockv-color-danger);
+  --dockv-button-outline-bg-color: transparent;
+  --dockv-button-outline-bg-color-hover: var(--dockv-color-fill-0);
+  --dockv-button-outline-bg-color-active: var(--dockv-color-fill-1);
+  --dockv-button-outline-ol-color-focus: var(--dockv-color-danger-light-active);
+  --dockv-button-outline-border-color: var(--dockv-color-danger);
+
+  // soft 浅色背景 + 边框
+  --dockv-button-soft-font-color: var(--dockv-color-danger);
+  --dockv-button-soft-bg-color: var(--dockv-color-danger-light-default);
+  --dockv-button-soft-bg-color-hover: var(--dockv-color-danger-light-hover);
+  --dockv-button-soft-bg-color-active: var(--dockv-color-danger-light-active);
+  --dockv-button-soft-ol-color-focus: var(--dockv-color-danger-light-active);
+  --dockv-button-soft-border-color: var(--dockv-color-danger);
+  
+  // neutral 单色填充
+  --dockv-button-neutral-font-color: var(--dockv-color-danger);
+  --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
+  --dockv-button-neutral-bg-color-hover: var(--dockv-color-fill-1);
+  --dockv-button-neutral-bg-color-active: var(--dockv-color-fill-2);
+  --dockv-button-neutral-ol-color-focus: var(--dockv-color-danger-light-active);
+  --dockv-button-neutral-border-color: transparent;
+}
+
+.dockv-button-extra-small { height: var(--dockv-button-extra-small-height); --dockv-button-padding-left: 8px; --dockv-button-padding-right: 8px; }
+.dockv-button-small       { height: var(--dockv-button-small-height);       --dockv-button-padding-left: 10px; --dockv-button-padding-right: 10px; }
+.dockv-button-medium      { height: var(--dockv-button-medium-height);      --dockv-button-padding-left: 12px; --dockv-button-padding-right: 12px; }
+.dockv-button-large       { height: var(--dockv-button-large-height);       --dockv-button-padding-left: 14px; --dockv-button-padding-right: 14px; }
+.dockv-button-extra-large { height: var(--dockv-button-extra-large-height); --dockv-button-padding-left: 16px; --dockv-button-padding-right: 16px; }
+
+// solid 深色填充
+.dockv-button-solid {
+  color: var(--dockv-button-solid-font-color);
+  background: var(--dockv-button-solid-bg-color);
+  border: 1px solid var(--dockv-button-solid-border-color);
+  &:hover{
+    background: var(--dockv-button-solid-bg-color-hover);
+  }
+  &:active{
+    background: var(--dockv-button-solid-bg-color-active);
+  }
+  &:focus-visible{
+    outline: 2px solid var(--dockv-button-solid-ol-color-focus);
+  }
+  &:disabled{
+    background: var(--dockv-color-disabled-bg) !important;
+  }
+}
+// light 浅色填充
+.dockv-button-light {
+  color: var(--dockv-button-light-font-color);
+  background: var(--dockv-button-light-bg-color);
+  border: 1px solid var(--dockv-button-light-border-color);
+  &:hover{
+    background: var(--dockv-button-light-bg-color-hover);
+  }
+  &:active{
+    background: var(--dockv-button-light-bg-color-active);
+  }
+  &:focus-visible{
+    outline: 2px solid var(--dockv-button-light-ol-color-focus);
+  }
+  &:disabled{
+    background: var(--dockv-color-disabled-bg) !important;
+  }
+}
+// ghost 无背景
+.dockv-button-ghost {
+  color: var(--dockv-button-ghost-font-color);
+  background: var(--dockv-button-ghost-bg-color);
+  border: 1px solid var(--dockv-button-ghost-border-color);
+  &:hover{
+    background: var(--dockv-button-ghost-bg-color-hover);
+  }
+  &:active{
+    background: var(--dockv-button-ghost-bg-color-active);
+  }
+  &:focus-visible{
+    outline: 2px solid var(--dockv-button-ghost-ol-color-focus);
+  }
+}
+// outline 透明背景 + 边框
+.dockv-button-outline {
+  color: var(--dockv-button-outline-font-color);
+  background: var(--dockv-button-outline-bg-color);
+  border: 1px solid var(--dockv-button-outline-border-color);
+  &:hover{
+    background: var(--dockv-button-outline-bg-color-hover);
+  }
+  &:active{
+    background: var(--dockv-button-outline-bg-color-active);
+  }
+  &:focus-visible{
+    outline: 2px solid var(--dockv-button-outline-ol-color-focus);
+  }
+}
+// soft 浅色背景 + 边框
+.dockv-button-soft {
+  color: var(--dockv-button-soft-font-color);
+  background: var(--dockv-button-soft-bg-color);
+  border: 1px solid var(--dockv-button-soft-border-color);
+  &:hover{
+    background: var(--dockv-button-soft-bg-color-hover);
+  }
+  &:active{
+    background: var(--dockv-button-soft-bg-color-active);
+  }
+  &:focus-visible{
+    outline: 2px solid var(--dockv-button-soft-ol-color-focus);
+  }
+}
+// neutral 单色填充
+.dockv-button-neutral {
+  color: var(--dockv-button-neutral-font-color);
+  background: var(--dockv-button-neutral-bg-color);
+  border: 1px solid var(--dockv-button-neutral-border-color);
+  &:hover{
+    background: var(--dockv-button-neutral-bg-color-hover);
+  }
+  &:active{
+    background: var(--dockv-button-neutral-bg-color-active);
+  }
+  &:focus-visible{
+    outline: 2px solid var(--dockv-button-neutral-ol-color-focus);
+  }
+}
+
+.dockv-button:disabled {
+  color: var(--dockv-color-disabled-text);
+  cursor: not-allowed;
+  /*pointer-events: none;*/
+
+  &:hover,
+  &:active {
+    background: var(--dockv-color-disabled-bg);
+  }
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.dockv-button-loading {
+  pointer-events: none;
+}
