@@ -28,6 +28,7 @@
     "@vitest/browser-playwright": "^4.1.10",
     "@vitest/coverage-v8": "^4.1.10",
     "playwright": "^1.61.1",
+    "sass-embedded": "^1.100.0",
     "storybook": "^10.4.6",
     "typescript": "~6.0.2",
     "vite": "^8.1.1",
