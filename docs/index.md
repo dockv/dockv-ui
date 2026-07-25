@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "DockV UI"
-  text: "一个适用于 Vue、React、原生 Web 的 UI 组件库"
+  text: "一个原生 Web 的 UI 组件库"
   image: { src: "logo.png", alt: "" }
   tagline: 
   actions:

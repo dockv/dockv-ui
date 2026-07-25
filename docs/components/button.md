@@ -8,10 +8,10 @@ title: Button 按钮
 
 ## 基础用法
 
-<d-button>按钮</d-button>
+<dv-button>按钮</dv-button>
 
 ```html
-<d-button>按钮</d-button>
+<dv-button>按钮</dv-button>
 ```
 
 ## 类型（type）
@@ -27,20 +27,20 @@ title: Button 按钮
 | `warning` | 警告按钮 |
 | `danger` | 危险按钮 |
 
-<d-button type="primary">主要按钮</d-button> 
-<d-button type="secondary">次要按钮</d-button> 
-<d-button type="tertiary">第三按钮</d-button> 
-<d-button type="success">成功按钮</d-button> 
-<d-button type="warning">警告按钮</d-button> 
-<d-button type="danger">危险按钮</d-button> 
+<dv-button type="primary">主要按钮</dv-button> 
+<dv-button type="secondary">次要按钮</dv-button> 
+<dv-button type="tertiary">第三按钮</dv-button> 
+<dv-button type="success">成功按钮</dv-button> 
+<dv-button type="warning">警告按钮</dv-button> 
+<dv-button type="danger">危险按钮</dv-button> 
 
 ```html
-<d-button type="primary">主要按钮</d-button>
-<d-button type="secondary">次要按钮</d-button>
-<d-button type="tertiary">第三按钮</d-button>
-<d-button type="success">成功按钮</d-button>
-<d-button type="warning">警告按钮</d-button>
-<d-button type="danger">危险按钮</d-button>
+<dv-button type="primary">主要按钮</dv-button>
+<dv-button type="secondary">次要按钮</dv-button>
+<dv-button type="tertiary">第三按钮</dv-button>
+<dv-button type="success">成功按钮</dv-button>
+<dv-button type="warning">警告按钮</dv-button>
+<dv-button type="danger">危险按钮</dv-button>
 ```
 
 ## 变体（variant）
@@ -56,20 +56,20 @@ title: Button 按钮
 | `soft` | 浅色背景 + 边框 |
 | `neutral` | 单色填充 |
 
-<d-button variant="solid">深色填充</d-button> 
-<d-button variant="light">浅色填充</d-button> 
-<d-button variant="ghost">无背景</d-button> 
-<d-button variant="outline">边框</d-button> 
-<d-button variant="soft">浅色+边框</d-button> 
-<d-button variant="neutral">单色填充</d-button> 
+<dv-button variant="solid">深色填充</dv-button> 
+<dv-button variant="light">浅色填充</dv-button> 
+<dv-button variant="ghost">无背景</dv-button> 
+<dv-button variant="outline">边框</dv-button> 
+<dv-button variant="soft">浅色+边框</dv-button> 
+<dv-button variant="neutral">单色填充</dv-button> 
 
 ```html
-<d-button variant="solid">深色填充</d-button>
-<d-button variant="light">浅色填充</d-button>
-<d-button variant="ghost">无背景</d-button>
-<d-button variant="outline">边框</d-button>
-<d-button variant="soft">浅色+边框</d-button>
-<d-button variant="neutral">单色填充</d-button>
+<dv-button variant="solid">深色填充</dv-button>
+<dv-button variant="light">浅色填充</dv-button>
+<dv-button variant="ghost">无背景</dv-button>
+<dv-button variant="outline">边框</dv-button>
+<dv-button variant="soft">浅色+边框</dv-button>
+<dv-button variant="neutral">单色填充</dv-button>
 ```
 
 ## 尺寸（size）
@@ -84,32 +84,32 @@ title: Button 按钮
 | `large` | 大尺寸 |
 | `extra-large` | 超大尺寸 |
 
-<d-button size="extra-small">超小尺寸</d-button> 
-<d-button size="small">小尺寸</d-button> 
-<d-button size="medium">中尺寸</d-button> 
-<d-button size="large">大尺寸</d-button> 
-<d-button size="extra-large">超大尺寸</d-button> 
+<dv-button size="extra-small">超小尺寸</dv-button> 
+<dv-button size="small">小尺寸</dv-button> 
+<dv-button size="medium">中尺寸</dv-button> 
+<dv-button size="large">大尺寸</dv-button> 
+<dv-button size="extra-large">超大尺寸</dv-button> 
 
 ```html
-<d-button size="extra-small">超小尺寸</d-button>
-<d-button size="small">小尺寸</d-button>
-<d-button size="medium">中尺寸</d-button>
-<d-button size="large">大尺寸</d-button>
-<d-button size="extra-large">超大尺寸</d-button>
+<dv-button size="extra-small">超小尺寸</dv-button>
+<dv-button size="small">小尺寸</dv-button>
+<dv-button size="medium">中尺寸</dv-button>
+<dv-button size="large">大尺寸</dv-button>
+<dv-button size="extra-large">超大尺寸</dv-button>
 ```
 
 ## 颜色（color）
 
 使用 `color` 属性自定义按钮颜色，会覆盖 `type` 的默认色值。支持 `HEX`、`RGB`、`HSL`。
 
-<d-button color="#39C5BB">初音未来绿</d-button> 
-<d-button color="rgb(255, 165, 0)">镜音铃橙</d-button> 
-<d-button color="hsl(354, 68%, 54%)">重音teto红</d-button> 
+<dv-button color="#39C5BB">初音未来绿</dv-button> 
+<dv-button color="rgb(255, 165, 0)">镜音铃橙</dv-button> 
+<dv-button color="hsl(354, 68%, 54%)">重音teto红</dv-button> 
 
 ```html
-<d-button color="#39C5BB">自定义色</d-button>
-<d-button color="rgb(255, 165, 0)">自定义色</d-button>
-<d-button color="hsl(354, 68%, 54%)">自定义色</d-button>
+<dv-button color="#39C5BB">自定义色</dv-button>
+<dv-button color="rgb(255, 165, 0)">自定义色</dv-button>
+<dv-button color="hsl(354, 68%, 54%)">自定义色</dv-button>
 ```
 
 ## 图标（icon）
@@ -118,38 +118,38 @@ title: Button 按钮
 
 ### 图标在左（默认）
 
-<d-button icon="material-symbols:home">首页</d-button> 
-<d-button icon="material-symbols:search">搜索</d-button> 
-<d-button icon="material-symbols:delete" type="danger">删除</d-button> 
+<dv-button icon="material-symbols:home">首页</dv-button> 
+<dv-button icon="material-symbols:search">搜索</dv-button> 
+<dv-button icon="material-symbols:delete" type="danger">删除</dv-button> 
 
 ```html
-<d-button icon="material-symbols:home">首页</d-button>
-<d-button icon="material-symbols:search">搜索</d-button>
-<d-button icon="material-symbols:delete" type="danger">删除</d-button>
+<dv-button icon="material-symbols:home">首页</dv-button>
+<dv-button icon="material-symbols:search">搜索</dv-button>
+<dv-button icon="material-symbols:delete" type="danger">删除</dv-button>
 ```
 
 ### 图标在右
 
-<d-button icon="material-symbols:arrow-forward" iconPosition="right">下一步</d-button> 
-<d-button icon="material-symbols:open-in-new" iconPosition="right" variant="outline">打开</d-button> 
+<dv-button icon="material-symbols:arrow-forward" iconPosition="right">下一步</dv-button> 
+<dv-button icon="material-symbols:open-in-new" iconPosition="right" variant="outline">打开</dv-button> 
 
 ```html
-<d-button icon="material-symbols:arrow-forward" iconPosition="right">下一步</d-button>
-<d-button icon="material-symbols:open-in-new" iconPosition="right" variant="outline">打开</d-button>
+<dv-button icon="material-symbols:arrow-forward" iconPosition="right">下一步</dv-button>
+<dv-button icon="material-symbols:open-in-new" iconPosition="right" variant="outline">打开</dv-button>
 ```
 
 ### 纯图标按钮
 
 不传内容时即为纯图标按钮。
 
-<d-button icon="material-symbols:settings"></d-button> 
-<d-button icon="material-symbols:add" variant="outline"></d-button> 
-<d-button icon="material-symbols:close" type="danger" variant="ghost"></d-button> 
+<dv-button icon="material-symbols:settings"></dv-button> 
+<dv-button icon="material-symbols:add" variant="outline"></dv-button> 
+<dv-button icon="material-symbols:close" type="danger" variant="ghost"></dv-button> 
 
 ```html
-<d-button icon="material-symbols:settings"></d-button>
-<d-button icon="material-symbols:add" variant="outline"></d-button>
-<d-button icon="material-symbols:close" type="danger" variant="ghost"></d-button>
+<dv-button icon="material-symbols:settings"></dv-button>
+<dv-button icon="material-symbols:add" variant="outline"></dv-button>
+<dv-button icon="material-symbols:close" type="danger" variant="ghost"></dv-button>
 ```
 
 ### 图标侧边距自定义
@@ -157,57 +157,57 @@ title: Button 按钮
 当有图标时，可通过 CSS 变量覆盖图标侧的 padding，让图标贴边。
 
 <div style="display: flex; gap: 8px; align-items: center;">
-  <d-button icon="material-symbols:arrow-back" style="--dockv-button-padding-x: 8px 0px 8px 0px">返回</d-button>
-  <d-button icon="material-symbols:arrow-forward" iconPosition="right" style="--dockv-button-padding-x: 8px 4px 8px 12px">下一步</d-button>
+  <dv-button icon="material-symbols:arrow-back" style="--dockv-button-padding-x: 8px 0px 8px 0px">返回</dv-button>
+  <dv-button icon="material-symbols:arrow-forward" iconPosition="right" style="--dockv-button-padding-x: 8px 4px 8px 12px">下一步</dv-button>
 </div>
 
 ```html
-<d-button icon="material-symbols:arrow-back" style="--dockv-button-padding-left: 4px">返回</d-button>
-<d-button icon="material-symbols:arrow-forward" iconPosition="right" style="--dockv-button-padding-right: 4px">下一步</d-button>
+<dv-button icon="material-symbols:arrow-back" style="--dockv-button-padding-left: 4px">返回</dv-button>
+<dv-button icon="material-symbols:arrow-forward" iconPosition="right" style="--dockv-button-padding-right: 4px">下一步</dv-button>
 
 ```html
-<d-button icon="material-symbols:arrow-back" style="--dockv-button-padding-left: 4px">返回</d-button>
-<d-button icon="material-symbols:arrow-forward" iconPosition="right" style="--dockv-button-padding-right: 4px">下一步</d-button>
+<dv-button icon="material-symbols:arrow-back" style="--dockv-button-padding-left: 4px">返回</dv-button>
+<dv-button icon="material-symbols:arrow-forward" iconPosition="right" style="--dockv-button-padding-right: 4px">下一步</dv-button>
 ```
 
 ## 圆角（borderRadius）
 
 使用 `borderRadius` 属性自定义圆角。
 
-<d-button borderRadius="0">直角</d-button> 
-<d-button borderRadius="0.75rem">小圆角</d-button> 
-<d-button borderRadius="9999px">胶囊</d-button> 
+<dv-button borderRadius="0">直角</dv-button> 
+<dv-button borderRadius="0.75rem">小圆角</dv-button> 
+<dv-button borderRadius="9999px">胶囊</dv-button> 
 
 ```html
-<d-button borderRadius="0">直角</d-button>
-<d-button borderRadius="0.75rem">小圆角</d-button> 
-<d-button borderRadius="9999px">胶囊</d-button>
+<dv-button borderRadius="0">直角</dv-button>
+<dv-button borderRadius="0.75rem">小圆角</dv-button> 
+<dv-button borderRadius="9999px">胶囊</dv-button>
 ```
 
 ## 禁用状态（disabled）
 
 使用 `disabled` 属性禁用按钮。
 
-<d-button disabled>禁用按钮</d-button> 
-<d-button type="danger" variant="solid" disabled>禁用危险按钮</d-button> 
+<dv-button disabled>禁用按钮</dv-button> 
+<dv-button type="danger" variant="solid" disabled>禁用危险按钮</dv-button> 
 
 ```html
-<d-button disabled>禁用按钮</d-button>
-<d-button type="danger" variant="solid" disabled>禁用危险按钮</d-button>
+<dv-button disabled>禁用按钮</dv-button>
+<dv-button type="danger" variant="solid" disabled>禁用危险按钮</dv-button>
 ```
 
 ## 加载状态（loading）
 
 使用 `loading` 属性让按钮进入加载中状态，显示一个旋转动画，同时按钮不可点击。
 
-<d-button loading>加载中</d-button> 
-<d-button loading variant="outline">提交中</d-button> 
-<d-button loading type="danger" icon="material-symbols:delete">删除中</d-button> 
+<dv-button loading>加载中</dv-button> 
+<dv-button loading variant="outline">提交中</dv-button> 
+<dv-button loading type="danger" icon="material-symbols:delete">删除中</dv-button> 
 
 ```html
-<d-button loading>加载中</d-button>
-<d-button loading variant="outline">提交中</d-button>
-<d-button loading type="danger" icon="material-symbols:delete">删除中</d-button>
+<dv-button loading>加载中</dv-button>
+<dv-button loading variant="outline">提交中</dv-button>
+<dv-button loading type="danger" icon="material-symbols:delete">删除中</dv-button>
 ```
 
 > [!warning]
@@ -219,14 +219,14 @@ title: Button 按钮
 
 <br>
 
-<d-button type="warning" onclick="alert('呀~不要点我')">
+<dv-button type="warning" onclick="alert('呀~不要点我')">
   点我一下
-</d-button>
+</dv-button>
 
 ```html
-<d-button type="warning" onclick="alert('呀~不要点我')">
+<dv-button type="warning" onclick="alert('呀~不要点我')">
   点我一下
-</d-button>
+</dv-button>
 ```
 
 ### 带时长的确认按钮
@@ -251,7 +251,7 @@ title: Button 按钮
 
 | 事件名 | 说明 | 回调参数 |
 |---|---|---|
-| d-click | 点击按钮时触发 | `CustomEvent` |
+| dv-click | 点击按钮时触发 | `CustomEvent` |
 
 ### 插槽
 

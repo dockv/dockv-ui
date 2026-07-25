@@ -3,8 +3,9 @@ import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.scss'
 
-import '../../../src/d-button'
-import '../../../src/d-icon'
+import '../../../src/dv-button'
+import '../../../src/dv-icon'
+import '../../../src/dv-notification'
 
 export default {
   extends: DefaultTheme,
