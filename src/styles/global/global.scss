@@ -6,10 +6,11 @@ body, body .dockv-theme-mode-light, :host, :host .dockv-theme-mode-light {
     --dockv-color-white: hsla(var(--dockv-white), 1); // 浅色模式下深色背景内容Inverse
     --dockv-color-black: hsla(var(--dockv-black), 1); // 深色模式下浅色背景内容Inverse
 
-    --dockv-color-primary: hsla(var(--dockv-blue-5), 1); // 主要颜色。仅在需要非常强调的情况下使用。
-    --dockv-color-primary-hover: hsla(var(--dockv-blue-6), 1); // 主要颜色悬浮态
-    --dockv-color-primary-active: hsla(var(--dockv-blue-7), 1); // 主要颜色激活态
-    --dockv-color-primary-disabled: hsla(var(--dockv-blue-2), 1); // 主要颜色禁用态
+    // 主要颜色。仅在需要非常强调的情况下使用。
+    --dockv-color-primary: hsla(var(--dockv-blue-5), 1);
+    --dockv-color-primary-hover: hsla(var(--dockv-blue-6), 1); // 悬浮态
+    --dockv-color-primary-active: hsla(var(--dockv-blue-7), 1); // 激活态
+    --dockv-color-primary-disabled: hsla(var(--dockv-blue-2), 1); // 禁用态
     --dockv-color-primary-light-default: hsla(var(--dockv-blue-0), 1); // 浅版主要颜色（多用于背景）。仅在需要非常强调的情况下使用。
     --dockv-color-primary-light-hover: hsla(var(--dockv-blue-1), 1); // 浅版主要颜色悬浮态
     --dockv-color-primary-light-active: hsla(var(--dockv-blue-2), 1); // 浅版主要颜色激活态

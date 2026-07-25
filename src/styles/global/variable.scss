@@ -1,0 +1,66 @@
+body, :host {
+    // 字号 (Font Size) 1rem = 16px
+    --dockv-font-size-xs: 0.75rem;
+    --dockv-font-size-sm: 0.8125rem;
+    --dockv-font-size-md: 0.875rem;
+
+    --dockv-font-size-h6: 1rem;
+    --dockv-font-size-h5: 1.125rem;
+    --dockv-font-size-h4: 1.25rem;
+    --dockv-font-size-h3: 1.5rem;
+    --dockv-font-size-h2: 1.75rem;
+    --dockv-font-size-h1: 2rem;
+
+    // 字重 (Font Weight)
+    --dockv-font-weight-light: 200;
+    --dockv-font-weight-normal: 400;
+    --dockv-font-weight-blod: 600;
+
+    // 字体 (Font Family)
+    --dockv-font-family-base: 
+    "Noto Sans",          /* English & Number & Symbol */
+    "Noto Sans JP",       /* 日本語 (Japanese) */
+    "Noto Sans SC",       /* 简体中文 (Simplified Chinese) */
+    "Noto Sans TC",       /* 繁体中文 (Traditional Chinese) */
+    "Noto Sans KR",       /* 한국어 (Korean) */
+    // Apple
+    -apple-system,
+    "PingFang SC",
+    // Windows
+    "Microsoft YaHei",
+    "Segoe UI",
+    // System
+    sans-serif;
+
+    // 圆角 (Border Radius)
+    --dockv-border-radius-sq: 0;   /* Square (直角) */
+    --dockv-border-radius-sm: 3px;
+    --dockv-border-radius-md: 6px;
+    --dockv-border-radius-lg: 10px;
+    --dockv-border-radius-xl: 12px;
+    --dockv-border-radius-cl: 50%;   /* Circle (圆/半圆) */
+    --dockv-border-radius-full: 9999px; /* Full (全胶囊) */
+    
+    // 图标尺寸 (Icon Size)
+    --dockv-icon-size-xs: 8px;
+    --dockv-icon-size-sm: 12px;
+    --dockv-icon-size-md: 16px;
+    --dockv-icon-size-lg: 20px;
+    --dockv-icon-size-xl: 24px;
+
+    // 间距 (spacing)
+    --dockv-spacing-none: 0px;
+    --dockv-spacing-3xs: 0.125rem;
+    --dockv-spacing-2xs: 0.25rem;
+    --dockv-spacing-xs: 0.5rem;
+    --dockv-spacing-sm: 0.75rem;
+    --dockv-spacing-md: 1rem;
+    --dockv-spacing-lg: 1.25rem;
+    --dockv-spacing-xl: 1.5rem;
+    --dockv-spacing-2xl: 2rem;
+    --dockv-spacing-3xl: 2.5rem;
+
+    // 层级 (z-index)
+    --dockv-zindex-wallpaper: -1;
+    --dockv-zindex-notification: 1001;
+  }
