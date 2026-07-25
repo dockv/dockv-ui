@@ -34,17 +34,18 @@
 
   cursor: pointer;
   gap: var(--dockv-button-gap);
-  padding: var(--dockv-button-padding-top) var(--dockv-button-padding-right) var(--dockv-button-padding-bottom) var(--dockv-button-padding-left);
+  padding: var(--dockv-button-padding-top) var(--dockv-button-padding-right)
+    var(--dockv-button-padding-bottom) var(--dockv-button-padding-left);
 }
 
-.dockv-button__icon {
+.dockv-button-icon {
   display: inline-flex;
   width: 20px;
   height: 20px;
   flex-shrink: 0;
 }
 
-.dockv-button-primary{
+.dockv-button-primary {
   // solid 深色填充
   --dockv-button-solid-font-color: var(--dockv-color-white);
   --dockv-button-solid-bg-color: var(--dockv-color-primary);
@@ -84,7 +85,7 @@
   --dockv-button-soft-bg-color-active: var(--dockv-color-primary-light-active);
   --dockv-button-soft-ol-color-focus: var(--dockv-color-primary-light-active);
   --dockv-button-soft-border-color: var(--dockv-color-primary);
-  
+
   // neutral 单色填充
   --dockv-button-neutral-font-color: var(--dockv-color-primary);
   --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
@@ -93,7 +94,7 @@
   --dockv-button-neutral-ol-color-focus: var(--dockv-color-primary-light-active);
   --dockv-button-neutral-border-color: transparent;
 }
-.dockv-button-secondary{
+.dockv-button-secondary {
   // solid 深色填充
   --dockv-button-solid-font-color: var(--dockv-color-white);
   --dockv-button-solid-bg-color: var(--dockv-color-secondary);
@@ -133,7 +134,7 @@
   --dockv-button-soft-bg-color-active: var(--dockv-color-secondary-light-active);
   --dockv-button-soft-ol-color-focus: var(--dockv-color-secondary-light-active);
   --dockv-button-soft-border-color: var(--dockv-color-secondary);
-  
+
   // neutral 单色填充
   --dockv-button-neutral-font-color: var(--dockv-color-secondary);
   --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
@@ -142,7 +143,7 @@
   --dockv-button-neutral-ol-color-focus: var(--dockv-color-secondary-light-active);
   --dockv-button-neutral-border-color: transparent;
 }
-.dockv-button-tertiary{
+.dockv-button-tertiary {
   // solid 深色填充
   --dockv-button-solid-font-color: var(--dockv-color-white);
   --dockv-button-solid-bg-color: var(--dockv-color-tertiary);
@@ -182,7 +183,7 @@
   --dockv-button-soft-bg-color-active: var(--dockv-color-tertiary-light-active);
   --dockv-button-soft-ol-color-focus: var(--dockv-color-tertiary-light-active);
   --dockv-button-soft-border-color: var(--dockv-color-tertiary);
-  
+
   // neutral 单色填充
   --dockv-button-neutral-font-color: var(--dockv-color-tertiary);
   --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
@@ -191,7 +192,7 @@
   --dockv-button-neutral-ol-color-focus: var(--dockv-color-tertiary-light-active);
   --dockv-button-neutral-border-color: transparent;
 }
-.dockv-button-success{
+.dockv-button-success {
   // solid 深色填充
   --dockv-button-solid-font-color: var(--dockv-color-white);
   --dockv-button-solid-bg-color: var(--dockv-color-success);
@@ -231,7 +232,7 @@
   --dockv-button-soft-bg-color-active: var(--dockv-color-success-light-active);
   --dockv-button-soft-ol-color-focus: var(--dockv-color-success-light-active);
   --dockv-button-soft-border-color: var(--dockv-color-success);
-  
+
   // neutral 单色填充
   --dockv-button-neutral-font-color: var(--dockv-color-success);
   --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
@@ -240,7 +241,7 @@
   --dockv-button-neutral-ol-color-focus: var(--dockv-color-success-light-active);
   --dockv-button-neutral-border-color: transparent;
 }
-.dockv-button-warning{
+.dockv-button-warning {
   // solid 深色填充
   --dockv-button-solid-font-color: var(--dockv-color-white);
   --dockv-button-solid-bg-color: var(--dockv-color-warning);
@@ -280,7 +281,7 @@
   --dockv-button-soft-bg-color-active: var(--dockv-color-warning-light-active);
   --dockv-button-soft-ol-color-focus: var(--dockv-color-warning-light-active);
   --dockv-button-soft-border-color: var(--dockv-color-warning);
-  
+
   // neutral 单色填充
   --dockv-button-neutral-font-color: var(--dockv-color-warning);
   --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
@@ -289,7 +290,7 @@
   --dockv-button-neutral-ol-color-focus: var(--dockv-color-warning-light-active);
   --dockv-button-neutral-border-color: transparent;
 }
-.dockv-button-danger{
+.dockv-button-danger {
   // solid 深色填充
   --dockv-button-solid-font-color: var(--dockv-color-white);
   --dockv-button-solid-bg-color: var(--dockv-color-danger);
@@ -329,7 +330,7 @@
   --dockv-button-soft-bg-color-active: var(--dockv-color-danger-light-active);
   --dockv-button-soft-ol-color-focus: var(--dockv-color-danger-light-active);
   --dockv-button-soft-border-color: var(--dockv-color-danger);
-  
+
   // neutral 单色填充
   --dockv-button-neutral-font-color: var(--dockv-color-danger);
   --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
@@ -339,27 +340,47 @@
   --dockv-button-neutral-border-color: transparent;
 }
 
-.dockv-button-extra-small { height: var(--dockv-button-extra-small-height); --dockv-button-padding-left: 8px; --dockv-button-padding-right: 8px; }
-.dockv-button-small       { height: var(--dockv-button-small-height);       --dockv-button-padding-left: 10px; --dockv-button-padding-right: 10px; }
-.dockv-button-medium      { height: var(--dockv-button-medium-height);      --dockv-button-padding-left: 12px; --dockv-button-padding-right: 12px; }
-.dockv-button-large       { height: var(--dockv-button-large-height);       --dockv-button-padding-left: 14px; --dockv-button-padding-right: 14px; }
-.dockv-button-extra-large { height: var(--dockv-button-extra-large-height); --dockv-button-padding-left: 16px; --dockv-button-padding-right: 16px; }
+.dockv-button-extra-small {
+  height: var(--dockv-button-extra-small-height);
+  --dockv-button-padding-left: 8px;
+  --dockv-button-padding-right: 8px;
+}
+.dockv-button-small {
+  height: var(--dockv-button-small-height);
+  --dockv-button-padding-left: 10px;
+  --dockv-button-padding-right: 10px;
+}
+.dockv-button-medium {
+  height: var(--dockv-button-medium-height);
+  --dockv-button-padding-left: 12px;
+  --dockv-button-padding-right: 12px;
+}
+.dockv-button-large {
+  height: var(--dockv-button-large-height);
+  --dockv-button-padding-left: 14px;
+  --dockv-button-padding-right: 14px;
+}
+.dockv-button-extra-large {
+  height: var(--dockv-button-extra-large-height);
+  --dockv-button-padding-left: 16px;
+  --dockv-button-padding-right: 16px;
+}
 
 // solid 深色填充
 .dockv-button-solid {
   color: var(--dockv-button-solid-font-color);
   background: var(--dockv-button-solid-bg-color);
   border: 1px solid var(--dockv-button-solid-border-color);
-  &:hover{
+  &:hover {
     background: var(--dockv-button-solid-bg-color-hover);
   }
-  &:active{
+  &:active {
     background: var(--dockv-button-solid-bg-color-active);
   }
-  &:focus-visible{
+  &:focus-visible {
     outline: 2px solid var(--dockv-button-solid-ol-color-focus);
   }
-  &:disabled{
+  &:disabled {
     background: var(--dockv-color-disabled-bg) !important;
   }
 }
@@ -368,16 +389,16 @@
   color: var(--dockv-button-light-font-color);
   background: var(--dockv-button-light-bg-color);
   border: 1px solid var(--dockv-button-light-border-color);
-  &:hover{
+  &:hover {
     background: var(--dockv-button-light-bg-color-hover);
   }
-  &:active{
+  &:active {
     background: var(--dockv-button-light-bg-color-active);
   }
-  &:focus-visible{
+  &:focus-visible {
     outline: 2px solid var(--dockv-button-light-ol-color-focus);
   }
-  &:disabled{
+  &:disabled {
     background: var(--dockv-color-disabled-bg) !important;
   }
 }
@@ -386,13 +407,13 @@
   color: var(--dockv-button-ghost-font-color);
   background: var(--dockv-button-ghost-bg-color);
   border: 1px solid var(--dockv-button-ghost-border-color);
-  &:hover{
+  &:hover {
     background: var(--dockv-button-ghost-bg-color-hover);
   }
-  &:active{
+  &:active {
     background: var(--dockv-button-ghost-bg-color-active);
   }
-  &:focus-visible{
+  &:focus-visible {
     outline: 2px solid var(--dockv-button-ghost-ol-color-focus);
   }
 }
@@ -401,13 +422,13 @@
   color: var(--dockv-button-outline-font-color);
   background: var(--dockv-button-outline-bg-color);
   border: 1px solid var(--dockv-button-outline-border-color);
-  &:hover{
+  &:hover {
     background: var(--dockv-button-outline-bg-color-hover);
   }
-  &:active{
+  &:active {
     background: var(--dockv-button-outline-bg-color-active);
   }
-  &:focus-visible{
+  &:focus-visible {
     outline: 2px solid var(--dockv-button-outline-ol-color-focus);
   }
 }
@@ -416,13 +437,13 @@
   color: var(--dockv-button-soft-font-color);
   background: var(--dockv-button-soft-bg-color);
   border: 1px solid var(--dockv-button-soft-border-color);
-  &:hover{
+  &:hover {
     background: var(--dockv-button-soft-bg-color-hover);
   }
-  &:active{
+  &:active {
     background: var(--dockv-button-soft-bg-color-active);
   }
-  &:focus-visible{
+  &:focus-visible {
     outline: 2px solid var(--dockv-button-soft-ol-color-focus);
   }
 }
@@ -431,13 +452,13 @@
   color: var(--dockv-button-neutral-font-color);
   background: var(--dockv-button-neutral-bg-color);
   border: 1px solid var(--dockv-button-neutral-border-color);
-  &:hover{
+  &:hover {
     background: var(--dockv-button-neutral-bg-color-hover);
   }
-  &:active{
+  &:active {
     background: var(--dockv-button-neutral-bg-color-active);
   }
-  &:focus-visible{
+  &:focus-visible {
     outline: 2px solid var(--dockv-button-neutral-ol-color-focus);
   }
 }

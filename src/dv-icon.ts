@@ -2,12 +2,15 @@ import { LitElement, html, unsafeCSS } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import { loadIcons, renderHTML } from '@iconify/iconify'
-import styles from './styles/components/d-icon.scss?inline'
+import styles from './styles/components/dv-icon.scss?inline'
 
-@customElement('d-icon')
+@customElement('dv-icon')
 export class DIcon extends LitElement {
   @property({ type: String })
   icon: string = ''
+
+  @property({ type: String })
+  src: string = ''
 
   @property({ type: String })
   size: string = ''
@@ -48,9 +51,17 @@ export class DIcon extends LitElement {
     if (this.color) styleParts.push(`color: ${this.color}`)
     if (this.size) styleParts.push(`font-size: ${this.size}`)
 
+    let fallback: unknown = ''
+
+    if (this.src) {
+      fallback = html`<img src=${this.src} alt="" />`
+    } else if (this._svgHTML) {
+      fallback = unsafeHTML(this._svgHTML)
+    }
+
     return html`
       <span class="dockv-icon" style=${styleParts.join(';') || ''}>
-        ${unsafeHTML(this._svgHTML)}
+        <slot>${fallback}</slot>
       </span>
     `
   }
@@ -58,6 +69,6 @@ export class DIcon extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'd-icon': DIcon
+    'dv-icon': DIcon
   }
 }

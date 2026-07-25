@@ -13,3 +13,16 @@
   justify-content: center;
   line-height: 0;
 }
+
+.dockv-icon svg,
+.dockv-icon img {
+  display: block;
+  width: 1em;
+  height: 1em;
+}
+
+::slotted(svg) {
+  display: block;
+  width: 1em;
+  height: 1em;
+}

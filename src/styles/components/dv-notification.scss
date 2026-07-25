@@ -1,0 +1,224 @@
+@use "../../styles/global/global.scss" as *;
+
+:host {
+  --dockv-notification-bg-color: var(--dockv-color-bg-2);
+  --dockv-notification-text-color: var(--dockv-color-text-1);
+  --dockv-notification-title-color: var(--dockv-color-text-0);
+  --dockv-notification-border-color: var(--dockv-color-border);
+  --dockv-notification-border-radius: var(--dockv-border-radius-medium);
+  --dockv-notification-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --dockv-notification-padding: 14px 16px;
+  --dockv-notification-width: 320px;
+  --dockv-notification-gap: 12px;
+  --dockv-notification-animation-duration: 300ms;
+  --dockv-notification-icon-size: 24px;
+  --dockv-notification-close-size: 20px;
+
+  display: block;
+  box-sizing: border-box;
+}
+
+.notification-show-top {
+  animation: dockv-notif-slide-in-top var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-hide-top {
+  animation: dockv-notif-slide-out-top var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-show-topLeft {
+  animation: dockv-notif-slide-in-left var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-hide-topLeft {
+  animation: dockv-notif-slide-out-left var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-show-topRight {
+  animation: dockv-notif-slide-in-right var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-hide-topRight {
+  animation: dockv-notif-slide-out-right var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-show-bottom {
+  animation: dockv-notif-slide-in-bottom var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-hide-bottom {
+  animation: dockv-notif-slide-out-bottom var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-show-bottomLeft {
+  animation: dockv-notif-slide-in-left var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-hide-bottomLeft {
+  animation: dockv-notif-slide-out-left var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-show-bottomRight {
+  animation: dockv-notif-slide-in-right var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.notification-hide-bottomRight {
+  animation: dockv-notif-slide-out-right var(--dockv-notification-animation-duration) cubic-bezier(0.62, 0.63, 0, 1.13) forwards;
+}
+
+.dockv-notification-card {
+  box-sizing: border-box;
+  display: flex;
+  gap: 10px;
+  width: var(--dockv-notification-width);
+  padding: var(--dockv-notification-padding);
+  background: var(--dockv-notification-bg-color);
+  border: 1px solid var(--dockv-notification-border-color);
+  border-radius: var(--dockv-notification-border-radius);
+  box-shadow: var(--dockv-notification-shadow);
+  color: var(--dockv-notification-text-color);
+  font-size: 14px;
+  line-height: 22px;
+  cursor: default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.dockv-notification-icon {
+  display: inline-flex;
+  width: var(--dockv-notification-icon-size);
+  height: var(--dockv-notification-icon-size);
+  flex-shrink: 0;
+
+  &.dockv-notification-type-info {
+    color: var(--dockv-color-info);
+  }
+
+  &.dockv-notification-type-success {
+    color: var(--dockv-color-success);
+  }
+
+  &.dockv-notification-type-warning {
+    color: var(--dockv-color-warning);
+  }
+
+  &.dockv-notification-type-error {
+    color: var(--dockv-color-danger);
+  }
+}
+
+.dockv-notification-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.dockv-notification-title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--dockv-notification-title-color);
+  margin-bottom: 2px;
+  word-break: break-word;
+}
+
+.dockv-notification-content {
+  color: var(--dockv-notification-text-color);
+  word-break: break-word;
+}
+
+.dockv-notification-close {
+  display: inline-flex;
+  width: var(--dockv-notification-close-size);
+  height: var(--dockv-notification-close-size);
+  flex-shrink: 0;
+}
+
+@keyframes dockv-notif-slide-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dockv-notif-slide-out-top {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes dockv-notif-slide-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dockv-notif-slide-out-bottom {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes dockv-notif-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes dockv-notif-slide-out-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes dockv-notif-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes dockv-notif-slide-out-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}

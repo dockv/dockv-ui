@@ -1,43 +1,49 @@
-import { LitElement, html, unsafeCSS } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
-import styles from './styles/components/d-button.scss?inline'
-import './d-icon'
+import { LitElement, html, unsafeCSS } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import styles from "./styles/components/dv-button.scss?inline";
+import "./dv-icon";
 
-@customElement('d-button')
+@customElement("dv-button")
 export class DButton extends LitElement {
   @property({ type: String })
-  type: 'primary' | 'secondary' | 'tertiary' | 'warning' | 'danger' = 'primary'
+  type: "primary" | "secondary" | "tertiary" | "warning" | "danger" = "primary";
 
   @property({ type: String })
-  variant: 'light' | 'solid' | 'ghost' | 'outline' | 'soft' | 'skeuo' = 'solid'
+  variant: "light" | "solid" | "ghost" | "outline" | "soft" | "skeuo" = "solid";
 
   @property({ type: String })
-  size: 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large' = 'medium'
+  size: "extra-small" | "small" | "medium" | "large" | "extra-large" = "medium";
 
   @property({ type: String })
-  color = ''
+  color = "";
 
   @property({ type: String })
-  icon = ''
+  icon = "";
 
   @property({ type: String })
-  iconPosition: 'left' | 'right' = 'left'
+  iconPosition: "left" | "right" = "left";
 
   @property({ type: String })
-  borderRadius = ''
+  borderRadius = "";
 
   @property({ type: Boolean })
-  disabled = false
+  disabled = false;
 
   @property({ type: Boolean })
-  loading = false
+  loading = false;
+
+  /**
+   * 是否为正方形按钮（消除左右内边距和图标间距）
+   */
+  @property({ type: Boolean })
+  square = false;
 
   private _handleClick() {
-    if (this.disabled || this.loading) return
-    this.dispatchEvent(new CustomEvent('d-click', { bubbles: true, composed: true }))
+    if (this.disabled || this.loading) return;
+    this.dispatchEvent(new CustomEvent("dv-click", { bubbles: true, composed: true }));
   }
 
-  static styles = unsafeCSS(styles)
+  static styles = unsafeCSS(styles);
 
   render() {
     const style = [
@@ -66,42 +72,43 @@ export class DButton extends LitElement {
           --dockv-button-soft-bg-color-active:color-mix(in srgb, ${this.color} 30%, transparent);
           --dockv-button-soft-ol-color-focus:color-mix(in srgb, ${this.color} 40%, transparent);
         `
-        : '',
-      this.borderRadius
-        ? `--dockv-button-border-radius: ${this.borderRadius}`
-        : '',
-    ].filter(Boolean).join(';')
+        : "",
+      this.borderRadius ? `--dockv-button-border-radius: ${this.borderRadius}` : "",
+    ]
+      .filter(Boolean)
+      .join(";");
 
-    const iconName = this.loading ? 'svg-spinners:180-ring' : this.icon
+    const iconName = this.loading ? "svg-spinners:180-ring" : this.icon;
 
     const iconEl = iconName
-      ? html`<span class="dockv-button__icon">
-          <d-icon icon=${iconName} size="20px"></d-icon>
+      ? html`<span class="dockv-button-icon">
+          <dv-icon icon=${iconName} size="20px"></dv-icon>
         </span>`
-      : ''
+      : "";
 
-    const loadingClass = this.loading ? ' dockv-button-loading' : ''
+    const loadingClass = this.loading ? " dockv-button-loading" : "";
+    const squareClass = this.square ? " dockv-button-square" : "";
 
     return html`
       <button
         part="button"
         type="button"
-        class="dockv-button dockv-button-${this.type} dockv-button-${this.variant} dockv-button-${this.size}${loadingClass}"
+        class="dockv-button dockv-button-${this.type} dockv-button-${this
+          .variant} dockv-button-${this.size}${loadingClass}${squareClass}"
         style=${style}
         ?disabled=${this.disabled}
         @click=${this._handleClick}
-        @contextmenu=${(e: Event) => e.preventDefault()}
-      >
-        ${this.iconPosition === 'left' ? iconEl : ''}
+        @contextmenu=${(e: Event) => e.preventDefault()}>
+        ${this.iconPosition === "left" ? iconEl : ""}
         <slot></slot>
-        ${this.iconPosition === 'right' ? iconEl : ''}
+        ${this.iconPosition === "right" ? iconEl : ""}
       </button>
-    `
+    `;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'd-button': DButton
+    "dv-button": DButton;
   }
 }
