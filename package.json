@@ -1,17 +1,58 @@
 {
-  "name": "ui",
-  "private": true,
-  "version": "0.0.0",
+  "name": "dockv-ui",
+  "version": "0.0.1",
+  "description": "DockV UI Component Library",
+  "keywords": [
+    "dockv",
+    "ui",
+    "dockv-ui",
+    "component",
+    "web-component",
+    "library"
+  ],
+  "author": "DockV",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dockv/dockv-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dockv/dockv-ui/issues"
+  },
   "type": "module",
+  "license": "MIT",
+  "main": "./dist/dockv-ui.umd.js",
+  "module": "./dist/dockv-ui.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/dockv-ui.es.js",
+      "require": "./dist/dockv-ui.umd.js"
+    },
+    "./es": "./dist/dockv-ui.es.js",
+    "./umd": "./dist/dockv-ui.umd.js",
+    "./styles": "./dist/dockv-ui.css",
+    "./dist/*": "./dist/*"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "dev": "pnpm dev:docs & pnpm dev:storybook",
+    "dev:docs": "vitepress dev docs",
+    "dev:storybook": "storybook dev -p 6006",
+    "build": "tsc --noEmit && pnpm build:components && pnpm build:styles && pnpm build:types",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build:components": "tsc --noEmit && vite build && vite build --mode umd",
+    "build:styles": "tsx build-styles.ts",
+    "build:all": "pnpm build && pnpm build:docs && pnpm build:storybook",
+    "build:docs": "vitepress build docs",
+    "build:storybook": "storybook build",
+    "preview:docs": "vitepress preview docs"
+  },
+  "peerDependencies": {
+    "@iconify/iconify": "^3.1.1",
+    "lit": "^3.3.3"
   },
   "dependencies": {
     "@iconify/iconify": "^3.1.1",
@@ -19,21 +60,37 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",
-    "@storybook/addon-a11y": "^10.4.6",
-    "@storybook/addon-docs": "^10.4.6",
-    "@storybook/addon-onboarding": "^10.4.6",
-    "@storybook/addon-vitest": "^10.4.6",
-    "@storybook/web-components": "^10.5.0",
-    "@storybook/web-components-vite": "^10.4.6",
+    "@storybook/addon-a11y": "10.5.0",
+    "@storybook/addon-docs": "10.5.0",
+    "@storybook/addon-onboarding": "10.5.0",
+    "@storybook/addon-vitest": "10.5.0",
+    "@storybook/web-components-vite": "10.5.0",
+    "@types/node": "^24.13.2",
     "@vitest/browser-playwright": "^4.1.10",
     "@vitest/coverage-v8": "^4.1.10",
+    "cross-env": "^7.0.3",
     "playwright": "^1.61.1",
     "sass-embedded": "^1.100.0",
-    "storybook": "^10.4.6",
-    "typescript": "~6.0.2",
+    "storybook": "10.5.0",
+    "tsx": "^4.23.1",
+    "typescript": "^6.0.2",
     "vite": "^8.1.1",
     "vitepress": "2.0.0-alpha.17",
     "vitest": "^4.1.10",
     "vue": "^3.5.39"
+  },
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Edge versions",
+    "last 2 Firefox versions",
+    "last 2 Safari versions",
+    "not dead"
+  ],
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": ">=11.10.0 <12.0.0",
+      "onFail": "download"
+    }
   }
 }
