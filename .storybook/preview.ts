@@ -1,20 +1,19 @@
-import type { Preview } from '@storybook/web-components'
+import type { Preview } from "@storybook/web-components-vite";
 
-import '../src/styles/global/palette.scss'
-import '../src/styles/global/global.scss'
+import "../src/styles/index.scss";
 
 const preview: Preview = {
   parameters: {
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/i
-      }
+        date: /Date$/i,
+      },
     },
     a11y: {
-      test: 'todo'
-    }
-  }
-}
+      test: "todo",
+    },
+  },
+};
 
-export default preview
+export default preview;
