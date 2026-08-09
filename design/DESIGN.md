@@ -2,114 +2,180 @@
 
 ## 分发策略
 
-两种并行策略，用户按需选择。
+使用 ES 和 UMD 格式进行分
 
-### 策略一：独立 IIFE（新手优先）
+区别：
+| 格式 | 优点 | 适用 |
+|------|------|------|
+| ES Module | Tree-shaking、按需加载、现代工具链兼容 | 现代项目 |
+| UMD | 零配置、直接引入、兼容旧浏览器 | 传统项目 |
 
-每个组件自包含，单 `<script>` 引入即用，零依赖。
+### ES Module（推荐）
 
+现代项目首选，支持 tree-shaking，体积最小。
+
+```typescript
+// npm/pnpm 安装
+import { Icon } from "dockv-ui";
+import "dockv-ui/styles";
 ```
-dockv-button.min.js    ← Lit ~5KB + palette ~3KB + 组件逻辑 ~2KB = ~10KB
-dockv-switch.min.js
-dockv-input.min.js
+
+```javascript
+// ES 产物需配合打包器使用（lit / iconify 已外置），
+// 无打包器直接 <script> 引入的场景请使用 UMD 产物。
 ```
+
+**优点**：Tree-shaking、按需加载、现代工具链兼容
+**适用**：Vite、Webpack、Rollup 等现代打包工具
+
+### UMD（通用兼容）
+
+兼容传统项目，支持 `<script>` 标签直接引入。
 
 ```html
-<script src="dockv-button.min.js"></script>
-<dv-button>按钮</dv-button>
+<!-- 全局变量方式（以 dist 目录作为部署根目录） -->
+<link rel="stylesheet" href="dockv-ui.css" />
+<script src="dockv-ui.umd.js"></script>
+<script>
+  // 通过全局变量使用
+  const button = new DockvUI.Icon();
+  document.body.appendChild(button);
+</script>
 ```
 
-**优点**：零工具链、离线可用、新手友好
-**代价**：每个组件体积含 palette 冗余（10 组件 ≈ 100KB，gzip ≈ 15KB）
-
-### 策略二：CSS Token 分离
-
-CSS 变量天然穿透 Shadow DOM → 色盘抽离为独立样式文件，组件只含逻辑。
-
-```
-dockv-tokens.css        ← 一次性引入，包含完整色盘 + 功能色 + 排版等
-dockv-button.min.js     ← Lit ~5KB + 组件逻辑 ~2KB = ~7KB（不含 palette）
-dockv-switch.min.js
-dockv-input.min.js
-```
-
-```html
-<link rel="stylesheet" href="dockv-tokens.css">
-<script src="dockv-button.min.js"></script>
-<script src="dockv-input.min.js"></script>
-```
-
-**优点**：10 组件 ≈ 35KB（CSS 去重）
-**代价**：必须引入 `tokens.css`，组件内每个变量需要 fallback 值
-
-### 体积对比
-
-| | 策略一 | 策略二 |
-|---|---|---|
-| 首个组件 | ~10KB | tokens 5KB + 7KB |
-| 每 +1 组件 | ~10KB | ~7KB |
-| 10 组件 | ~100KB | ~40KB |
+**优点**：零配置、直接引入、兼容旧浏览器
+**适用**：传统项目、快速原型、离线环境
 
 ---
 
 ## 构建方式
 
-两种策略共用同一套 Vite lib 配置，通过参数切换。
+### 命令总览
 
-**策略一（自包含）：**
+| 命令                    | 说明                         | 产物                                                             |
+| ----------------------- | ---------------------------- | ---------------------------------------------------------------- |
+| `pnpm build`            | 完整构建（类型 + JS + 样式） | `dockv-ui.es.js` / `dockv-ui.umd.js` + `*.d.ts` + `dockv-ui.css` |
+| `pnpm build:types`      | 仅生成类型声明               | `dist/*.d.ts`                                                    |
+| `pnpm build:components` | 仅构建 JS（ES + UMD）        | `dockv-ui.es.js` / `dockv-ui.umd.js`                             |
+| `pnpm build:styles`     | 仅编译样式                   | `dist/dockv-ui.css`（全量汇总）                                  |
+| `pnpm build:all`        | JS+类型+样式+文档+Storybook  | 全部产物                                                         |
 
-```ts
-// vite.config.ts
-build: {
-  lib: {
-    entry: { 'dockv-button': 'src/dv-button.ts', ... },
-    formats: ['iife'],
-  },
-  rollupOptions: {
-    output: {
-      // 不 external 任何内容，全部打包进组件
-    }
-  }
-}
+### 完整构建（默认）
+
+```typescript
+// 使用方式
+pnpm build
 ```
 
-组件 SCSS 通过 `@use` 内联 palette，最终编译产物包含完整色盘。
-
-**策略二（CSS 分离）：**
-
-先构建 `tokens.css`：
-
-```
-src/styles/global/global.scss → dockv-tokens.css
+```typescript
+// 引入所有组件
+import { Icon } from "dockv-ui";
+import "dockv-ui/styles";
 ```
 
-组件构建时 `vite.config.external = ['lit', 'lit/decorators.js']`（可选，如需进一步拆分运行时），palette 和功能色不打入 JS，由 `tokens.css` 通过 CSS 变量继承提供。组件内所有变量引用使用 `var(--dockv-xxx, fallback)` 模式。
+> 说明：早期设计过"按组件单独打包"（JS 与样式），后因使用场景少、且每个组件都要重复携带 Lit 运行时、单组件样式还需自包含整套色盘变量导致体积不划算，已移除。JS 统一为 ES + UMD 两种整体格式，样式只保留全量 `dockv-ui.css` 一份。需要极致包体积的开发者可自行通过 npm 安装 + 打包器按需引入。
+
+### 产物结构
+
+```
+dist/
+├── dockv-ui.es.js                 ← 整体 ES Module（lit / iconify 外置，由 peerDependencies 提供）
+├── dockv-ui.umd.js                ← 整体 UMD（自包含 lit + iconify）
+├── dockv-ui.css                   ← 全量样式（编译 src/styles/index.scss）
+├── index.d.ts                     ← 类型声明（目录结构与 src 对应）
+└── components/
+    └── dv-icon.d.ts
+```
+
+### 配置说明
+
+```typescript
+// vite.config.ts（build:components，JS 主构建）
+// 通过 --mode 区分两次构建：
+//   vite build            → dockv-ui.es.js（external lit / iconify，供 npm 打包器用户）
+//   vite build --mode umd → dockv-ui.umd.js（自包含，供 <script> 直引用户）
+// lib 模式下 external 对所有 format 全局生效，无法按 format 区分，故拆成两次构建。
+
+// build:types —— tsc -p tsconfig.build.json
+// declaration + emitDeclarationOnly，只产出 .d.ts 类型声明
+
+// build:styles —— tsx build-styles.ts
+// 使用 sass-embedded 编译 src/styles/index.scss → dist/dockv-ui.css（全量样式）
+```
+
+### 使用方式对比
+
+| 场景         | ES Module                         | UMD                  |
+| ------------ | --------------------------------- | -------------------- |
+| 安装方式     | `pnpm add dockv-ui`               | `<script>` 标签      |
+| 引入方式     | `import { Icon } from 'dockv-ui'` | `new DockvUI.Icon()` |
+| Tree-shaking | ✅ 支持                           | ❌ 不支持            |
+| 类型支持     | ✅ 完整                           | ⚠️ 需要额外配置      |
+| 适用环境     | 现代打包工具                      | 传统 HTML 项目       |
 
 ---
 
+## 样式策略
+
+### CSS Token 分离
+
+CSS 变量天然穿透 Shadow DOM → 色盘抽离为独立样式文件，组件只含逻辑。
+
 ```
-palette.scss           →  裸 HSL 色值  "216,100%,49%"
-global.scss            →  功能色       "--dockv-color-primary: hsla(...)"
-组件 SCSS              →  消费变量     "background: var(--dockv-color-primary)"
+src/styles/global/palette.scss      →  裸 HSL 色值
+src/styles/global/global.scss       →  功能色变量
+dist/dockv-ui.css                   →  编译后的完整样式
 ```
 
-- 策略一：`palette` + `global` 在组件 `@use` 时内联编译
-- 策略二：`palette` + `global` 编译为 `tokens.css`，组件不再 `@use` 色盘
+```html
+<!-- 方式1：npm 安装自动引入 -->
+<link rel="stylesheet" href="dockv-ui/dist/dockv-ui.css" />
+
+<!-- 方式2：手动引入 -->
+<link rel="stylesheet" href="https://unpkg.com/dockv-ui/dist/dockv-ui.css" />
+```
+
+**优点**：
+
+- 样式与逻辑分离，易于维护
+- 支持主题切换（只需覆盖 CSS 变量）
+- 多组件共享样式，减少冗余
+
+**组件内变量引用**：
+
+```scss
+.dockv-button {
+  background: var(--dockv-color-primary);
+  color: var(--dockv-color-text);
+}
+```
 
 ---
 
 ## 品牌可见性
 
-MIT 协议不强制展示品牌，但以下方式可在不引发反感的前提下自然曝光：
+MIT 协议不强制展示品牌，但以下方式可自然曝光：
 
 ### CSS 变量命名
 
 所有 Token 以 `--dockv-` 为前缀。DevTools 检查元素时天然可见，无需额外操作。
 
-### IIFE 全局变量
+### UMD 全局变量
 
-策略一的 IIFE 构建自动挂载 `window.DockV`。这是 IIFE 格式的标准行为（jQuery → `window.$`、Lodash → `window._`、Alpine → `window.Alpine`），社区无争议。npm `import` 用户不受影响。
+UMD 构建自动挂载 `window.DockvUI`。这是 UMD 格式的标准行为（jQuery → `window.$`、Lodash → `window._`），社区无争议。
 
 ### JS 文件头注释
 
-minify 时保留 `/*! DockV vX | MIT | https://... */`，任何拿到文件的开发者都能溯源。
+minify 时保留 `/*! DockV UI vX | MIT | https://... */`，任何拿到文件的开发者都能溯源。
+
+---
+
+## 浏览器支持
+
+支持主流浏览器最新 2 个版本，不支持 IE：
+
+- ✅ Chrome / Chromium / Edge
+- ✅ Firefox
+- ✅ Safari
+- ⚠️ Electron / Tauri / WebView（基于上述内核，自动兼容）
+- ❌ IE 及以下版本
