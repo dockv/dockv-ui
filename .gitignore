@@ -9,13 +9,11 @@ lerna-debug.log*
 
 node_modules
 dist
-dist-ssr
 *.local
 
 # Editor directories and files
 .vscode/*
 .opencode/*
-AGENTS.md
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -28,5 +26,7 @@ AGENTS.md
 # VitePress
 docs/.vitepress/dist
 docs/.vitepress/cache
+
+# Storybook
 *storybook.log
 storybook-static

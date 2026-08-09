@@ -1,3 +1,2 @@
-import './styles/global/index.scss'
-import './d-button'
-import './d-icon'
+// dv-icon 图标组件
+export { Icon } from "./components/icon.ts";

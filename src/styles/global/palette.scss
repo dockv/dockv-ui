@@ -1,511 +1,411 @@
-body, body .dockv-theme-mode-light, :host, :host .dockv-theme-mode-light {
-    --dockv-white: 0, 0%, 100%;
-    --dockv-black: 0, 0%, 0%;
+// 亮色模式
+body,                            // 全局默认
+body[theme-mode="light"],        // body 上有 light 属性
+body.dockv-theme-mode-light,     // body 上有 light 类（auto 模式自动注入）
+body .dockv-theme-mode-light,    // body 的子元素有 light 类
+:host,                           // Web Component 宿主
+:host[theme-mode="light"],       // Web Component 宿主有 light 属性
+:host(.dockv-theme-mode-light)   // Web Component 宿主有 light 类
+{
+  // 白色
+  --dockv-white: 0, 0%, 100%;
+  // 黑色
+  --dockv-black: 0, 0%, 0%;
 
-    --dockv-amber-0: 51,90%,96%;
-    --dockv-amber-1: 51,88%,90%;
-    --dockv-amber-2: 49,88%,80%;
-    --dockv-amber-3: 47,88%,70%;
-    --dockv-amber-4: 45,88%,60%;
-    --dockv-amber-5: 43,88%,51%;
-    --dockv-amber-6: 40,86%,42%;
-    --dockv-amber-7: 37,88%,33%;
-    --dockv-amber-8: 34,90%,25%;
-    --dockv-amber-9: 31,93%,16%;
+  // 红色
+  --dockv-red-0: 18, 89%, 96%;
+  --dockv-red-1: 15, 96%, 91%;
+  --dockv-red-2: 12, 96%, 82%;
+  --dockv-red-3: 11, 94%, 73%;
+  --dockv-red-4: 9, 95%, 64%;
+  --dockv-red-5: 7, 95%, 55%;
+  --dockv-red-6: 5, 82%, 46%;
+  --dockv-red-7: 3, 87%, 37%;
+  --dockv-red-8: 1, 93%, 29%;
+  --dockv-red-9: 359, 98%, 21%;
 
-    --dockv-blue-0: 209,100%,96%;
-    --dockv-blue-1: 207,96%,90%;
-    --dockv-blue-2: 209,96%,79%;
-    --dockv-blue-3: 209,96%,69%;
-    --dockv-blue-4: 210,96%,59%;
-    --dockv-blue-5: 216,100%,49%;
-    --dockv-blue-6: 213,100%,42%;
-    --dockv-blue-7: 214,100%,35%;
-    --dockv-blue-8: 214,100%,28%;
-    --dockv-blue-9: 215,100%,21%;
+  // 粉色
+  --dockv-pink-0: 349, 81%, 96%;
+  --dockv-pink-1: 348, 85%, 90%;
+  --dockv-pink-2: 345, 83%, 80%;
+  --dockv-pink-3: 343, 83%, 70%;
+  --dockv-pink-4: 341, 82%, 61%;
+  --dockv-pink-5: 340, 82%, 52%;
+  --dockv-pink-6: 337, 82%, 42%;
+  --dockv-pink-7: 336, 87%, 34%;
+  --dockv-pink-8: 334, 92%, 26%;
+  --dockv-pink-9: 332, 98%, 18%;
 
-    --dockv-cyan-0: 183,58%,94%;
-    --dockv-cyan-1: 181,61%,85%;
-    --dockv-cyan-2: 183,60%,71%;
-    --dockv-cyan-3: 184,58%,59%;
-    --dockv-cyan-4: 185,63%,47%;
-    --dockv-cyan-5: 186,95%,37%;
-    --dockv-cyan-6: 187,96%,30%;
-    --dockv-cyan-7: 188,98%,24%;
-    --dockv-cyan-8: 189,100%,18%;
-    --dockv-cyan-9: 191,100%,12%;
+  // 紫色
+  --dockv-purple-0: 300, 47%, 94%;
+  --dockv-purple-1: 298, 56%, 87%;
+  --dockv-purple-2: 297, 53%, 74%;
+  --dockv-purple-3: 295, 52%, 63%;
+  --dockv-purple-4: 293, 50%, 52%;
+  --dockv-purple-5: 291, 63%, 43%;
+  --dockv-purple-6: 289, 68%, 37%;
+  --dockv-purple-7: 287, 72%, 31%;
+  --dockv-purple-8: 285, 77%, 26%;
+  --dockv-purple-9: 283, 81%, 21%;
 
-    --dockv-green-0: 120,41%,95%;
-    --dockv-green-1: 122,52%,88%;
-    --dockv-green-2: 123,49%,76%;
-    --dockv-green-3: 124,48%,65%;
-    --dockv-green-4: 125,46%,56%;
-    --dockv-green-5: 126,50%,47%;
-    --dockv-green-6: 127,51%,39%;
-    --dockv-green-7: 127,53%,31%;
-    --dockv-green-8: 129,53%,23%;
-    --dockv-green-9: 130,56%,15%;
+  // 紫罗兰色
+  --dockv-violet-0: 270, 50%, 95%;
+  --dockv-violet-1: 269, 61%, 89%;
+  --dockv-violet-2: 266, 60%, 78%;
+  --dockv-violet-3: 265, 58%, 68%;
+  --dockv-violet-4: 263, 57%, 59%;
+  --dockv-violet-5: 260, 56%, 50%;
+  --dockv-violet-6: 258, 58%, 44%;
+  --dockv-violet-7: 256, 62%, 38%;
+  --dockv-violet-8: 254, 66%, 33%;
+  --dockv-violet-9: 252, 71%, 27%;
 
-    --dockv-grey-0: 0,0%,98%;
-    --dockv-grey-1: 210,9%,91%;
-    --dockv-grey-2: 206,7%,79%;
-    --dockv-grey-3: 213,5%,67%;
-    --dockv-grey-4: 210,4%,55%;
-    --dockv-grey-5: 210,4%,44%;
-    --dockv-grey-6: 210,7%,36%;
-    --dockv-grey-7: 213,8%,28%;
-    --dockv-grey-8: 216,10%,20%;
-    --dockv-grey-9: 214,11%,12%;
+  // 靛青色
+  --dockv-indigo-0: 225, 46%, 95%;
+  --dockv-indigo-1: 226, 51%, 88%;
+  --dockv-indigo-2: 228, 49%, 77%;
+  --dockv-indigo-3: 228, 49%, 66%;
+  --dockv-indigo-4: 230, 46%, 57%;
+  --dockv-indigo-5: 231, 48%, 48%;
+  --dockv-indigo-6: 232, 52%, 42%;
+  --dockv-indigo-7: 233, 56%, 35%;
+  --dockv-indigo-8: 234, 59%, 30%;
+  --dockv-indigo-9: 235, 62%, 24%;
 
-    --dockv-indigo-0: 225,46%,95%;
-    --dockv-indigo-1: 226,51%,88%;
-    --dockv-indigo-2: 228,49%,77%;
-    --dockv-indigo-3: 228,49%,66%;
-    --dockv-indigo-4: 230,46%,57%;
-    --dockv-indigo-5: 231,48%,48%;
-    --dockv-indigo-6: 232,52%,42%;
-    --dockv-indigo-7: 233,56%,35%;
-    --dockv-indigo-8: 234,59%,30%;
-    --dockv-indigo-9: 235,62%,24%;
+  // 蓝色
+  --dockv-blue-0: 209, 100%, 96%;
+  --dockv-blue-1: 207, 96%, 90%;
+  --dockv-blue-2: 209, 96%, 79%;
+  --dockv-blue-3: 209, 96%, 69%;
+  --dockv-blue-4: 210, 96%, 59%;
+  --dockv-blue-5: 216, 100%, 49%;
+  --dockv-blue-6: 213, 100%, 42%;
+  --dockv-blue-7: 214, 100%, 35%;
+  --dockv-blue-8: 214, 100%, 28%;
+  --dockv-blue-9: 215, 100%, 21%;
 
-    --dockv-light-blue-0: 198,83%,95%;
-    --dockv-light-blue-1: 199,89%,89%;
-    --dockv-light-blue-2: 199,88%,78%;
-    --dockv-light-blue-3: 200,88%,67%;
-    --dockv-light-blue-4: 201,87%,57%;
-    --dockv-light-blue-5: 202,100%,47%;
-    --dockv-light-blue-6: 203,100%,40%;
-    --dockv-light-blue-7: 204,100%,33%;
-    --dockv-light-blue-8: 206,100%,26%;
-    --dockv-light-blue-9: 207,100%,19%;
+  // 浅蓝色
+  --dockv-light-blue-0: 198, 83%, 95%;
+  --dockv-light-blue-1: 199, 89%, 89%;
+  --dockv-light-blue-2: 199, 88%, 78%;
+  --dockv-light-blue-3: 200, 88%, 67%;
+  --dockv-light-blue-4: 201, 87%, 57%;
+  --dockv-light-blue-5: 202, 100%, 47%;
+  --dockv-light-blue-6: 203, 100%, 40%;
+  --dockv-light-blue-7: 204, 100%, 33%;
+  --dockv-light-blue-8: 206, 100%, 26%;
+  --dockv-light-blue-9: 207, 100%, 19%;
 
-    --dockv-light-green-0: 85,46%,95%;
-    --dockv-light-green-1: 84,52%,88%;
-    --dockv-light-green-2: 86,51%,77%;
-    --dockv-light-green-3: 87,49%,66%;
-    --dockv-light-green-4: 88,48%,56%;
-    --dockv-light-green-5: 89,50%,47%;
-    --dockv-light-green-6: 90,52%,39%;
-    --dockv-light-green-7: 91,52%,31%;
-    --dockv-light-green-8: 92,54%,23%;
-    --dockv-light-green-9: 93,54%,15%;
+  // 青色
+  --dockv-cyan-0: 183, 58%, 94%;
+  --dockv-cyan-1: 181, 61%, 85%;
+  --dockv-cyan-2: 183, 60%, 71%;
+  --dockv-cyan-3: 184, 58%, 59%;
+  --dockv-cyan-4: 185, 63%, 47%;
+  --dockv-cyan-5: 186, 95%, 37%;
+  --dockv-cyan-6: 187, 96%, 30%;
+  --dockv-cyan-7: 188, 98%, 24%;
+  --dockv-cyan-8: 189, 100%, 18%;
+  --dockv-cyan-9: 191, 100%, 12%;
 
-    --dockv-lime-0: 84,67%,94%;
-    --dockv-lime-1: 83,73%,87%;
-    --dockv-lime-2: 81,73%,74%;
-    --dockv-lime-3: 79,71%,62%;
-    --dockv-lime-4: 78,70%,51%;
-    --dockv-lime-5: 76,100%,41%;
-    --dockv-lime-6: 77,100%,34%;
-    --dockv-lime-7: 77,100%,27%;
-    --dockv-lime-8: 78,100%,20%;
-    --dockv-lime-9: 80,100%,14%;
+  // 蓝绿色
+  --dockv-teal-0: 171, 54%, 93%;
+  --dockv-teal-1: 170, 62%, 85%;
+  --dockv-teal-2: 171, 59%, 70%;
+  --dockv-teal-3: 172, 58%, 57%;
+  --dockv-teal-4: 173, 67%, 46%;
+  --dockv-teal-5: 174, 100%, 35%;
+  --dockv-teal-6: 175, 100%, 29%;
+  --dockv-teal-7: 176, 100%, 23%;
+  --dockv-teal-8: 177, 100%, 17%;
+  --dockv-teal-9: 178, 100%, 12%;
 
-    --dockv-orange-0: 40,100%,96%;
-    --dockv-orange-1: 41,96%,90%;
-    --dockv-orange-2: 38,98%,80%;
-    --dockv-orange-3: 36,97%,69%;
-    --dockv-orange-4: 34,98%,60%;
-    --dockv-orange-5: 32,100%,49%;
-    --dockv-orange-6: 29,100%,41%;
-    --dockv-orange-7: 26,100%,33%;
-    --dockv-orange-8: 23,100%,25%;
-    --dockv-orange-9: 21,100%,16%;
+  // 绿色
+  --dockv-green-0: 120, 41%, 95%;
+  --dockv-green-1: 122, 52%, 88%;
+  --dockv-green-2: 123, 49%, 76%;
+  --dockv-green-3: 124, 48%, 65%;
+  --dockv-green-4: 125, 46%, 56%;
+  --dockv-green-5: 126, 50%, 47%;
+  --dockv-green-6: 127, 51%, 39%;
+  --dockv-green-7: 127, 53%, 31%;
+  --dockv-green-8: 129, 53%, 23%;
+  --dockv-green-9: 130, 56%, 15%;
 
-    --dockv-pink-0: 349,81%,96%;
-    --dockv-pink-1: 348,85%,90%;
-    --dockv-pink-2: 345,83%,80%;
-    --dockv-pink-3: 343,83%,70%;
-    --dockv-pink-4: 341,82%,61%;
-    --dockv-pink-5: 340,82%,52%;
-    --dockv-pink-6: 337,82%,42%;
-    --dockv-pink-7: 336,87%,34%;
-    --dockv-pink-8: 334,92%,26%;
-    --dockv-pink-9: 332,98%,18%;
+  // 浅绿色
+  --dockv-light-green-0: 85, 46%, 95%;
+  --dockv-light-green-1: 84, 52%, 88%;
+  --dockv-light-green-2: 86, 51%, 77%;
+  --dockv-light-green-3: 87, 49%, 66%;
+  --dockv-light-green-4: 88, 48%, 56%;
+  --dockv-light-green-5: 89, 50%, 47%;
+  --dockv-light-green-6: 90, 52%, 39%;
+  --dockv-light-green-7: 91, 52%, 31%;
+  --dockv-light-green-8: 92, 54%, 23%;
+  --dockv-light-green-9: 93, 54%, 15%;
 
-    --dockv-purple-0: 300,47%,94%;
-    --dockv-purple-1: 298,56%,87%;
-    --dockv-purple-2: 297,53%,74%;
-    --dockv-purple-3: 295,52%,63%;
-    --dockv-purple-4: 293,50%,52%;
-    --dockv-purple-5: 291,63%,43%;
-    --dockv-purple-6: 289,68%,37%;
-    --dockv-purple-7: 287,72%,31%;
-    --dockv-purple-8: 285,77%,26%;
-    --dockv-purple-9: 283,81%,21%;
+  // 柠檬绿色
+  --dockv-lime-0: 84, 67%, 94%;
+  --dockv-lime-1: 83, 73%, 87%;
+  --dockv-lime-2: 81, 73%, 74%;
+  --dockv-lime-3: 79, 71%, 62%;
+  --dockv-lime-4: 78, 70%, 51%;
+  --dockv-lime-5: 76, 100%, 41%;
+  --dockv-lime-6: 77, 100%, 34%;
+  --dockv-lime-7: 77, 100%, 27%;
+  --dockv-lime-8: 78, 100%, 20%;
+  --dockv-lime-9: 80, 100%, 14%;
 
-    --dockv-red-0: 18,89%,96%;
-    --dockv-red-1: 15,96%,91%;
-    --dockv-red-2: 12,96%,82%;
-    --dockv-red-3: 11,94%,73%;
-    --dockv-red-4: 9,95%,64%;
-    --dockv-red-5: 7,95%,55%;
-    --dockv-red-6: 5,82%,46%;
-    --dockv-red-7: 3,87%,37%;
-    --dockv-red-8: 1,93%,29%;
-    --dockv-red-9: 359,98%,21%;
+  // 黄色
+  --dockv-yellow-0: 54, 100%, 96%;
+  --dockv-yellow-1: 56, 96%, 90%;
+  --dockv-yellow-2: 54, 96%, 79%;
+  --dockv-yellow-3: 52, 96%, 69%;
+  --dockv-yellow-4: 50, 96%, 59%;
+  --dockv-yellow-5: 48, 100%, 49%;
+  --dockv-yellow-6: 49, 100%, 41%;
+  --dockv-yellow-7: 50, 100%, 33%;
+  --dockv-yellow-8: 51, 100%, 25%;
+  --dockv-yellow-9: 52, 100%, 16%;
 
-    --dockv-teal-0: 171,54%,93%;
-    --dockv-teal-1: 170,62%,85%;
-    --dockv-teal-2: 171,59%,70%;
-    --dockv-teal-3: 172,58%,57%;
-    --dockv-teal-4: 173,67%,46%;
-    --dockv-teal-5: 174,100%,35%;
-    --dockv-teal-6: 175,100%,29%;
-    --dockv-teal-7: 176,100%,23%;
-    --dockv-teal-8: 177,100%,17%;
-    --dockv-teal-9: 178,100%,12%;
+  // 琥珀色
+  --dockv-amber-0: 51, 90%, 96%;
+  --dockv-amber-1: 51, 88%, 90%;
+  --dockv-amber-2: 49, 88%, 80%;
+  --dockv-amber-3: 47, 88%, 70%;
+  --dockv-amber-4: 45, 88%, 60%;
+  --dockv-amber-5: 43, 88%, 51%;
+  --dockv-amber-6: 40, 86%, 42%;
+  --dockv-amber-7: 37, 88%, 33%;
+  --dockv-amber-8: 34, 90%, 25%;
+  --dockv-amber-9: 31, 93%, 16%;
 
-    --dockv-violet-0: 270,50%,95%;
-    --dockv-violet-1: 269,61%,89%;
-    --dockv-violet-2: 266,60%,78%;
-    --dockv-violet-3: 265,58%,68%;
-    --dockv-violet-4: 263,57%,59%;
-    --dockv-violet-5: 260,56%,50%;
-    --dockv-violet-6: 258,58%,44%;
-    --dockv-violet-7: 256,62%,38%;
-    --dockv-violet-8: 254,66%,33%;
-    --dockv-violet-9: 252,71%,27%;
+  // 橙色
+  --dockv-orange-0: 40, 100%, 96%;
+  --dockv-orange-1: 41, 96%, 90%;
+  --dockv-orange-2: 38, 98%, 80%;
+  --dockv-orange-3: 36, 97%, 69%;
+  --dockv-orange-4: 34, 98%, 60%;
+  --dockv-orange-5: 32, 100%, 49%;
+  --dockv-orange-6: 29, 100%, 41%;
+  --dockv-orange-7: 26, 100%, 33%;
+  --dockv-orange-8: 23, 100%, 25%;
+  --dockv-orange-9: 21, 100%, 16%;
 
-    --dockv-yellow-0: 54,100%,96%;
-    --dockv-yellow-1: 56,96%,90%;
-    --dockv-yellow-2: 54,96%,79%;
-    --dockv-yellow-3: 52,96%,69%;
-    --dockv-yellow-4: 50,96%,59%;
-    --dockv-yellow-5: 48,100%,49%;
-    --dockv-yellow-6: 49,100%,41%;
-    --dockv-yellow-7: 50,100%,33%;
-    --dockv-yellow-8: 51,100%,25%;
-    --dockv-yellow-9: 52,100%,16%;
-    
-    // ai related
-    --dockv-ai-purple-0: 277,100%,96%;
-    --dockv-ai-purple-1: 279,100%,93%;
-    --dockv-ai-purple-2: 277,100%,85%;
-    --dockv-ai-purple-3: 275,100%,78%;
-    --dockv-ai-purple-4: 273,100%,71%;
-    --dockv-ai-purple-5: 271,100%,64%;
-    --dockv-ai-purple-6: 269,70%,54%;
-    --dockv-ai-purple-7: 267,64%,44%;
-    --dockv-ai-purple-8: 265,68%,35%;
-    --dockv-ai-purple-9: 263,72%,25%;
-
-    --dockv-ai-general-0-3: 210,100%,97%;
-    --dockv-ai-general-0-2: 240,100%,98%;
-    --dockv-ai-general-0-1: 277,100%,96%;
-    --dockv-ai-general-0-0: 300,100%,97%;
-
-    --dockv-ai-general-1-3: 209,100%,92%;
-    --dockv-ai-general-1-2: 238,100%,94%;
-    --dockv-ai-general-1-1: 279,100%,93%;
-    --dockv-ai-general-1-0: 302,100%,93%;
-
-    --dockv-ai-general-2-3: 210,100%,84%;
-    --dockv-ai-general-2-2: 241,100%,88%;
-    --dockv-ai-general-2-1: 277,100%,85%;
-    --dockv-ai-general-2-0: 299,100%,85%;
-
-    --dockv-ai-general-3-3: 211,100%,75%;
-    --dockv-ai-general-3-2: 242,100%,81%;
-    --dockv-ai-general-3-1: 275,100%,78%;
-    --dockv-ai-general-3-0: 297,100%,78%;
-
-    --dockv-ai-general-4-3: 212,100%,67%;
-    --dockv-ai-general-4-2: 242,100%,75%;
-    --dockv-ai-general-4-1: 273,100%,71%;
-    --dockv-ai-general-4-0: 295,100%,71%;
-
-    --dockv-ai-general-5-3: 213,100%,59%;
-    --dockv-ai-general-5-2: 244,100%,69%;
-    --dockv-ai-general-5-1: 271,100%,64%;
-    --dockv-ai-general-5-0: 293,100%,64%;
-
-    --dockv-ai-general-6-3: 214,74%,49%;
-    --dockv-ai-general-6-2: 245,66%,58%;
-    --dockv-ai-general-6-1: 269,70%,54%;
-    --dockv-ai-general-6-0: 291,70%,53%;
-
-    --dockv-ai-general-7-3: 215,79%,40%;
-    --dockv-ai-general-7-2: 246,51%,48%;
-    --dockv-ai-general-7-1: 267,64%,44%;
-    --dockv-ai-general-7-0: 289,65%,44%;
-
-    --dockv-ai-general-8-3: 216,84%,32%;
-    --dockv-ai-general-8-2: 247,55%,37%;
-    --dockv-ai-general-8-1: 265,68%,35%;
-    --dockv-ai-general-8-0: 287,69%,34%;
-
-    --dockv-ai-general-9-3: 217,88%,23%;
-    --dockv-ai-general-9-2: 248,59%,28%;
-    --dockv-ai-general-9-1: 263,72%,25%;
-    --dockv-ai-general-9-0: 285,74%,25%;
-
-    --dockv-ai-general-0: linear-gradient(278deg, hsla(var(--dockv-ai-general-0-0)) 0%, hsla(var(--dockv-ai-general-0-1)) 30%, hsla(var(--dockv-ai-general-0-2)) 60%, hsla(var(--dockv-ai-general-0-3)) 100%); 
-    --dockv-ai-general-1: linear-gradient(278deg, hsla(var(--dockv-ai-general-1-0)) 0%, hsla(var(--dockv-ai-general-1-1)) 30%, hsla(var(--dockv-ai-general-1-2)) 60%, hsla(var(--dockv-ai-general-1-3)) 100%);
-    --dockv-ai-general-2: linear-gradient(278deg, hsla(var(--dockv-ai-general-2-0)) 0%, hsla(var(--dockv-ai-general-2-1)) 30%, hsla(var(--dockv-ai-general-2-2)) 60%, hsla(var(--dockv-ai-general-2-3)) 100%);
-    --dockv-ai-general-3: linear-gradient(278deg, hsla(var(--dockv-ai-general-3-0)) 0%, hsla(var(--dockv-ai-general-3-1)) 30%, hsla(var(--dockv-ai-general-3-2)) 60%, hsla(var(--dockv-ai-general-3-3)) 100%);
-    --dockv-ai-general-4: linear-gradient(278deg, hsla(var(--dockv-ai-general-4-0)) 0%, hsla(var(--dockv-ai-general-4-1)) 30%, hsla(var(--dockv-ai-general-4-2)) 60%, hsla(var(--dockv-ai-general-4-3)) 100%);
-    --dockv-ai-general-5: linear-gradient(278deg, hsla(var(--dockv-ai-general-5-0)) 0%, hsla(var(--dockv-ai-general-5-1)) 30%, hsla(var(--dockv-ai-general-5-2)) 60%, hsla(var(--dockv-ai-general-5-3)) 100%);
-    --dockv-ai-general-6: linear-gradient(278deg, hsla(var(--dockv-ai-general-6-0)) 0%, hsla(var(--dockv-ai-general-6-1)) 30%, hsla(var(--dockv-ai-general-6-2)) 60%, hsla(var(--dockv-ai-general-6-3)) 100%);
-    --dockv-ai-general-7: linear-gradient(278deg, hsla(var(--dockv-ai-general-7-0)) 0%, hsla(var(--dockv-ai-general-7-1)) 30%, hsla(var(--dockv-ai-general-7-2)) 60%, hsla(var(--dockv-ai-general-7-3)) 100%);
-    --dockv-ai-general-8: linear-gradient(278deg, hsla(var(--dockv-ai-general-8-0)) 0%, hsla(var(--dockv-ai-general-8-1)) 30%, hsla(var(--dockv-ai-general-8-2)) 60%, hsla(var(--dockv-ai-general-8-3)) 100%);
-    --dockv-ai-general-9: linear-gradient(278deg, hsla(var(--dockv-ai-general-9-0)) 0%, hsla(var(--dockv-ai-general-9-1)) 30%, hsla(var(--dockv-ai-general-9-2)) 60%, hsla(var(--dockv-ai-general-9-3)) 100%);
-
-    --dockv-color-white: hsla(var(--dockv-white), 1);
-    --dockv-color-black: hsla(var(--dockv-black), 1);
+  // 灰色
+  --dockv-grey-0: 0, 0%, 98%;
+  --dockv-grey-1: 210, 9%, 91%;
+  --dockv-grey-2: 206, 7%, 79%;
+  --dockv-grey-3: 213, 5%, 67%;
+  --dockv-grey-4: 210, 4%, 55%;
+  --dockv-grey-5: 210, 4%, 44%;
+  --dockv-grey-6: 210, 7%, 36%;
+  --dockv-grey-7: 213, 8%, 28%;
+  --dockv-grey-8: 216, 10%, 20%;
+  --dockv-grey-9: 214, 11%, 12%;
 }
 
-body[theme-mode="dark"], body .dockv-theme-mode-dark, :host([theme-mode="dark"]), :host .dockv-theme-dark {
-    --dockv-white: 0,0%,100%;
-    --dockv-black: 0,0%,0%;
-    
-    --dockv-red-0: 359,85%,23%;
-    --dockv-red-1: 0,80%,31%;
-    --dockv-red-2: 3,76%,40%;
-    --dockv-red-3: 5,71%,49%;
-    --dockv-red-4: 7,96%,59%;
-    --dockv-red-5: 9,96%,67%;
-    --dockv-red-6: 11,97%,75%;
-    --dockv-red-7: 13,95%,83%;
-    --dockv-red-8: 16,95%,92%;
-    --dockv-red-9: 15,100%,97%;
+// 暗色模式
+body[theme-mode="dark"],         // body 上有 dark 属性
+body.dockv-theme-mode-dark,      // body 上有 dark 类（auto 模式自动注入）
+body .dockv-theme-mode-dark,     // body 的子元素有 dark 类
+:host[theme-mode="dark"],        // Web Component 宿主有 dark 属性
+:host(.dockv-theme-mode-dark)    // Web Component 宿主有 dark 类
+{
+  // 白色
+  --dockv-white: 0, 0%, 100%;
+  // 黑色
+  --dockv-black: 0, 0%, 0%;
 
-    --dockv-pink-0: 331,86%,19%;
-    --dockv-pink-1: 333,80%,28%;
-    --dockv-pink-2: 335,75%,37%;
-    --dockv-pink-3: 337,71%,46%;
-    --dockv-pink-4: 339,82%,55%;
-    --dockv-pink-5: 341,83%,64%;
-    --dockv-pink-6: 343,83%,72%;
-    --dockv-pink-7: 345,83%,81%;
-    --dockv-pink-8: 346,83%,91%;
-    --dockv-pink-9: 348,79%,96%;
+  // 红色
+  --dockv-red-0: 359, 85%, 23%;
+  --dockv-red-1: 0, 80%, 31%;
+  --dockv-red-2: 3, 76%, 40%;
+  --dockv-red-3: 5, 71%, 49%;
+  --dockv-red-4: 7, 96%, 59%;
+  --dockv-red-5: 9, 96%, 67%;
+  --dockv-red-6: 11, 97%, 75%;
+  --dockv-red-7: 13, 95%, 83%;
+  --dockv-red-8: 16, 95%, 92%;
+  --dockv-red-9: 15, 100%, 97%;
 
-    --dockv-purple-0: 283,72%,22%;
-    --dockv-purple-1: 285,67%,28%;
-    --dockv-purple-2: 287,63%,33%;
-    --dockv-purple-3: 289,60%,39%;
-    --dockv-purple-4: 291,56%,45%;
-    --dockv-purple-5: 293,48%,54%;
-    --dockv-purple-6: 295,49%,65%;
-    --dockv-purple-7: 296,52%,75%;
-    --dockv-purple-8: 298,53%,87%;
-    --dockv-purple-9: 300,43%,95%;
+  // 粉色
+  --dockv-pink-0: 331, 86%, 19%;
+  --dockv-pink-1: 333, 80%, 28%;
+  --dockv-pink-2: 335, 75%, 37%;
+  --dockv-pink-3: 337, 71%, 46%;
+  --dockv-pink-4: 339, 82%, 55%;
+  --dockv-pink-5: 341, 83%, 64%;
+  --dockv-pink-6: 343, 83%, 72%;
+  --dockv-pink-7: 345, 83%, 81%;
+  --dockv-pink-8: 346, 83%, 91%;
+  --dockv-pink-9: 348, 79%, 96%;
 
-    --dockv-violet-0: 264,63%,29%;
-    --dockv-violet-1: 263,59%,35%;
-    --dockv-violet-2: 262,55%,40%;
-    --dockv-violet-3: 261,52%,47%;
-    --dockv-violet-4: 260,55%,53%;
-    --dockv-violet-5: 259,56%,61%;
-    --dockv-violet-6: 258,58%,70%;
-    --dockv-violet-7: 257,58%,80%;
-    --dockv-violet-8: 257,59%,89%;
-    --dockv-violet-9: 255,55%,96%;
+  // 紫色
+  --dockv-purple-0: 283, 72%, 22%;
+  --dockv-purple-1: 285, 67%, 28%;
+  --dockv-purple-2: 287, 63%, 33%;
+  --dockv-purple-3: 289, 60%, 39%;
+  --dockv-purple-4: 291, 56%, 45%;
+  --dockv-purple-5: 293, 48%, 54%;
+  --dockv-purple-6: 295, 49%, 65%;
+  --dockv-purple-7: 296, 52%, 75%;
+  --dockv-purple-8: 298, 53%, 87%;
+  --dockv-purple-9: 300, 43%, 95%;
 
-    --dockv-indigo-0: 235,63%,24%;
-    --dockv-indigo-1: 234,58%,30%;
-    --dockv-indigo-2: 232,55%,36%;
-    --dockv-indigo-3: 231,52%,42%;
-    --dockv-indigo-4: 230,48%,48%;
-    --dockv-indigo-5: 229,47%,57%;
-    --dockv-indigo-6: 228,49%,67%;
-    --dockv-indigo-7: 227,50%,77%;
-    --dockv-indigo-8: 227,53%,88%;
-    --dockv-indigo-9: 229,44%,95%;
+  // 紫罗兰色
+  --dockv-violet-0: 264, 63%, 29%;
+  --dockv-violet-1: 263, 59%, 35%;
+  --dockv-violet-2: 262, 55%, 40%;
+  --dockv-violet-3: 261, 52%, 47%;
+  --dockv-violet-4: 260, 55%, 53%;
+  --dockv-violet-5: 259, 56%, 61%;
+  --dockv-violet-6: 258, 58%, 70%;
+  --dockv-violet-7: 257, 58%, 80%;
+  --dockv-violet-8: 257, 59%, 89%;
+  --dockv-violet-9: 255, 55%, 96%;
 
-    --dockv-blue-0: 215,91%,23%;
-    --dockv-blue-1: 214,87%,31%;
-    --dockv-blue-2: 213,81%,40%;
-    --dockv-blue-3: 212,77%,49%;
-    --dockv-blue-4: 211,100%,58%;
-    --dockv-blue-5: 210,100%,66%;
-    --dockv-blue-6: 209,100%,75%;
-    --dockv-blue-7: 208,100%,83%;
-    --dockv-blue-8: 207,100%,92%;
-    --dockv-blue-9: 206,100%,97%;
+  // 靛青色
+  --dockv-indigo-0: 235, 63%, 24%;
+  --dockv-indigo-1: 234, 58%, 30%;
+  --dockv-indigo-2: 232, 55%, 36%;
+  --dockv-indigo-3: 231, 52%, 42%;
+  --dockv-indigo-4: 230, 48%, 48%;
+  --dockv-indigo-5: 229, 47%, 57%;
+  --dockv-indigo-6: 228, 49%, 67%;
+  --dockv-indigo-7: 227, 50%, 77%;
+  --dockv-indigo-8: 227, 53%, 88%;
+  --dockv-indigo-9: 229, 44%, 95%;
 
-    --dockv-light-blue-0: 206,100%,19%;
-    --dockv-light-blue-1: 205,100%,26%;
-    --dockv-light-blue-2: 204,97%,34%;
-    --dockv-light-blue-3: 203,91%,42%;
-    --dockv-light-blue-4: 202,88%,51%;
-    --dockv-light-blue-5: 201,88%,60%;
-    --dockv-light-blue-6: 200,88%,70%;
-    --dockv-light-blue-7: 199,88%,80%;
-    --dockv-light-blue-8: 198,88%,90%;
-    --dockv-light-blue-9: 199,90%,96%;
+  // 蓝色
+  --dockv-blue-0: 215, 91%, 23%;
+  --dockv-blue-1: 214, 87%, 31%;
+  --dockv-blue-2: 213, 81%, 40%;
+  --dockv-blue-3: 212, 77%, 49%;
+  --dockv-blue-4: 211, 100%, 58%;
+  --dockv-blue-5: 210, 100%, 66%;
+  --dockv-blue-6: 209, 100%, 75%;
+  --dockv-blue-7: 208, 100%, 83%;
+  --dockv-blue-8: 207, 100%, 92%;
+  --dockv-blue-9: 206, 100%, 97%;
 
-    --dockv-cyan-0: 189,88%,13%;
-    --dockv-cyan-1: 189,86%,19%;
-    --dockv-cyan-2: 188,85%,26%;
-    --dockv-cyan-3: 187,83%,33%;
-    --dockv-cyan-4: 186,81%,40%;
-    --dockv-cyan-5: 185,56%,50%;
-    --dockv-cyan-6: 184,57%,61%;
-    --dockv-cyan-7: 183,59%,73%;
-    --dockv-cyan-8: 183,61%,86%;
-    --dockv-cyan-9: 184,55%,94%;
+  // 浅蓝色
+  --dockv-light-blue-0: 206, 100%, 19%;
+  --dockv-light-blue-1: 205, 100%, 26%;
+  --dockv-light-blue-2: 204, 97%, 34%;
+  --dockv-light-blue-3: 203, 91%, 42%;
+  --dockv-light-blue-4: 202, 88%, 51%;
+  --dockv-light-blue-5: 201, 88%, 60%;
+  --dockv-light-blue-6: 200, 88%, 70%;
+  --dockv-light-blue-7: 199, 88%, 80%;
+  --dockv-light-blue-8: 198, 88%, 90%;
+  --dockv-light-blue-9: 199, 90%, 96%;
 
-    --dockv-teal-0: 177,94%,12%;
-    --dockv-teal-1: 177,91%,18%;
-    --dockv-teal-2: 176,89%,25%;
-    --dockv-teal-3: 174,87%,31%;
-    --dockv-teal-4: 173,85%,38%;
-    --dockv-teal-5: 172,58%,48%;
-    --dockv-teal-6: 172,56%,59%;
-    --dockv-teal-7: 170,58%,72%;
-    --dockv-teal-8: 169,59%,85%;
-    --dockv-teal-9: 169,52%,94%;
+  // 青色
+  --dockv-cyan-0: 189, 88%, 13%;
+  --dockv-cyan-1: 189, 86%, 19%;
+  --dockv-cyan-2: 188, 85%, 26%;
+  --dockv-cyan-3: 187, 83%, 33%;
+  --dockv-cyan-4: 186, 81%, 40%;
+  --dockv-cyan-5: 185, 56%, 50%;
+  --dockv-cyan-6: 184, 57%, 61%;
+  --dockv-cyan-7: 183, 59%, 73%;
+  --dockv-cyan-8: 183, 61%, 86%;
+  --dockv-cyan-9: 184, 55%, 94%;
 
-    --dockv-green-0: 130,54%,15%;
-    --dockv-green-1: 129,53%,23%;
-    --dockv-green-2: 128,51%,31%;
-    --dockv-green-3: 127,50%,39%;
-    --dockv-green-4: 126,49%,47%;
-    --dockv-green-5: 124,45%,56%;
-    --dockv-green-6: 124,47%,66%;
-    --dockv-green-7: 122,50%,77%;
-    --dockv-green-8: 122,52%,88%;
-    --dockv-green-9: 120,41%,95%;
+  // 蓝绿色
+  --dockv-teal-0: 177, 94%, 12%;
+  --dockv-teal-1: 177, 91%, 18%;
+  --dockv-teal-2: 176, 89%, 25%;
+  --dockv-teal-3: 174, 87%, 31%;
+  --dockv-teal-4: 173, 85%, 38%;
+  --dockv-teal-5: 172, 58%, 48%;
+  --dockv-teal-6: 172, 56%, 59%;
+  --dockv-teal-7: 170, 58%, 72%;
+  --dockv-teal-8: 169, 59%, 85%;
+  --dockv-teal-9: 169, 52%, 94%;
 
-    --dockv-light-green-0: 93,53%,16%;
-    --dockv-light-green-1: 91,52%,24%;
-    --dockv-light-green-2: 90,51%,32%;
-    --dockv-light-green-3: 90,49%,40%;
-    --dockv-light-green-4: 89,48%,49%;
-    --dockv-light-green-5: 87,47%,57%;
-    --dockv-light-green-6: 86,49%,67%;
-    --dockv-light-green-7: 86,52%,77%;
-    --dockv-light-green-8: 84,53%,88%;
-    --dockv-light-green-9: 87,44%,95%;
+  // 绿色
+  --dockv-green-0: 130, 54%, 15%;
+  --dockv-green-1: 129, 53%, 23%;
+  --dockv-green-2: 128, 51%, 31%;
+  --dockv-green-3: 127, 50%, 39%;
+  --dockv-green-4: 126, 49%, 47%;
+  --dockv-green-5: 124, 45%, 56%;
+  --dockv-green-6: 124, 47%, 66%;
+  --dockv-green-7: 122, 50%, 77%;
+  --dockv-green-8: 122, 52%, 88%;
+  --dockv-green-9: 120, 41%, 95%;
 
-    --dockv-lime-0: 79,92%,14%;
-    --dockv-lime-1: 78,91%,22%;
-    --dockv-lime-2: 77,88%,29%;
-    --dockv-lime-3: 76,87%,37%;
-    --dockv-lime-4: 75,85%,45%;
-    --dockv-lime-5: 77,70%,55%;
-    --dockv-lime-6: 79,71%,65%;
-    --dockv-lime-7: 81,71%,76%;
-    --dockv-lime-8: 83,71%,88%;
-    --dockv-lime-9: 87,69%,95%;
+  // 浅绿色
+  --dockv-light-green-0: 93, 53%, 16%;
+  --dockv-light-green-1: 91, 52%, 24%;
+  --dockv-light-green-2: 90, 51%, 32%;
+  --dockv-light-green-3: 90, 49%, 40%;
+  --dockv-light-green-4: 89, 48%, 49%;
+  --dockv-light-green-5: 87, 47%, 57%;
+  --dockv-light-green-6: 86, 49%, 67%;
+  --dockv-light-green-7: 86, 52%, 77%;
+  --dockv-light-green-8: 84, 53%, 88%;
+  --dockv-light-green-9: 87, 44%, 95%;
 
-    --dockv-yellow-0: 52,93%,17%;
-    --dockv-yellow-1: 51,91%,26%;
-    --dockv-yellow-2: 50,89%,35%;
-    --dockv-yellow-3: 49,87%,44%;
-    --dockv-yellow-4: 48,97%,53%;
-    --dockv-yellow-5: 50,98%,63%;
-    --dockv-yellow-6: 52,97%,72%;
-    --dockv-yellow-7: 54,98%,81%;
-    --dockv-yellow-8: 56,96%,91%;
-    --dockv-yellow-9: 57,100%,96%;
+  // 柠檬绿色
+  --dockv-lime-0: 79, 92%, 14%;
+  --dockv-lime-1: 78, 91%, 22%;
+  --dockv-lime-2: 77, 88%, 29%;
+  --dockv-lime-3: 76, 87%, 37%;
+  --dockv-lime-4: 75, 85%, 45%;
+  --dockv-lime-5: 77, 70%, 55%;
+  --dockv-lime-6: 79, 71%, 65%;
+  --dockv-lime-7: 81, 71%, 76%;
+  --dockv-lime-8: 83, 71%, 88%;
+  --dockv-lime-9: 87, 69%, 95%;
 
-    --dockv-amber-0: 31,80%,18%;
-    --dockv-amber-1: 34,78%,27%;
-    --dockv-amber-2: 37,76%,36%;
-    --dockv-amber-3: 39,74%,45%;
-    --dockv-amber-4: 43,89%,55%;
-    --dockv-amber-5: 44,89%,64%;
-    --dockv-amber-6: 47,89%,72%;
-    --dockv-amber-7: 49,89%,82%;
-    --dockv-amber-8: 51,88%,91%;
-    --dockv-amber-9: 49,89%,96%;
+  // 黄色
+  --dockv-yellow-0: 52, 93%, 17%;
+  --dockv-yellow-1: 51, 91%, 26%;
+  --dockv-yellow-2: 50, 89%, 35%;
+  --dockv-yellow-3: 49, 87%, 44%;
+  --dockv-yellow-4: 48, 97%, 53%;
+  --dockv-yellow-5: 50, 98%, 63%;
+  --dockv-yellow-6: 52, 97%, 72%;
+  --dockv-yellow-7: 54, 98%, 81%;
+  --dockv-yellow-8: 56, 96%, 91%;
+  --dockv-yellow-9: 57, 100%, 96%;
 
-    --dockv-orange-0: 20,93%,17%;
-    --dockv-orange-1: 23,91%,26%;
-    --dockv-orange-2: 26,89%,35%;
-    --dockv-orange-3: 29,87%,45%;
-    --dockv-orange-4: 32,100%,54%;
-    --dockv-orange-5: 34,100%,63%;
-    --dockv-orange-6: 36,100%,72%;
-    --dockv-orange-7: 38,100%,82%;
-    --dockv-orange-8: 40,100%,91%;
-    --dockv-orange-9: 40,100%,96%;
+  // 琥珀色
+  --dockv-amber-0: 31, 80%, 18%;
+  --dockv-amber-1: 34, 78%, 27%;
+  --dockv-amber-2: 37, 76%, 36%;
+  --dockv-amber-3: 39, 74%, 45%;
+  --dockv-amber-4: 43, 89%, 55%;
+  --dockv-amber-5: 44, 89%, 64%;
+  --dockv-amber-6: 47, 89%, 72%;
+  --dockv-amber-7: 49, 89%, 82%;
+  --dockv-amber-8: 51, 88%, 91%;
+  --dockv-amber-9: 49, 89%, 96%;
 
-    --dockv-grey-0: 214,11%,12%;
-    --dockv-grey-1: 216,10%,20%;
-    --dockv-grey-2: 213,8%,28%;
-    --dockv-grey-3: 210,7%,36%;
-    --dockv-grey-4: 210,4%,44%;
-    --dockv-grey-5: 210,4%,55%;
-    --dockv-grey-6: 213,5%,67%;
-    --dockv-grey-7: 206,7%,79%;
-    --dockv-grey-8: 210,9%,91%;
-    --dockv-grey-9: 0,0%,98%;
+  // 橙色
+  --dockv-orange-0: 20, 93%, 17%;
+  --dockv-orange-1: 23, 91%, 26%;
+  --dockv-orange-2: 26, 89%, 35%;
+  --dockv-orange-3: 29, 87%, 45%;
+  --dockv-orange-4: 32, 100%, 54%;
+  --dockv-orange-5: 34, 100%, 63%;
+  --dockv-orange-6: 36, 100%, 72%;
+  --dockv-orange-7: 38, 100%, 82%;
+  --dockv-orange-8: 40, 100%, 91%;
+  --dockv-orange-9: 40, 100%, 96%;
 
-    // ai related
-    --dockv-ai-purple-0: 264,66%,26%;
-    --dockv-ai-purple-1: 265,62%,36%;
-    --dockv-ai-purple-2: 268,58%,46%;
-    --dockv-ai-purple-3: 270,68%,56%;
-    --dockv-ai-purple-4: 272,100%,63%;
-    --dockv-ai-purple-5: 274,100%,73%;
-    --dockv-ai-purple-6: 276,100%,80%;
-    --dockv-ai-purple-7: 277,100%,86%;
-    --dockv-ai-purple-8: 279,100%,93%;
-    --dockv-ai-purple-9: 280,100%,98%;
-
-    --dockv-ai-general-0-0: 217,83%,21%;
-    --dockv-ai-general-0-1: 248,58%,27%;
-    --dockv-ai-general-0-2: 264,66%,26%;
-    --dockv-ai-general-0-3: 285,70%,23%;
-
-    --dockv-ai-general-1-0: 216,78%,30%;
-    --dockv-ai-general-1-1: 247,54%,37%;
-    --dockv-ai-general-1-2: 265,62%,36%;
-    --dockv-ai-general-1-3: 287,66%,32%;
-
-    --dockv-ai-general-2-0: 215,74%,39%;
-    --dockv-ai-general-2-1: 245,51%,47%;
-    --dockv-ai-general-2-2: 268,58%,46%;
-    --dockv-ai-general-2-3: 289,62%,42%;
-
-    --dockv-ai-general-3-0: 214,69%,48%;
-    --dockv-ai-general-3-1: 244,63%,57%;
-    --dockv-ai-general-3-2: 270,68%,56%;
-    --dockv-ai-general-3-3: 291,62%,52%;
-
-    --dockv-ai-general-4-0: 213,87%,54%;
-    --dockv-ai-general-4-1: 244,92%,65%;
-    --dockv-ai-general-4-2: 272,100%,63%;
-    --dockv-ai-general-4-3: 293,87%,58%;
-
-    --dockv-ai-general-5-0: 212,89%,66%;
-    --dockv-ai-general-5-1: 242,95%,75%;
-    --dockv-ai-general-5-2: 274,100%,73%;
-    --dockv-ai-general-5-3: 295,89%,69%;
-
-    --dockv-ai-general-6-0: 211,89%,74%;
-    --dockv-ai-general-6-1: 242,96%,81%;
-    --dockv-ai-general-6-2: 276,100%,80%;
-    --dockv-ai-general-6-3: 297,88%,77%;
-
-    --dockv-ai-general-7-0: 211,89%,83%;
-    --dockv-ai-general-7-1: 240,94%,87%;
-    --dockv-ai-general-7-2: 277,100%,86%;
-    --dockv-ai-general-7-3: 298,90%,85%;
-
-    --dockv-ai-general-8-0: 210,91%,91%;
-    --dockv-ai-general-8-1: 240,94%,94%;
-    --dockv-ai-general-8-2: 279,100%,93%;
-    --dockv-ai-general-8-3: 302,90%,92%;
-    
-    --dockv-ai-general-9-0: 208,88%,97%;
-    --dockv-ai-general-9-1: 240,100%,98%;
-    --dockv-ai-general-9-2: 280,100%,98%;
-    --dockv-ai-general-9-3: 300,87%,97%;
-
-    --dockv-ai-general-0: linear-gradient(278deg, hsla(var(--dockv-ai-general-0-0)) 0%, hsla(var(--dockv-ai-general-0-1)) 30%, hsla(var(--dockv-ai-general-0-2)) 60%, hsla(var(--dockv-ai-general-0-3)) 100%); 
-    --dockv-ai-general-1: linear-gradient(278deg, hsla(var(--dockv-ai-general-1-0)) 0%, hsla(var(--dockv-ai-general-1-1)) 30%, hsla(var(--dockv-ai-general-1-2)) 60%, hsla(var(--dockv-ai-general-1-3)) 100%);
-    --dockv-ai-general-2: linear-gradient(278deg, hsla(var(--dockv-ai-general-2-0)) 0%, hsla(var(--dockv-ai-general-2-1)) 30%, hsla(var(--dockv-ai-general-2-2)) 60%, hsla(var(--dockv-ai-general-2-3)) 100%);
-    --dockv-ai-general-3: linear-gradient(278deg, hsla(var(--dockv-ai-general-3-0)) 0%, hsla(var(--dockv-ai-general-3-1)) 30%, hsla(var(--dockv-ai-general-3-2)) 60%, hsla(var(--dockv-ai-general-3-3)) 100%);
-    --dockv-ai-general-4: linear-gradient(278deg, hsla(var(--dockv-ai-general-4-0)) 0%, hsla(var(--dockv-ai-general-4-1)) 30%, hsla(var(--dockv-ai-general-4-2)) 60%, hsla(var(--dockv-ai-general-4-3)) 100%);
-    --dockv-ai-general-5: linear-gradient(278deg, hsla(var(--dockv-ai-general-5-0)) 0%, hsla(var(--dockv-ai-general-5-1)) 30%, hsla(var(--dockv-ai-general-5-2)) 60%, hsla(var(--dockv-ai-general-5-3)) 100%);
-    --dockv-ai-general-6: linear-gradient(278deg, hsla(var(--dockv-ai-general-6-0)) 0%, hsla(var(--dockv-ai-general-6-1)) 30%, hsla(var(--dockv-ai-general-6-2)) 60%, hsla(var(--dockv-ai-general-6-3)) 100%);
-    --dockv-ai-general-7: linear-gradient(278deg, hsla(var(--dockv-ai-general-7-0)) 0%, hsla(var(--dockv-ai-general-7-1)) 30%, hsla(var(--dockv-ai-general-7-2)) 60%, hsla(var(--dockv-ai-general-7-3)) 100%);
-    --dockv-ai-general-8: linear-gradient(278deg, hsla(var(--dockv-ai-general-8-0)) 0%, hsla(var(--dockv-ai-general-8-1)) 30%, hsla(var(--dockv-ai-general-8-2)) 60%, hsla(var(--dockv-ai-general-8-3)) 100%);
-    --dockv-ai-general-9: linear-gradient(278deg, hsla(var(--dockv-ai-general-9-0)) 0%, hsla(var(--dockv-ai-general-9-1)) 30%, hsla(var(--dockv-ai-general-9-2)) 60%, hsla(var(--dockv-ai-general-9-3)) 100%);
-
+  // 灰色
+  --dockv-grey-0: 214, 11%, 12%;
+  --dockv-grey-1: 216, 10%, 20%;
+  --dockv-grey-2: 213, 8%, 28%;
+  --dockv-grey-3: 210, 7%, 36%;
+  --dockv-grey-4: 210, 4%, 44%;
+  --dockv-grey-5: 210, 4%, 55%;
+  --dockv-grey-6: 213, 5%, 67%;
+  --dockv-grey-7: 206, 7%, 79%;
+  --dockv-grey-8: 210, 9%, 91%;
+  --dockv-grey-9: 0, 0%, 98%;
 }

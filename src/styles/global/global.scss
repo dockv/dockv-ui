@@ -1,272 +1,242 @@
-@use "./palette.scss" as *;
+:host {
+  box-sizing: border-box; // 所有组件的盒模型计算包含内边距和边框
+  font-family: var(--dockv-font-family-base);
+  font-size: var(--dockv-font-size-md);
 
-body, body .dockv-theme-mode-light, :host, :host .dockv-theme-mode-light {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    --dockv-color-white: hsla(var(--dockv-white), 1); // 浅色模式下深色背景内容Inverse
-    --dockv-color-black: hsla(var(--dockv-black), 1); // 深色模式下浅色背景内容Inverse
+  //字体平滑（抗锯齿）
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body,
+body[theme-mode="light"],
+body.dockv-theme-mode-light,
+body .dockv-theme-mode-light,
+:host,
+:host[theme-mode="light"],
+:host(.dockv-theme-mode-light) {
+  // 黑白色
+  --dockv-color-white: hsl(var(--dockv-white));
+  --dockv-color-black: hsl(var(--dockv-black));
 
-    --dockv-color-primary: hsla(var(--dockv-blue-5), 1); // 主要颜色。仅在需要非常强调的情况下使用。
-    --dockv-color-primary-hover: hsla(var(--dockv-blue-6), 1); // 主要颜色悬浮态
-    --dockv-color-primary-active: hsla(var(--dockv-blue-7), 1); // 主要颜色激活态
-    --dockv-color-primary-disabled: hsla(var(--dockv-blue-2), 1); // 主要颜色禁用态
-    --dockv-color-primary-light-default: hsla(var(--dockv-blue-0), 1); // 浅版主要颜色（多用于背景）。仅在需要非常强调的情况下使用。
-    --dockv-color-primary-light-hover: hsla(var(--dockv-blue-1), 1); // 浅版主要颜色悬浮态
-    --dockv-color-primary-light-active: hsla(var(--dockv-blue-2), 1); // 浅版主要颜色激活态
+  // 主要颜色
+  --dockv-color-primary: hsla(var(--dockv-blue-5), 1);
+  --dockv-color-primary-hover: hsla(var(--dockv-blue-6), 1); // 悬浮态
+  --dockv-color-primary-active: hsla(var(--dockv-blue-7), 1); // 激活态
+  --dockv-color-primary-disabled: hsla(var(--dockv-blue-2), 1); // 禁用态
+  --dockv-color-primary-light: hsla(var(--dockv-blue-0), 1); // 浅色版本
+  --dockv-color-primary-light-hover: hsla(var(--dockv-blue-1), 1); // 浅色版本悬浮态
+  --dockv-color-primary-light-active: hsla(var(--dockv-blue-2), 1); // 浅色版本激活态
 
-    --dockv-color-secondary: hsla(var(--dockv-light-blue-5), 1); // 次要颜色。强调作用次于主要颜色，但仍然具有强调作用。
-    --dockv-color-secondary-hover: hsla(var(--dockv-light-blue-6), 1); // 次要颜色悬浮态
-    --dockv-color-secondary-active: hsla(var(--dockv-light-blue-7), 1); // 次要颜色激活态
-    --dockv-color-secondary-disabled: hsla(var(--dockv-light-blue-2), 1); // 次要颜色禁用态
-    --dockv-color-secondary-light-default: hsla(var(--dockv-light-blue-0), 1); // 浅版次要颜色（多用于背景）。强调作用次于主要颜色，但仍然具有强调作用。
-    --dockv-color-secondary-light-hover: hsla(var(--dockv-light-blue-1), 1); // 浅版次要颜色悬浮态
-    --dockv-color-secondary-light-active: hsla(var(--dockv-light-blue-2), 1); // 浅版次要颜色激活态
+  // 次要颜色
+  --dockv-color-secondary: hsla(var(--dockv-light-blue-5), 1);
+  --dockv-color-secondary-hover: hsla(var(--dockv-light-blue-6), 1); // 悬浮态
+  --dockv-color-secondary-active: hsla(var(--dockv-light-blue-7), 1); // 激活态
+  --dockv-color-secondary-disabled: hsla(var(--dockv-light-blue-2), 1); // 禁用态
+  --dockv-color-secondary-light: hsla(var(--dockv-light-blue-0), 1); // 浅色版本
+  --dockv-color-secondary-light-hover: hsla(var(--dockv-light-blue-1), 1); // 浅色版本悬浮态
+  --dockv-color-secondary-light-active: hsla(var(--dockv-light-blue-2), 1); // 浅色版本激活态
 
-    --dockv-color-tertiary: hsla(var(--dockv-grey-5), 1); // 第三颜色，可以在页面上多次使用
-    --dockv-color-tertiary-hover: hsla(var(--dockv-grey-6), 1); // 第三颜色悬浮态
-    --dockv-color-tertiary-active: hsla(var(--dockv-grey-7), 1); // 第三颜色激活态
-    --dockv-color-tertiary-light-default: hsla(var(--dockv-grey-0), 1); // 浅版第三颜色（多用于背景），可以在页面上多次使用
-    --dockv-color-tertiary-light-hover: hsla(var(--dockv-grey-1), 1); // 浅版第三颜色悬浮态
-    --dockv-color-tertiary-light-active: hsla(var(--dockv-grey-2), 1); // 浅版第三颜色激活态
+  // 第三颜色
+  --dockv-color-tertiary: hsla(var(--dockv-grey-5), 1);
+  --dockv-color-tertiary-hover: hsla(var(--dockv-grey-6), 1); // 悬浮态
+  --dockv-color-tertiary-active: hsla(var(--dockv-grey-7), 1); // 激活态
+  --dockv-color-tertiary-disabled: hsla(var(--dockv-grey-2), 1); // 禁用态
+  --dockv-color-tertiary-light: hsla(var(--dockv-grey-0), 1); // 浅色版本
+  --dockv-color-tertiary-light-hover: hsla(var(--dockv-grey-1), 1); // 浅色版本悬浮态
+  --dockv-color-tertiary-light-active: hsla(var(--dockv-grey-2), 1); // 浅色版本激活态
 
-    --dockv-color-default: hsla(var(--dockv-grey-0), 1); // 不建议使用
-    --dockv-color-default-hover: hsla(var(--dockv-grey-1), 1); // 不建议使用
-    --dockv-color-default-active: hsla(var(--dockv-grey-2), 1); // 不建议使用
+  // 信息色
+  --dockv-color-info: hsla(var(--dockv-blue-5), 1);
+  --dockv-color-info-hover: hsla(var(--dockv-blue-6), 1); // 悬浮态
+  --dockv-color-info-active: hsla(var(--dockv-blue-7), 1); // 激活态
+  --dockv-color-info-disabled: hsla(var(--dockv-blue-2), 1); // 禁用态
+  --dockv-color-info-light: hsla(var(--dockv-blue-0), 1); // 浅色版本
+  --dockv-color-info-light-hover: hsla(var(--dockv-blue-1), 1); // 浅色版本悬浮态
+  --dockv-color-info-light-active: hsla(var(--dockv-blue-2), 1); // 浅色版本激活态
 
-    --dockv-color-info: hsla(var(--dockv-blue-5), 1); // 信息色, 通常用于表达客观、中立信息
-    --dockv-color-info-hover: hsla(var(--dockv-blue-6), 1); // 信息色悬浮态
-    --dockv-color-info-active: hsla(var(--dockv-blue-7), 1); // 信息色激活态
-    --dockv-color-info-disabled: hsla(var(--dockv-blue-2), 1); // 信息色禁用态
-    --dockv-color-info-light-default: hsla(var(--dockv-blue-0), 1); // 浅版信息色（多用于背景），通常用于表达客观、中立信息
-    --dockv-color-info-light-hover: hsla(var(--dockv-blue-1), 1); // 浅版信息色悬浮态
-    --dockv-color-info-light-active: hsla(var(--dockv-blue-2), 1); // 浅版信息色激活态
+  // 成功色
+  --dockv-color-success: hsla(var(--dockv-green-5), 1);
+  --dockv-color-success-hover: hsla(var(--dockv-green-6), 1); // 悬浮态
+  --dockv-color-success-active: hsla(var(--dockv-green-7), 1); // 激活态
+  --dockv-color-success-disabled: hsla(var(--dockv-green-2), 1); // 禁用态
+  --dockv-color-success-light: hsla(var(--dockv-green-0), 1); // 浅色版本
+  --dockv-color-success-light-hover: hsla(var(--dockv-green-1), 1); // 浅色版本悬浮态
+  --dockv-color-success-light-active: hsla(var(--dockv-green-2), 1); // 浅色版本激活态
 
-    --dockv-color-success: hsla(var(--dockv-green-5), 1); // 成功色，表示安全、成功、开启的状态
-    --dockv-color-success-hover: hsla(var(--dockv-green-6), 1); // 成功色悬浮态
-    --dockv-color-success-active: hsla(var(--dockv-green-7), 1); // 成功色激活态
-    --dockv-color-success-disabled: hsla(var(--dockv-green-2), 1); // 成功色禁用态
-    --dockv-color-success-light-default: hsla(var(--dockv-green-0), 1); // 浅版成功色（多用于背景），表示安全、成功、开启的状态
-    --dockv-color-success-light-hover: hsla(var(--dockv-green-1), 1); // 浅版成功色悬浮态
-    --dockv-color-success-light-active: hsla(var(--dockv-green-2), 1); // 浅版成功色激活态
+  // 警示色
+  --dockv-color-warning: hsla(var(--dockv-orange-5), 1);
+  --dockv-color-warning-hover: hsla(var(--dockv-orange-6), 1); // 悬浮态
+  --dockv-color-warning-active: hsla(var(--dockv-orange-7), 1); // 激活态
+  --dockv-color-warning-disabled: hsla(var(--dockv-orange-2), 1); // 禁用态
+  --dockv-color-warning-light: hsla(var(--dockv-orange-0), 1); // 浅色版本
+  --dockv-color-warning-light-hover: hsla(var(--dockv-orange-1), 1); // 浅色版本悬浮态
+  --dockv-color-warning-light-active: hsla(var(--dockv-orange-2), 1); // 浅色版本激活态
 
-    --dockv-color-danger: hsla(var(--dockv-red-5), 1); // 危险色，表示危险的操作、或需要特别注意的危险信息
-    --dockv-color-danger-hover: hsla(var(--dockv-red-6), 1); // 危险色悬浮态
-    --dockv-color-danger-active: hsla(var(--dockv-red-7), 1); // 危险色激活态
-    --dockv-color-danger-light-default: hsla(var(--dockv-red-0), 1); // 浅版危险色（多用于背景），表示危险的操作、或需要特别注意的危险信息
-    --dockv-color-danger-light-hover: hsla(var(--dockv-red-1), 1); // 浅版危险色悬浮态
-    --dockv-color-danger-light-active: hsla(var(--dockv-red-2), 1); // 浅版危险色激活态
+  // 危险色
+  --dockv-color-danger: hsla(var(--dockv-red-5), 1);
+  --dockv-color-danger-hover: hsla(var(--dockv-red-6), 1); // 悬浮态
+  --dockv-color-danger-active: hsla(var(--dockv-red-7), 1); // 激活态
+  --dockv-color-danger-disabled: hsla(var(--dockv-red-2), 1); // 禁用态
+  --dockv-color-danger-light: hsla(var(--dockv-red-0), 1); // 浅色版本
+  --dockv-color-danger-light-hover: hsla(var(--dockv-red-1), 1); // 浅色版本悬浮态
+  --dockv-color-danger-light-active: hsla(var(--dockv-red-2), 1); // 浅色版本激活态
 
-    --dockv-color-warning: hsla(var(--dockv-orange-5), 1); // 警示色，表示警告、不安全的状态
-    --dockv-color-warning-hover: hsla(var(--dockv-orange-6), 1); // 警示色悬浮态
-    --dockv-color-warning-active: hsla(var(--dockv-orange-7), 1); // 警示色激活态
-    --dockv-color-warning-light-default: hsla(var(--dockv-orange-0), 1); // 浅版警示色（多用于背景），表示警告、不安全的状态
-    --dockv-color-warning-light-hover: hsla(var(--dockv-orange-1), 1); // 浅版警示色悬浮态
-    --dockv-color-warning-light-active: hsla(var(--dockv-orange-2), 1); // 浅版警示色激活态
+  // 填充色
+  --dockv-color-fill-0: hsla(0, 0%, 0%, 0.04); // 填充色 - 默认态
+  --dockv-color-fill-1: hsla(0, 0%, 0%, 0.08); // 填充色 - 悬浮态
+  --dockv-color-fill-2: hsla(0, 0%, 0%, 0.12); // 填充色 - 激活态
 
-    --dockv-color-focus-border: hsla(var(--dockv-blue-5), 1); // 多用于边框激活态颜色
+  // 背景色
+  --dockv-color-bg-0: hsla(0, 0%, 100%, 1); // 背景色 - 最下层（底部页面）
+  --dockv-color-bg-1: hsla(0, 0%, 100%, 1); // 背景色 - 次下层（页面中需要提升的内容）
+  --dockv-color-bg-2: hsla(0, 0%, 100%, 1); // 背景色 - 中间层（模态等容器）
+  --dockv-color-bg-3: hsla(0, 0%, 100%, 1); // 背景色 - 次上层（通知，Toast等）
+  --dockv-color-bg-4: hsla(0, 0%, 100%, 1); // 背景色 - 最上层（特殊）
 
-    --dockv-color-disabled-text: hsla(var(--dockv-grey-9), .35); // 禁用态 - 文字
-    --dockv-color-disabled-border: hsla(var(--dockv-grey-1), 1); // 禁用态 - 描边
-    --dockv-color-disabled-bg: hsla(var(--dockv-grey-1), 1); // 禁用态 - 背景
-    --dockv-color-disabled-fill: hsla(var(--dockv-grey-8), .04); // 禁用态 - 填充
+  // 文本色
+  --dockv-color-text-0: hsla(0, 0%, 0%, 1); // 最主要
+  --dockv-color-text-1: hsla(0, 0%, 0%, 0.8); // 稍次要
+  --dockv-color-text-2: hsla(0, 0%, 0%, 0.62); // 次要
+  --dockv-color-text-3: hsla(0, 0%, 0%, 0.35); // 最次要
 
-    --dockv-color-shadow: hsla(var(--dockv-black), .04); // 用于模拟描边的阴影颜色
+  // 描边色
+  --dockv-color-border: hsla(214, 11%, 12%, .08);
 
-    --dockv-color-link: hsla(var(--dockv-blue-5), 1); // 链接颜色
-    --dockv-color-link-hover: hsla(var(--dockv-blue-6), 1); // 链接颜色 - 悬浮态
-    --dockv-color-link-active: hsla(var(--dockv-blue-7), 1); // 链接颜色 - 激活态
-    --dockv-color-link-visited: hsla(var(--dockv-blue-5), 1); // 链接颜色 - 已访问
-
-    --dockv-color-border: hsla(var(--dockv-grey-9), .08); // 默认描边颜色
-    --dockv-color-nav-bg: hsla(var(--dockv-white), 1); // 导航背景色
-    --dockv-color-overlay-bg: rgba(22, 22, 26, .6); // 蒙层背景色
-
-    --dockv-color-fill-0: hsla(var(--dockv-grey-8), .05); // 填充色 - 默认态
-    --dockv-color-fill-1: hsla(var(--dockv-grey-8), .09); // 填充色 - 悬浮态
-    --dockv-color-fill-2: hsla(var(--dockv-grey-8), .13); // 填充色 - 激活态
-    --dockv-color-bg-0: hsla(var(--dockv-white), 1); // 背景色 - 最下层（底部页面）
-    --dockv-color-bg-1: hsla(var(--dockv-white), 1); // 背景色 - 次下层（页面中需要提升的内容）
-    --dockv-color-bg-2: hsla(var(--dockv-white), 1); // 背景色 - 中间层（模态等容器）
-    --dockv-color-bg-3: hsla(var(--dockv-white), 1); // 背景色 - 次上层（通知，Toast等）
-    --dockv-color-bg-4: hsla(var(--dockv-white), 1); // 背景色 - 最上层（特殊）
-    --dockv-color-text-0: hsla(var(--dockv-grey-9), 1); // 文本/图标颜色 - 最主要
-    --dockv-color-text-1: hsla(var(--dockv-grey-9), .8); // 文本/图标颜色 - 稍次要
-    --dockv-color-text-2: hsla(var(--dockv-grey-9), .62); // 文本/图标颜色 - 次要
-    --dockv-color-text-3: hsla(var(--dockv-grey-9), .35); // 文本/图标颜色 - 最次要
-    --dockv-shadow-elevated: 0 0 1px rgba(0, 0, 0, .3), 0 4px 14px rgba(0, 0, 0, .1); // 用于toast, modal, popover等需要提升层级的界面元素
-    --dockv-border-radius-extra-small: 3px; // 超小圆角，用于 checkbox 内圆角
-    --dockv-border-radius-small: 3px; // 小圆角, 用于 button、tag、tabs 等大多数组件, 比较常用
-    --dockv-border-radius-medium: 6px; // 中圆角, 用于 dropdown、scrollist、transfer 等菜单类组件
-    --dockv-border-radius-large: 12px; // 大圆角, 用于 modal
-    --dockv-border-radius-circle: 50%; // 全圆角, 用于 avatar, badge 等组件
-    --dockv-border-radius-full: 9999px; // 用于创建全尺寸圆角，如胶囊标签等
-    --dockv-color-highlight-bg: hsla(var(--dockv-yellow-4), 1); // 高亮文本背景色
-    --dockv-color-highlight: hsla(var(--dockv-black), 1); // 高亮文本色
-    --dockv-color-data-0: rgba(87, 105, 255, 1); // 数据颜色 - 0
-    --dockv-color-data-1: rgba(142, 212, 231, 1); // 数据颜色 - 1
-    --dockv-color-data-2: rgba(245, 135, 0, 1); // 数据颜色 - 2
-    --dockv-color-data-3: rgba(220, 183, 252, 1); // 数据颜色 - 3
-    --dockv-color-data-4: rgba(74, 156, 247, 1); // 数据颜色 - 4
-    --dockv-color-data-5: rgba(243, 204, 53, 1); // 数据颜色 - 5
-    --dockv-color-data-6: rgba(254, 128, 144, 1); // 数据颜色 - 6
-    --dockv-color-data-7: rgba(139, 215, 210, 1); // 数据颜色 - 7
-    --dockv-color-data-8: rgba(131, 176, 35, 1); // 数据颜色 - 8
-    --dockv-color-data-9: rgba(233, 165, 229, 1); // 数据颜色 - 9
-    --dockv-color-data-10: rgba(48, 167, 206, 1); // 数据颜色 - 10
-    --dockv-color-data-11: rgba(249, 192, 100, 1); // 数据颜色 - 11
-    --dockv-color-data-12: rgba(177, 113, 249, 1); // 数据颜色 - 12
-    --dockv-color-data-13: rgba(119, 182, 249, 1); // 数据颜色 - 13
-    --dockv-color-data-14: rgba(200, 143, 2, 1); // 数据颜色 - 14
-    --dockv-color-data-15: rgba(255, 170, 178, 1); // 数据颜色 - 15
-    --dockv-color-data-16: rgba(51, 176, 171, 1); // 数据颜色 - 16
-    --dockv-color-data-17: rgba(182, 215, 129, 1); // 数据颜色 - 17
-    --dockv-color-data-18: rgba(212, 88, 212, 1); // 数据颜色 - 18
-    --dockv-color-data-19: rgba(188, 198, 255, 1); // 数据颜色 - 19
-
-    // ai-related
-    --dockv-color-ai-general: var(--dockv-ai-general-5); // AI 颜色
-    --dockv-color-ai-general-hover: var(--dockv-ai-general-6); // AI 颜色 - 悬浮态
-    --dockv-color-ai-general-active: var(--dockv-ai-general-7); // AI 颜色 - 激活态
-    --dockv-color-ai-general-disabled: var(--dockv-ai-general-2); // AI 颜色 - 禁用态
-
-    --dockv-color-ai-purple: hsla(var(--dockv-ai-purple-5), 1); // AI 次要颜色
-    --dockv-color-ai-purple-hover: hsla(var(--dockv-ai-purple-6), 1); // AI 次要颜色 - 悬浮态
-    --dockv-color-ai-purple-active: hsla(var(--dockv-ai-purple-7), 1); // AI 次要颜色 - 激活态
-    --dockv-color-ai-purple-disabled: hsla(var(--dockv-ai-purple-2), 1); // AI 次要颜色 - 禁用态
-    
-    --dockv-color-ai-background-bottom: linear-gradient(201.15deg, rgba(255, 255, 255, 0.04) 6.58%, rgba(255, 226, 138, 0.04) 32.88%, rgba(231, 45, 255, 0.04) 67.93%, rgba(0, 115, 255, 0.04) 94.23%); // AI 场景背景色底部
-    --dockv-color-ai-background-bottom-hover: linear-gradient(201.15deg, rgba(255, 255, 255, 0.08) 6.58%, rgba(255, 226, 138, 0.08) 32.88%, rgba(231, 45, 255, 0.08) 67.93%, rgba(0, 115, 255, 0.08) 94.23%); // AI 场景背景色底部 - 悬浮态
-    --dockv-color-ai-background-bottom-active: linear-gradient(201.15deg, rgba(255, 255, 255, 0.12) 6.58%, rgba(255, 226, 138, 0.12) 32.88%, rgba(231, 45, 255, 0.12) 67.93%, rgba(0, 115, 255, 0.12) 94.23%); // AI 场景背景色底部 - 激活态
-
-    --dockv-color-ai-background-top: linear-gradient(201.15deg, rgba(83, 56, 255, 0.16) 6.58%, rgba(176, 48, 240, 0.096) 32.88%, rgba(231, 45, 255, 0.048) 59.17%, rgba(255, 255, 255, 0) 94.23%); // AI 场景背景色顶部
-    --dockv-color-ai-background-top-hover: linear-gradient(201.15deg, rgba(83, 56, 255, 0.24) 6.58%, rgba(176, 48, 240, 0.144) 32.88%, rgba(231, 45, 255, 0.072) 59.17%, rgba(255, 255, 255, 0) 94.23%); // AI 场景背景色顶部 - 悬浮态
-    --dockv-color-ai-background-top-active: linear-gradient(201.15deg, rgba(83, 56, 255, 0.32) 6.58%, rgba(176, 48, 240, 0.192) 32.88%, rgba(231, 45, 255, 0.096) 59.17%, rgba(255, 255, 255, 0) 94.23%); // AI 场景背景色顶部 - 激活态
+  // 数据颜色
+  --dockv-color-data-0: #5768ff;
+  --dockv-color-data-1: #8ed4e7;
+  --dockv-color-data-2: #f58700;
+  --dockv-color-data-3: #dcb7fc;
+  --dockv-color-data-4: #4a9cf7;
+  --dockv-color-data-5: #f3cc35;
+  --dockv-color-data-6: #fe8090;
+  --dockv-color-data-7: #8bd7d2;
+  --dockv-color-data-8: #83b023;
+  --dockv-color-data-9: #e9a5e5;
+  --dockv-color-data-10: #30a7cf;
+  --dockv-color-data-11: #f9c064;
+  --dockv-color-data-12: #b171f9;
+  --dockv-color-data-13: #77b6f9;
+  --dockv-color-data-14: #c88f02;
+  --dockv-color-data-15: #ffaab2;
+  --dockv-color-data-16: #33b0ab;
+  --dockv-color-data-17: #b6d781;
+  --dockv-color-data-18: #d458d4;
+  --dockv-color-data-19: #bcc6ff;
 }
 
-body[theme-mode="dark"], body .dockv-theme-mode-dark, :host([theme-mode="dark"]), :host .dockv-theme-mode-dark {
-    --dockv-color-white: rgba(228, 231, 245, 1);
-    --dockv-color-black: hsla(var(--dockv-black), 1);
-    --dockv-color-primary: hsla(var(--dockv-blue-5), 1);
-    --dockv-color-primary-hover: hsla(var(--dockv-blue-6), 1);
-    --dockv-color-primary-active: hsla(var(--dockv-blue-7), 1);
-    --dockv-color-primary-disabled: hsla(var(--dockv-blue-2), 1);
-    --dockv-color-primary-light-default: hsla(var(--dockv-blue-5), .2);
-    --dockv-color-primary-light-hover: hsla(var(--dockv-blue-5), .3);
-    --dockv-color-primary-light-active: hsla(var(--dockv-blue-5), .4);
-    --dockv-color-secondary: hsla(var(--dockv-light-blue-5), 1);
-    --dockv-color-secondary-hover: hsla(var(--dockv-light-blue-6), 1);
-    --dockv-color-secondary-active: hsla(var(--dockv-light-blue-7), 1);
-    --dockv-color-secondary-disabled: hsla(var(--dockv-light-blue-2), 1);
-    --dockv-color-secondary-light-default: hsla(var(--dockv-light-blue-5), .2);
-    --dockv-color-secondary-light-hover: hsla(var(--dockv-light-blue-5), .3);
-    --dockv-color-secondary-light-active: hsla(var(--dockv-light-blue-5), .4);
-    --dockv-color-tertiary: hsla(var(--dockv-grey-5), 1);
-    --dockv-color-tertiary-hover: hsla(var(--dockv-grey-6), 1);
-    --dockv-color-tertiary-active: hsla(var(--dockv-grey-7), 1);
-    --dockv-color-tertiary-light-default: hsla(var(--dockv-grey-5), .2);
-    --dockv-color-tertiary-light-hover: hsla(var(--dockv-grey-5), .3);
-    --dockv-color-tertiary-light-active: hsla(var(--dockv-grey-5), .4);
-    --dockv-color-default: hsla(var(--dockv-grey-0), 1);
-    --dockv-color-default-hover: hsla(var(--dockv-grey-1), 1);
-    --dockv-color-default-active: hsla(var(--dockv-grey-2), 1);
-    --dockv-color-info: hsla(var(--dockv-blue-5), 1);
-    --dockv-color-info-hover: hsla(var(--dockv-blue-6), 1);
-    --dockv-color-info-active: hsla(var(--dockv-blue-7), 1);
-    --dockv-color-info-disabled: hsla(var(--dockv-blue-2), 1);
-    --dockv-color-info-light-default: hsla(var(--dockv-blue-5), .2);
-    --dockv-color-info-light-hover: hsla(var(--dockv-blue-5), .3);
-    --dockv-color-info-light-active: hsla(var(--dockv-blue-5), .4);
-    --dockv-color-success: hsla(var(--dockv-green-5), 1);
-    --dockv-color-success-hover: hsla(var(--dockv-green-6), 1);
-    --dockv-color-success-active: hsla(var(--dockv-green-7), 1);
-    --dockv-color-success-disabled: hsla(var(--dockv-green-2), 1);
-    --dockv-color-success-light-default: hsla(var(--dockv-green-5), .2);
-    --dockv-color-success-light-hover: hsla(var(--dockv-green-5), .3);
-    --dockv-color-success-light-active: hsla(var(--dockv-green-5), .4);
-    --dockv-color-danger: hsla(var(--dockv-red-5), 1);
-    --dockv-color-danger-hover: hsla(var(--dockv-red-6), 1);
-    --dockv-color-danger-active: hsla(var(--dockv-red-7), 1);
-    --dockv-color-danger-light-default: hsla(var(--dockv-red-5), .2);
-    --dockv-color-danger-light-hover: hsla(var(--dockv-red-5), .3);
-    --dockv-color-danger-light-active: hsla(var(--dockv-red-5), .4);
-    --dockv-color-warning: hsla(var(--dockv-orange-5), 1);
-    --dockv-color-warning-hover: hsla(var(--dockv-orange-6), 1);
-    --dockv-color-warning-active: hsla(var(--dockv-orange-7), 1);
-    --dockv-color-warning-light-default: hsla(var(--dockv-orange-5), .2);
-    --dockv-color-warning-light-hover: hsla(var(--dockv-orange-5), .3);
-    --dockv-color-warning-light-active: hsla(var(--dockv-orange-5), .4);
-    --dockv-color-focus-border: hsla(var(--dockv-blue-5), 1);
-    --dockv-color-disabled-text: hsla(var(--dockv-grey-9), .35);
-    --dockv-color-disabled-border: hsla(var(--dockv-grey-1), 1);
-    --dockv-color-disabled-bg: hsla(var(--dockv-grey-1), 1);
-    --dockv-color-disabled-fill: hsla(var(--dockv-grey-8), .04);
-    --dockv-color-link: hsla(var(--dockv-blue-5), 1);
-    --dockv-color-link-hover: hsla(var(--dockv-blue-6), 1);
-    --dockv-color-link-active: hsla(var(--dockv-blue-7), 1);
-    --dockv-color-link-visited: hsla(var(--dockv-blue-5), 1);
-    --dockv-color-nav-bg: rgba(35, 36, 41, 1);
-    --dockv-shadow-elevated: inset 0 0 0 1px rgba(255, 255, 255, .1), 0 4px 14px rgba(0, 0, 0, .25);
-    --dockv-color-overlay-bg: rgba(22, 22, 26, .6);
-    --dockv-color-fill-0: hsla(var(--dockv-white), .12);
-    --dockv-color-fill-1: hsla(var(--dockv-white), .16);
-    --dockv-color-fill-2: hsla(var(--dockv-white), .20);
-    --dockv-color-border: hsla(var(--dockv-white), .08);
-    --dockv-color-shadow: hsla(var(--dockv-black), .04);
-    --dockv-color-bg-0: rgba(22, 22, 26, 1);
-    --dockv-color-bg-1: rgba(35, 36, 41, 1);
-    --dockv-color-bg-2: rgba(53, 54, 60, 1);
-    --dockv-color-bg-3: rgba(67, 68, 74, 1);
-    --dockv-color-bg-4: rgba(79, 81, 89, 1);
-    --dockv-color-text-0: hsla(var(--dockv-grey-9), 1);
-    --dockv-color-text-1: hsla(var(--dockv-grey-9), .8);
-    --dockv-color-text-2: hsla(var(--dockv-grey-9), .6);
-    --dockv-color-text-3: hsla(var(--dockv-grey-9), .35);
-    --dockv-border-radius-extra-small: 3px;
-    --dockv-border-radius-small: 3px;
-    --dockv-border-radius-medium: 6px;
-    --dockv-border-radius-large: 12px;
-    --dockv-border-radius-circle: 50%;
-    --dockv-border-radius-full: 9999px;
-    --dockv-color-highlight-bg: hsla(var(--dockv-yellow-2), 1); // 高亮文本背景色
-    --dockv-color-highlight: hsla(var(--dockv-white), 1); // 高亮文本色
-    --dockv-color-data-0: hsl(231, 45%, 56%); // 数据颜色 - 0
-    --dockv-color-data-1: hsl(189, 88%, 25%); // 数据颜色 - 1
-    --dockv-color-data-2: #faad3f; // 数据颜色 - 2
-    --dockv-color-data-3: hsl(258, 57%, 39%); // 数据颜色 - 3
-    --dockv-color-data-4: rgba(16, 125, 248, 1); // 数据颜色 - 4
-    --dockv-color-data-5: rgba(248, 202, 16, 1); // 数据颜色 - 5
-    --dockv-color-data-6: rgba(195, 30, 87, 1); // 数据颜色 - 6
-    --dockv-color-data-7: rgba(5, 119, 115, 1); // 数据颜色 - 7
-    --dockv-color-data-8: rgba(154, 207, 13, 1); // 数据颜色 - 8
-    --dockv-color-data-9: rgba(117, 29, 138, 1); // 数据颜色 - 9
-    --dockv-color-data-10: rgba(16, 162, 180, 1); // 数据颜色 - 10
-    --dockv-color-data-11: rgba(208, 110, 11, 1); // 数据颜色 - 11
-    --dockv-color-data-12: rgba(113, 66, 197, 1); // 数据颜色 - 12
-    --dockv-color-data-13: rgba(7, 100, 212, 1); // 数据颜色 - 13
-    --dockv-color-data-14: rgba(251, 232, 110, 1); // 数据颜色 - 14
-    --dockv-color-data-15: rgba(160, 19, 73, 1); // 数据颜色 - 15
-    --dockv-color-data-16: rgba(11, 179, 167, 1); // 数据颜色 - 16
-    --dockv-color-data-17: rgba(98, 138, 6, 1); // 数据颜色 - 17
-    --dockv-color-data-18: rgba(162, 48, 179, 1); // 数据颜色 - 18
-    --dockv-color-data-19: rgba(40, 51, 138, 1); // 数据颜色 - 19
-   
-    // ai-related
-    --dockv-color-ai-general: var(--dockv-ai-general-5); // AI 颜色
-    --dockv-color-ai-general-hover: var(--dockv-ai-general-6); // AI 颜色 - 悬浮态
-    --dockv-color-ai-general-active: var(--dockv-ai-general-7); // AI 颜色 - 激活态
-    --dockv-color-ai-general-disabled: var(--dockv-ai-general-2); // AI 颜色 - 禁用态
+// 暗色模式
+body[theme-mode="dark"],
+body .dockv-theme-mode-dark,
+:host([theme-mode="dark"]),
+:host .dockv-theme-mode-dark {
+  // 黑白色
+  --dockv-color-white: hsl(var(--dockv-white));
+  --dockv-color-black: hsl(var(--dockv-black));
 
-    --dockv-color-ai-purple: hsla(var(--dockv-ai-purple-5), 1); // AI 次要颜色
-    --dockv-color-ai-purple-hover: hsla(var(--dockv-ai-purple-6), 1); // AI 次要颜色 - 悬浮态
-    --dockv-color-ai-purple-active: hsla(var(--dockv-ai-purple-7), 1); // AI 次要颜色 - 激活态
-    --dockv-color-ai-purple-disabled: hsla(var(--dockv-ai-purple-2), 1); // AI 次要颜色 - 禁用态
+  // 主要色
+  --dockv-color-primary: hsla(var(--dockv-blue-5), 1);
+  --dockv-color-primary-hover: hsla(var(--dockv-blue-6), 1);
+  --dockv-color-primary-active: hsla(var(--dockv-blue-7), 1);
+  --dockv-color-primary-disabled: hsla(var(--dockv-blue-2), 1);
+  --dockv-color-primary-light: hsla(var(--dockv-blue-5), 0.2);
+  --dockv-color-primary-light-hover: hsla(var(--dockv-blue-5), 0.3);
+  --dockv-color-primary-light-active: hsla(var(--dockv-blue-5), 0.4);
 
-    --dockv-color-ai-background-bottom: linear-gradient(201.15deg, rgba(255, 226, 138, 0.2) 6.58%, rgba(231, 45, 255, 0.2) 50.4%, rgba(0, 115, 255, 0.2) 94.23%); // AI 场景背景色底部
-    --dockv-color-ai-background-bottom-hover: linear-gradient(201.15deg, rgba(255, 226, 138, 0.3) 6.58%, rgba(231, 45, 255, 0.3) 50.4%, rgba(0, 115, 255, 0.3) 94.23%); // AI 场景背景色底部 - 悬浮态
-    --dockv-color-ai-background-bottom-active: linear-gradient(201.15deg, rgba(255, 226, 138, 0.4) 6.58%, rgba(231, 45, 255, 0.4) 50.4%, rgba(0, 115, 255, 0.4) 94.23%); // AI 场景背景色底部 - 激活态
+  // 次要色
+  --dockv-color-secondary: hsla(var(--dockv-light-blue-5), 1);
+  --dockv-color-secondary-hover: hsla(var(--dockv-light-blue-6), 1);
+  --dockv-color-secondary-active: hsla(var(--dockv-light-blue-7), 1);
+  --dockv-color-secondary-disabled: hsla(var(--dockv-light-blue-2), 1);
+  --dockv-color-secondary-light: hsla(var(--dockv-light-blue-5), 0.2);
+  --dockv-color-secondary-light-hover: hsla(var(--dockv-light-blue-5), 0.3);
+  --dockv-color-secondary-light-active: hsla(var(--dockv-light-blue-5), 0.4);
 
-    --dockv-color-ai-background-top: linear-gradient(201.15deg, rgba(83, 56, 255, 0.36) 6.58%, rgba(176, 48, 240, 0.216) 32.88%, rgba(154, 0, 174, 0.108) 59.17%, rgba(0, 0, 0, 0) 94.23%); // AI 场景背景色顶部
-    --dockv-color-ai-background-top-hover: linear-gradient(201.15deg, rgba(83, 56, 255, 0.54) 6.58%, rgba(176, 48, 240, 0.324) 32.88%, rgba(154, 0, 174, 0.162) 59.17%, rgba(0, 0, 0, 0) 94.23%); // AI 场景背景色顶部 - 悬浮态
-    --dockv-color-ai-background-top-active: linear-gradient(201.15deg, rgba(83, 56, 255, 0.72) 6.58%, rgba(176, 48, 240, 0.432) 32.88%, rgba(154, 0, 174, 0.216) 59.17%, rgba(0, 0, 0, 0) 94.23%); // AI 场景背景色顶部 - 激活态
+  // 第三色
+  --dockv-color-tertiary: hsla(var(--dockv-grey-5), 1);
+  --dockv-color-tertiary-hover: hsla(var(--dockv-grey-6), 1);
+  --dockv-color-tertiary-active: hsla(var(--dockv-grey-7), 1);
+  --dockv-color-tertiary-disabled: hsla(var(--dockv-grey-2), 1);
+  --dockv-color-tertiary-light: hsla(var(--dockv-grey-5), 0.2);
+  --dockv-color-tertiary-light-hover: hsla(var(--dockv-grey-5), 0.3);
+  --dockv-color-tertiary-light-active: hsla(var(--dockv-grey-5), 0.4);
 
+  // 信息色
+  --dockv-color-info: hsla(var(--dockv-blue-5), 1);
+  --dockv-color-info-hover: hsla(var(--dockv-blue-6), 1);
+  --dockv-color-info-active: hsla(var(--dockv-blue-7), 1);
+  --dockv-color-info-disabled: hsla(var(--dockv-blue-2), 1);
+  --dockv-color-info-light: hsla(var(--dockv-blue-5), 0.2);
+  --dockv-color-info-light-hover: hsla(var(--dockv-blue-5), 0.3);
+  --dockv-color-info-light-active: hsla(var(--dockv-blue-5), 0.4);
+
+  // 成功色
+  --dockv-color-success: hsla(var(--dockv-green-5), 1);
+  --dockv-color-success-hover: hsla(var(--dockv-green-6), 1);
+  --dockv-color-success-active: hsla(var(--dockv-green-7), 1);
+  --dockv-color-success-disabled: hsla(var(--dockv-green-2), 1);
+  --dockv-color-success-light: hsla(var(--dockv-green-5), 0.2);
+  --dockv-color-success-light-hover: hsla(var(--dockv-green-5), 0.3);
+  --dockv-color-success-light-active: hsla(var(--dockv-green-5), 0.4);
+
+  // 危险色
+  --dockv-color-danger: hsla(var(--dockv-red-5), 1);
+  --dockv-color-danger-hover: hsla(var(--dockv-red-6), 1);
+  --dockv-color-danger-active: hsla(var(--dockv-red-7), 1);
+  --dockv-color-danger-disabled: hsla(var(--dockv-red-2), 1);
+  --dockv-color-danger-light: hsla(var(--dockv-red-5), 0.2);
+  --dockv-color-danger-light-hover: hsla(var(--dockv-red-5), 0.3);
+  --dockv-color-danger-light-active: hsla(var(--dockv-red-5), 0.4);
+
+  // 警告色
+  --dockv-color-warning: hsla(var(--dockv-orange-5), 1);
+  --dockv-color-warning-hover: hsla(var(--dockv-orange-6), 1);
+  --dockv-color-warning-active: hsla(var(--dockv-orange-7), 1);
+  --dockv-color-warning-disabled: hsla(var(--dockv-orange-2), 1);
+  --dockv-color-warning-light: hsla(var(--dockv-orange-5), 0.2);
+  --dockv-color-warning-light-hover: hsla(var(--dockv-orange-5), 0.3);
+  --dockv-color-warning-light-active: hsla(var(--dockv-orange-5), 0.4);
+
+  // 填充色
+  --dockv-color-fill-0: hsla(0, 0%, 100%, 0.12);
+  --dockv-color-fill-1: hsla(0, 0%, 100%, 0.16);
+  --dockv-color-fill-2: hsla(0, 0%, 100%, 0.2);
+
+  // 背景色
+  --dockv-color-bg-0: hsl(240, 8%, 9%);
+  --dockv-color-bg-1: hsl(230, 8%, 15%);
+  --dockv-color-bg-2: hsl(231, 6%, 22%);
+  --dockv-color-bg-3: hsl(231, 5%, 28%);
+  --dockv-color-bg-4: hsl(228, 6%, 33%);
+
+  // 文本色
+  --dockv-color-text-0: rgba(255, 255, 255, 1); // 最主要
+  --dockv-color-text-1: rgba(255, 255, 255, 0.8); // 稍次要
+  --dockv-color-text-2: rgba(255, 255, 255, 0.62); // 次要
+  --dockv-color-text-3: rgba(255, 255, 255, 0.35); // 最次要
+
+  // 描边色
+  --dockv-color-border: hsla(0, 0%, 100%, 0.08);
+
+  // 数据颜色
+  --dockv-color-data-0: #5c6bc2;
+  --dockv-color-data-1: #086778;
+  --dockv-color-data-2: #faad3f;
+  --dockv-color-data-3: #4d2b9c;
+  --dockv-color-data-4: #107df8;
+  --dockv-color-data-5: #f8ca10;
+  --dockv-color-data-6: #c31e57;
+  --dockv-color-data-7: #057773;
+  --dockv-color-data-8: #9acf0d;
+  --dockv-color-data-9: #751d8a;
+  --dockv-color-data-10: #10a2b4;
+  --dockv-color-data-11: #d06e0b;
+  --dockv-color-data-12: #7142c5;
+  --dockv-color-data-13: #0764d4;
+  --dockv-color-data-14: #fbe86e;
+  --dockv-color-data-15: #a01349;
+  --dockv-color-data-16: #0bb3a7;
+  --dockv-color-data-17: #628a06;
+  --dockv-color-data-18: #a230b3;
+  --dockv-color-data-19: #28338a;
 }
