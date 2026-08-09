@@ -2,7 +2,7 @@
   <div class="palette-wrapper">
     <div class="palette-row">
       <div
-        v-for="color in colors"
+        v-for="color in activeColors"
         :key="color.name"
         class="palette-chip"
         @click="copy(`hsla(var(--dockv-${prefix}-${color.name}), 1)`)">
@@ -13,28 +13,25 @@
         <div class="palette-chip__value" :style="{ color: color.color }">{{ color.hsl }}</div>
       </div>
     </div>
-    <div v-if="darkColors" class="palette-row">
-      <div
-        v-for="color in darkColors"
-        :key="color.name"
-        class="palette-chip"
-        @click="copy(`hsla(var(--dockv-${prefix}-${color.name}), 1)`)">
-        <div class="palette-chip__block" :style="{ background: 'hsl(' + color.hsl + ')' }"></div>
-        <div class="palette-chip__label-d" :style="{ color: color.color }">
-          {{ prefix }}-{{ color.name }}
-        </div>
-        <div class="palette-chip__value" :style="{ color: color.color }">{{ color.hsl }}</div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { computed } from "vue";
+import { useData } from "vitepress";
+
+const props = defineProps<{
   prefix: string;
   colors: { name: string; hsl: string; color: string }[];
   darkColors?: { name: string; hsl: string; color: string }[];
 }>();
+
+const { isDark } = useData();
+
+// 跟随主题模式切换色盘：暗色模式显示暗色色盘，亮色模式显示亮色色盘
+const activeColors = computed(() =>
+  isDark.value && props.darkColors ? props.darkColors : props.colors
+);
 
 function copy(value: string) {
   navigator.clipboard.writeText(value);
@@ -81,14 +78,6 @@ function copy(value: string) {
   inset: 0;
 }
 .palette-chip__label {
-  position: absolute;
-  top: 6px;
-  left: 12px;
-  font-size: 14px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-.palette-chip__label-d {
   position: absolute;
   top: 6px;
   left: 12px;

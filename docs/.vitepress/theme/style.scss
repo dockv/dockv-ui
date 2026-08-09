@@ -42,6 +42,8 @@
  * - `danger`: Used to show error, or dangerous message to the users. Used
  *   in custom container, badges, etc.
  * -------------------------------------------------------------------------- */
+ 
+@use "../../../src/styles/index.scss" as *;
 
 :root {
   --vp-c-default-1: var(--vp-c-gray-1);
@@ -92,17 +94,9 @@
 
 :root {
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(
-    120deg,
-    #bd34fe 30%,
-    hsl(354, 68%, 54%)
-  );
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, hsl(354, 68%, 54%));
 
-  --vp-home-hero-image-background-image: linear-gradient(
-    -45deg,
-    #bd34fe 50%,
-    rgb(255, 165, 0) 50%
-  );
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #bd34fe 50%, rgb(255, 165, 0) 50%);
   --vp-home-hero-image-filter: blur(44px);
 }
 

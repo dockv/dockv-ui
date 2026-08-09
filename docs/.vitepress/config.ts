@@ -18,9 +18,7 @@ export default defineConfig({
       {
         text: 'Components 组件',
         items: [
-          { text: 'Button | 按钮', link: '/components/button' },
           { text: 'Icon | 图标', link: '/components/icon' },
-          { text: 'Notification | 通知', link: '/components/notification' },
         ]
       },
       {
