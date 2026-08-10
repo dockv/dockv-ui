@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dockv-ui 手动测试页</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 24px;
+        color: #333;
+      }
+      h1 {
+        font-size: 22px;
+        margin: 0 0 4px;
+      }
+      h2 {
+        font-size: 16px;
+        margin: 28px 0 8px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #eee;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .tip {
+        color: #888;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>dockv-ui 手动测试页</h1>
+
+    <!-- 引入构建产物：UMD 脚本自动注册 &lt;dv-icon&gt; 自定义元素，全量样式提供图标尺寸等 CSS 变量 -->
+    <script type="module">
+      import "../dist/dockv-ui.umd.js";
+    </script>
+    <link rel="stylesheet" href="../dist/dockv-ui.css" />
+
+    <h2>基础图标（默认 md 尺寸）</h2>
+    <div class="row">
+      <dv-icon icon="material-symbols:home"></dv-icon>
+      <dv-icon icon="material-symbols:emergency-home"></dv-icon>
+      <dv-icon icon="line-md:beer-twotone-loop"></dv-icon>
+      <dv-icon icon="line-md:emoji-smile-twotone"></dv-icon>
+    </div>
+
+    <h2>尺寸（预设值 xs → xl）</h2>
+    <div class="row">
+      <dv-icon icon="material-symbols:home" size="xs"></dv-icon>
+      <dv-icon icon="material-symbols:home" size="sm"></dv-icon>
+      <dv-icon icon="material-symbols:home" size="md"></dv-icon>
+      <dv-icon icon="material-symbols:home" size="lg"></dv-icon>
+      <dv-icon icon="material-symbols:home" size="xl"></dv-icon>
+    </div>
+
+    <h2>尺寸（自定义值 + 继承字体大小）</h2>
+    <div class="row">
+      <dv-icon icon="material-symbols:home" size="16px"></dv-icon>
+      <dv-icon icon="material-symbols:home" size="32px"></dv-icon>
+      <dv-icon icon="material-symbols:home" size="48px"></dv-icon>
+      <span style="font-size: 14px"
+        >14px 文字 <dv-icon icon="material-symbols:home" size="inherit"></dv-icon
+      ></span>
+      <span style="font-size: 22px"
+        >22px 文字 <dv-icon icon="material-symbols:home" size="inherit"></dv-icon
+      ></span>
+    </div>
+
+    <h2>颜色（单色图标生效，多色图标无效）</h2>
+    <div class="row">
+      <dv-icon
+        icon="material-symbols:home"
+        size="32px"
+        color="var(--dockv-color-vocaloid-miku)"></dv-icon>
+      <dv-icon icon="material-symbols:home" size="32px" color="#66CCFF"></dv-icon>
+      <dv-icon icon="material-symbols:home" size="32px" color="rgb(153, 153, 255)"></dv-icon>
+      <span class="tip">↓ 多色 logo，color 不生效</span>
+      <dv-icon icon="logos:figma" size="32px" color="red"></dv-icon>
+    </div>
+
+    <h2>旋转与动画（rotate / spin）</h2>
+    <div class="row">
+      <dv-icon icon="material-symbols:arrow-left-alt-rounded" size="32px" rotate="45"></dv-icon>
+      <dv-icon icon="material-symbols:arrow-left-alt-rounded" size="32px" rotate="180"></dv-icon>
+      <dv-icon icon="material-symbols:settings" size="lg" spin></dv-icon>
+      <dv-icon icon="material-symbols:settings" size="lg" rotate="45" spin></dv-icon>
+    </div>
+
+    <h2>图片（src 属性）</h2>
+    <div class="row">
+      <dv-icon
+        src="https://raw.githubusercontent.com/gilbarbara/logos/refs/heads/main/logos/github-icon.svg"
+        size="36px"></dv-icon>
+      <dv-icon src="https://dash.cloudflare.com/favicon.ico" size="36px"></dv-icon>
+    </div>
+
+    <h2>插槽（slot 传入自定义 SVG，优先级 slot &gt; src &gt; icon）</h2>
+    <div class="row">
+      <dv-icon
+        size="32px"
+        color="var(--dockv-color-danger)"
+        icon="material-symbols:home"
+        src="https://picsum.photos/40">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 2L2 22h20L12 2zm0 4l6 14H6l6-14z" />
+        </svg>
+      </dv-icon>
+      <span class="tip">同时设置 icon/src/slot，最终显示插槽里的 SVG</span>
+    </div>
+
+    <h2>第三方图标库（Font Awesome，需联网加载 CSS）</h2>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css" />
+    <div class="row">
+      <dv-icon size="24px" color="#4c78f2">
+        <i class="fa-solid fa-circle-user"></i>
+      </dv-icon>
+      <dv-icon size="30px" color="#eea21f">
+        <i class="fa-brands fa-cloudflare"></i>
+      </dv-icon>
+    </div>
+  </body>
+</html>

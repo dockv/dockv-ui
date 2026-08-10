@@ -6,6 +6,7 @@ import "./style.scss";
 
 import "../../../src/index";
 
+import Card from "../components/Card.vue";
 import ColorToken from "../components/ColorToken.vue";
 import FontToken from "../components/FontToken.vue";
 import IconSizeToken from "../components/IconSizeToken.vue";
@@ -36,6 +37,7 @@ export default {
   extends: DefaultTheme,
   Layout,
   enhanceApp({ app }) {
+    app.component("Card", Card);
     app.component("Palette", Palette);
     app.component("ColorToken", ColorToken);
     app.component("FontToken", FontToken);
