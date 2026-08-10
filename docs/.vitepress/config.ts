@@ -18,6 +18,7 @@ export default defineConfig({
       {
         text: 'Components 组件',
         items: [
+          { text: 'Overview 组件总览', link: '/components' },
           { text: 'Icon | 图标', link: '/components/icon' },
         ]
       },
