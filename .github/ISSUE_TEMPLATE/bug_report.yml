@@ -1,0 +1,154 @@
+name: 🕷️ Bug Report | Bug反馈 | バグ報告
+description: Report a bug or unexpected behavior.
+title: "[Bug] "
+labels: ["🚫Bug"]
+assignees:
+  - chairowell
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > A clear description of the problem you encountered helps us solve it faster.
+        > 清晰的描述你遇到的问题，有助于我们更快的解决问题。
+        > 問題を明確に説明していただけると、より早く解決できます。
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist | 前置检查 | 前置チェック
+      description: Please confirm that you have completed the following. / 请确认您已完成以下操作。/ 以下の操作を完了したことを確認してください。
+      options:
+        - label: |
+            No similar issue has been reported.
+            没有人提过类似问题。
+            類似の Issue は報告されていません。
+          required: true
+        - label: |
+            Read the docs and found nothing relevant.
+            已阅读说明文档，未找到相关内容。
+            ドキュメントは確認済みですが、関連内容は見つかりませんでした。
+          required: true
+        - label: |
+            May be closed without reproduction steps or detailed info.
+            无复现步骤或详细信息时，Issue 可能被关闭。
+            再現手順や詳細情報がない場合はクローズされる可能性があります。
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description | 问题描述 | 説明
+      description: Please describe the problem in detail.
+      placeholder: |
+        Please describe the problem in detail.
+        请简要描述你遇到的问题。
+        問題を簡潔に説明してください。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce | 复现步骤 | 再現手順
+      description: Please describe the steps to reproduce the problem in detail.
+      placeholder: |
+        Please describe the steps to reproduce the problem in detail.
+        请按顺序说明如何复现该问题。
+        問題を再現する手順を詳細に説明してください。
+
+        1. Open the page...
+        2. Click the button...
+        3. Observe the error...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-code
+    attributes:
+      label: Reproduction Code | 复现代码 | 再現コード
+      description: Please provide the code to reproduce the problem.
+      placeholder: |
+        Please provide the code to reproduce the problem.
+        提供可复现问题的代码。
+        問題を再現するコードを提供してください。
+        ```
+        import { Icon } from "dockv-ui";
+        import "dockv-ui/styles";
+
+        ...
+        ```
+      render: html
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior | 预期行为 | 期待する動作
+      description: What did you expect to happen?
+      placeholder: |
+        What did you expect to happen?
+        你期望发生什么？
+        期待していた動作を説明してください。
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior | 实际行为 | 実際の動作
+      description: What actually happened?
+      placeholder: |
+        What actually happened?
+        实际发生了什么？
+        実際に発生した動作を説明してください。
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version | 版本 | バージョン
+      description: Please provide the version of `dockv-ui` you are using.
+      placeholder: "v0.0.x.beta.1"
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser | 浏览器 | ブラウザ
+      description: Which browser were you using?
+      placeholder: "Chrome / Edge / Firefox / Safari / Chromium..."
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS | 系统 | OS
+      description: Which operating system were you using?
+      placeholder: "Windows / macOS / Ubuntu / Android / iOS..."
+    validations:
+      required: true
+  - type: input
+    id: usage
+    attributes:
+      label: Usage | 使用方式 | 利用方法
+      description: How did you use dockv-ui?
+      placeholder: "Web component / Vue3 / React / Next.js / Svelte..."
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Notes | 补充说明 | 補足
+      description: Anything else you would like to share.
+      placeholder: |
+        Please provide any additional information.
+        请分享任何其他信息。
+        他の情報を共有してください。
+    validations:
+      required: false
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Willing to Contribute | 是否愿意贡献 | 貢献の意思
+      description: If you are willing to submit a PR to fix this bug, please check. / 如果你愿意提交 PR 修复此 bug，请勾选。 / このバグを修正する PR を提出してくださる場合はチェックしてください。
+      options:
+        - label: |
+            I am willing to submit a PR to fix this bug.
+            我愿意提交 PR 修复此 bug。
+            このバグを修正する PR を提出しても構いません。
+          required: false

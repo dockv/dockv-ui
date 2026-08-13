@@ -1,0 +1,9 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Discussion | 讨论区 | ディスカッション
+    url: https://github.com/dockv/dockv-ui/discussions
+    about: Ask questions & share ideas.
+
+  - name: 📘 README | 使用说明 | 利用ガイド
+    url: https://github.com/dockv/dockv-ui#readme
+    about: Install & usage — read the README first.
