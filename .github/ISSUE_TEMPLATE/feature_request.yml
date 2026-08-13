@@ -1,0 +1,90 @@
+name: 🌠 Feature Request | 功能请求 | 機能要望
+description: Propose a new component or feature.
+title: "[Feature] "
+labels: ["✨Feature"]
+assignees:
+  - chairowell
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > Feature requests that are excessive or lack a clear description or use case may not be accepted. The maintainers and contributors work on this project in their spare time. Thank you for your understanding and patience.
+        > 功能请求过分、或缺少清晰的功能描述与使用场景时，可能不会被受理。本项目由维护者和贡献者在业余时间维护，感谢你的理解与耐心。
+        > 過剰な機能要望、または明確な機能説明や利用シーンがない場合は、受け入れられない可能性があります。このプロジェクトはメンテナーやコントリビューターが余暇を割いて維持しています。ご理解とご協力に感謝します。
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist | 前置检查 | 前置チェック
+      description: Please confirm that you have completed the following. / 请确认您已完成以下操作。/ 以下の操作を完了したことを確認してください。
+      options:
+        - label: |
+            No similar feature request has been reported.
+            没有人提过类似的功能请求。
+            類似の Feature Request は報告されていません。
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description | 描述 | 説明
+      description: Please describe the component or feature you would like to add.
+      placeholder: |
+        Please describe the component or feature you would like to add.
+        请描述你希望添加的组件或功能。
+        追加したいコンポーネントや機能について説明してください。
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation | 动机 | 目的
+      description: Why is this needed? Tell us the use case or background.
+      placeholder: |
+        Why is this needed? Tell us the use case or background.
+        为什么需要这个功能？请说明使用场景或背景。
+        なぜ必要ですか？利用シーンや背景を説明してください。
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected Behavior | 预期行为 | 期待する動作
+      description: How should it work? Describe the expected behavior.
+      placeholder: |
+        How should it work? Describe the expected behavior.
+        它应该如何工作？请描述预期行为。
+        期待していた動作を説明してください。
+    validations:
+      required: true
+  - type: textarea
+    id: design-reference
+    attributes:
+      label: Design Reference | 设计参考 | デザイン参考
+      description: Do you have any design references or examples?
+      placeholder: |
+        Do you have any design references or examples?
+        是否有设计参考或示例？
+        デザイン参考や例がありますか？
+    validations:
+      required: false
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Notes | 补充说明 | 補足
+      description: Anything else you would like to share.
+      placeholder: |
+        Please provide any additional information.
+        请分享任何其他信息。
+        他の情報を共有してください。
+    validations:
+      required: false
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Willing to Contribute | 是否愿意贡献 | 貢献の意思
+      description: If you are willing to submit a PR to implement this feature, please check. / 如果你愿意提交 PR 实现此功能，请勾选。 / この機能を実装する PR を提出してくださる場合はチェックしてください。
+      options:
+        - label: |
+            I am willing to submit a PR to implement this feature.
+            我愿意提交 PR 实现此功能。
+            この機能を実装する PR を提出しても構いません。
+          required: false
