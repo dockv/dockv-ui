@@ -15,7 +15,7 @@
 <script setup lang="ts">
 /**
  * 组件总览卡片
- * 参考 Semi Design 组件总览的卡片结构：上方预览区 + 下方组件名。
+ * 上方预览区 + 下方组件名。
  * 传入 link 时整张卡片变为可点击链接。
  */
 defineProps<{
