@@ -6,6 +6,15 @@ export default defineConfig({
   title: "DockV UI",
   description: "A Web Component based UI library for React and Vue",
   head: [['link', { rel: 'icon', href: '/logo.png' }]],
+  // 让 Vue 编译器把所有 `dv-` 开头的标签视为原生自定义元素（Web Component），
+  // 而不是当作可注册的 Vue 组件去解析，从而消除 "Failed to resolve component: dv-*" 告警。
+  vue: {
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith('dv-'),
+      },
+    },
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: { src:'/logo.png',alt:'' },
@@ -20,6 +29,7 @@ export default defineConfig({
         items: [
           { text: 'Overview 组件总览', link: '/components' },
           { text: 'Icon | 图标', link: '/components/icon' },
+          { text: 'Button | 按钮', link: '/components/button' },
         ]
       },
       {
