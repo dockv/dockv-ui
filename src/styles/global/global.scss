@@ -11,7 +11,6 @@ body,
 body[theme-mode="light"],
 body.dockv-theme-mode-light,
 body .dockv-theme-mode-light,
-:host,
 :host[theme-mode="light"],
 :host(.dockv-theme-mode-light) {
   // 黑白色
@@ -100,7 +99,7 @@ body .dockv-theme-mode-light,
   --dockv-color-text-3: hsla(0, 0%, 0%, 0.35); // 最次要
 
   // 描边色
-  --dockv-color-border: hsla(214, 11%, 12%, .08);
+  --dockv-color-border: hsla(214, 11%, 12%, 0.08);
 
   // 数据颜色
   --dockv-color-data-0: #5768ff;
