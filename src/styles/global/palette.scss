@@ -3,7 +3,6 @@ body,                            // 全局默认
 body[theme-mode="light"],        // body 上有 light 属性
 body.dockv-theme-mode-light,     // body 上有 light 类（auto 模式自动注入）
 body .dockv-theme-mode-light,    // body 的子元素有 light 类
-:host,                           // Web Component 宿主
 :host[theme-mode="light"],       // Web Component 宿主有 light 属性
 :host(.dockv-theme-mode-light)   // Web Component 宿主有 light 类
 {
