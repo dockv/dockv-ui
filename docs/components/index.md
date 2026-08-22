@@ -6,6 +6,13 @@
 
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--dockv-spacing-md);">
 
+<Card title="Button | 按钮" link="/components/button">
+  <div style="display: flex; gap: var(--dockv-spacing-sm);">
+    <dv-button type="primary">按钮</dv-button>
+    <dv-button icon="material-symbols:check-box-rounded" type="success"></dv-button>
+  </div>
+</Card>
+
 <Card title="Icon | 图标" link="/components/icon">
   <div style="display: flex; gap: var(--dockv-spacing-sm);">
     <dv-icon icon="material-symbols:home" size="xl" color="var(--dockv-color-primary)"></dv-icon>

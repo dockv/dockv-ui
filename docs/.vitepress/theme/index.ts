@@ -16,6 +16,17 @@ import SpacingToken from "../components/SpacingToken.vue";
 import ThemeToggle from "../components/ThemeToggle.vue";
 
 /**
+ * 显式把自定义元素注册为 Vue 组件。
+ * 首选方案是 vite.config 的 isCustomElement；这里作为兜底，
+ * 确保任意上下文（含 Vue 模板直接调用）都不会产生 unresolved component 警告。
+ */
+const DockvButton = defineComponent({
+  setup(_props, { slots }) {
+    return () => h("dv-button", null, slots.default?.());
+  },
+});
+
+/**
  * 把 VitePress 的亮/暗状态同步到 body 的 theme-mode 属性，
  * 驱动 DockV 的 token 变量（global.scss）跟随主题切换。
  */
@@ -45,5 +56,6 @@ export default {
     app.component("RadiusToken", RadiusToken);
     app.component("SpacingToken", SpacingToken);
     app.component("ThemeToggle", ThemeToggle);
+    app.component("dv-button", DockvButton);
   },
 } satisfies Theme;

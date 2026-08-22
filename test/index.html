@@ -125,5 +125,112 @@
         <i class="fa-brands fa-cloudflare"></i>
       </dv-icon>
     </div>
+
+    <h2>Button · 基础与类型（type）</h2>
+    <div class="row">
+      <dv-button>默认（primary + solid）</dv-button>
+      <dv-button type="primary">主要</dv-button>
+      <dv-button type="secondary">次要</dv-button>
+      <dv-button type="tertiary">第三</dv-button>
+      <dv-button type="success">成功</dv-button>
+      <dv-button type="warning">警告</dv-button>
+      <dv-button type="danger">危险</dv-button>
+    </div>
+
+    <h2>Button · 变体（variant）</h2>
+    <div class="row">
+      <dv-button variant="solid">solid 深色填充</dv-button>
+      <dv-button variant="light">light 浅色填充</dv-button>
+      <dv-button variant="ghost">ghost 无背景</dv-button>
+      <dv-button variant="outline">outline 边框</dv-button>
+      <dv-button variant="soft">soft 浅色+边框</dv-button>
+      <dv-button variant="neutral">neutral 单色</dv-button>
+    </div>
+
+    <h2>Button · 尺寸（size）与固定宽度（width）</h2>
+    <div class="row">
+      <dv-button size="xs">超小</dv-button>
+      <dv-button size="sm">小</dv-button>
+      <dv-button size="md">中</dv-button>
+      <dv-button size="lg">大</dv-button>
+      <dv-button size="xl">超大</dv-button>
+      <dv-button width="120px">宽 120px</dv-button>
+      <dv-button width="50%">宽 50%</dv-button>
+    </div>
+
+    <h2>Button · 自定义颜色（color）</h2>
+    <div class="row">
+      <dv-button color="#39C5BB" variant="solid">初音未来绿</dv-button>
+      <dv-button color="rgb(255, 165, 0)" variant="light">镜音铃橙</dv-button>
+      <dv-button color="hsl(354, 68%, 54%)" variant="outline">重音teto红</dv-button>
+      <dv-button color="#4CAF50" variant="soft">自定义绿</dv-button>
+      <dv-button color="var(--dockv-color-danger)" variant="ghost">token 红</dv-button>
+    </div>
+
+    <h2>Button · 图标（icon 属性 / slot 图标）</h2>
+    <div class="row">
+      <dv-button icon="material-symbols:home">首页</dv-button>
+      <dv-button icon="material-symbols:arrow-forward" iconPosition="right">下一步</dv-button>
+      <dv-button icon="material-symbols:settings"></dv-button>
+      <dv-button icon="material-symbols:add" variant="outline"></dv-button>
+      <dv-button>
+        <dv-icon icon="material-symbols:home"></dv-icon>
+        slot 图标
+      </dv-button>
+      <dv-button iconPosition="right">
+        slot 图标在右
+        <dv-icon icon="material-symbols:home"></dv-icon>
+      </dv-button>
+    </div>
+
+    <h2>Button · 形状（square / circle）</h2>
+    <div class="row">
+      <dv-button icon="material-symbols:settings" square></dv-button>
+      <dv-button icon="material-symbols:close" circle></dv-button>
+      <dv-button circle>保存</dv-button>
+      <dv-button square>删</dv-button>
+      <dv-button circle type="warning">?</dv-button>
+    </div>
+
+    <h2>Button · 圆角（borderRadius）</h2>
+    <div class="row">
+      <dv-button borderRadius="0">直角</dv-button>
+      <dv-button borderRadius="0.75rem">小圆角</dv-button>
+      <dv-button borderRadius="9999px">胶囊</dv-button>
+      <dv-button borderRadius="var(--dockv-border-radius-xl)">token xl</dv-button>
+    </div>
+
+    <h2>Button · 禁用与加载（disabled / loading）</h2>
+    <div class="row">
+      <dv-button disabled>禁用</dv-button>
+      <dv-button type="danger" variant="outline" disabled>禁用描边</dv-button>
+      <dv-button loading>加载中</dv-button>
+      <dv-button loading type="danger" icon="material-symbols:delete">删除中</dv-button>
+      <dv-button disabled loading>禁用优先</dv-button>
+      <span class="tip">loading 状态图标应替换为 spinner；禁用优先于加载</span>
+    </div>
+
+    <h2>Button · 表单行为（native-type）</h2>
+    <div class="row">
+      <dv-button type="primary" native-type="submit">提交 submit</dv-button>
+      <dv-button type="success" native-type="reset">重置 reset</dv-button>
+    </div>
+
+    <h2>Button · 事件（dv-click）</h2>
+    <div class="row" id="button-click-box">
+      <dv-button>点我（dv-click）</dv-button>
+      <dv-button disabled>禁用（无事件）</dv-button>
+      <dv-button loading>加载（无事件）</dv-button>
+    </div>
+    <p class="tip" id="button-click-count">dv-click 次数：0</p>
+    <script>
+      // dv-click 会冒泡：在容器上统一监听即可计数
+      const box = document.getElementById("button-click-box");
+      let count = 0;
+      box.addEventListener("dv-click", () => {
+        count++;
+        document.getElementById("button-click-count").textContent = "dv-click 次数：" + count;
+      });
+    </script>
   </body>
 </html>

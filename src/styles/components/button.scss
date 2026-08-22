@@ -1,0 +1,337 @@
+@use "../../styles/global/global.scss" as *;
+
+:host {
+  // 尺寸预设（高度）
+  --dockv-button-xs-height: 24px;
+  --dockv-button-sm-height: 28px;
+  --dockv-button-md-height: 32px;
+  --dockv-button-lg-height: 36px;
+  --dockv-button-xl-height: 40px;
+
+  // 默认尺寸（md）+ 水平内边距，供 .dockv-button 读取；尺寸类再逐档覆盖
+  --dockv-button-height: var(--dockv-button-md-height);
+  --dockv-button-padding-left: 12px;
+  --dockv-button-padding-right: 12px;
+
+  // 间距
+  --dockv-button-gap: 6px;
+  --dockv-button-border-radius: var(--dockv-border-radius-sm);
+
+  // 禁用态（组件内兜底值；全局有同名 token 时会被覆盖）
+  --dockv-button-disabled-text: var(--dockv-color-text-3);
+  --dockv-button-disabled-bg: var(--dockv-color-fill-0);
+  --dockv-button-disabled-border: var(--dockv-color-border);
+
+  display: inline-block;
+  box-sizing: border-box; // 单独组件兜底
+  vertical-align: middle;
+}
+
+.dockv-button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: var(--dockv-button-height);
+  width: 100%; // 铺满块级按钮，通过外层 CSS 确定宽度
+  // 水平内边距由 CSS 变量驱动，支持外部覆盖；垂直方向靠定高 + flex 居中，无需内边距
+  padding-inline: var(--dockv-button-padding-left) var(--dockv-button-padding-right);
+
+  gap: var(--dockv-button-gap);
+
+  border: 1px solid transparent;
+  border-radius: var(--dockv-button-border-radius);
+
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  line-height: 24px;
+
+  color: var(--dockv-color-black);
+  background: transparent;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    background-color 0.1s,
+    color 0.1s,
+    border-color 0.1s;
+
+  // 按下瞬间关掉过渡：按压反馈要"一步到位"才跟手；悬浮保留极短过渡保持平滑
+  &:active {
+    transition: none;
+  }
+
+  &:disabled {
+    color: var(--dockv-button-disabled-text);
+    cursor: not-allowed;
+
+    &:hover,
+    &:active {
+      background: var(--dockv-button-disabled-bg);
+    }
+    &:focus-visible {
+      outline: none;
+    }
+  }
+}
+
+.dockv-button-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  // 高度由内部 <dv-icon size> 控制，宽度按图标原始比例自适应（自然撑开）
+}
+
+// ===== 尺寸预设（xs / sm / md / lg / xl）：只改高度 + 水平内边距 =====
+.dockv-button-xs {
+  --dockv-button-height: var(--dockv-button-xs-height);
+  --dockv-button-padding-left: 8px;
+  --dockv-button-padding-right: 8px;
+  --dockv-button-icononly-pad: 6px;
+}
+.dockv-button-sm {
+  --dockv-button-height: var(--dockv-button-sm-height);
+  --dockv-button-padding-left: 10px;
+  --dockv-button-padding-right: 10px;
+  --dockv-button-icononly-pad: 7px;
+}
+.dockv-button-md {
+  --dockv-button-height: var(--dockv-button-md-height);
+  --dockv-button-padding-left: 12px;
+  --dockv-button-padding-right: 12px;
+  --dockv-button-icononly-pad: 8px;
+}
+.dockv-button-lg {
+  --dockv-button-height: var(--dockv-button-lg-height);
+  --dockv-button-padding-left: 14px;
+  --dockv-button-padding-right: 14px;
+  --dockv-button-icononly-pad: 9px;
+}
+.dockv-button-xl {
+  --dockv-button-height: var(--dockv-button-xl-height);
+  --dockv-button-padding-left: 16px;
+  --dockv-button-padding-right: 16px;
+  --dockv-button-icononly-pad: 10px;
+}
+
+// ===== 纯图标按钮：按尺寸档位收窄水平内边距 =====
+// 图标自身（SVG viewBox）通常自带一圈透明留白，若沿用文字的常规内边距会显得"空"。
+// 内边距不写死，而是读取各尺寸档位预设的 --dockv-button-icononly-pad，随尺寸递增。
+// 双类选择器提升优先级，覆盖尺寸预设的水平内边距变量，垂直方向不覆盖。
+.dockv-button.dockv-button-icononly {
+  --dockv-button-padding-left: var(--dockv-button-icononly-pad);
+  --dockv-button-padding-right: var(--dockv-button-icononly-pad);
+}
+
+// ===== 形状：square 只管宽 = 高，circle 额外全圆角 =====
+// 双类选择器覆盖 .dockv-button 的水平内边距读取，紧凑形状不应用图标/文字的内边距。
+.dockv-button.dockv-button-square {
+  aspect-ratio: 1;
+  padding-inline: 0;
+}
+.dockv-button.dockv-button-circle {
+  aspect-ratio: 1;
+  padding-inline: 0;
+  border-radius: 9999px; // 大数值会被钳制为短边一半，正方形得正圆；不用 50%（宽高不等时是椭圆）
+}
+
+// ===== 语义色色板：每 type 预定义一组 --dockv-button-{variant}-* 变量 =====
+$button-types: "primary" "secondary" "tertiary" "success" "warning" "danger";
+
+@each $type in $button-types {
+  .dockv-button-#{$type} {
+    // solid 深色填充
+    --dockv-button-solid-font-color: var(--dockv-color-white);
+    --dockv-button-solid-bg-color: var(--dockv-color-#{$type});
+    --dockv-button-solid-bg-color-hover: var(--dockv-color-#{$type}-hover);
+    --dockv-button-solid-bg-color-active: var(--dockv-color-#{$type}-active);
+    --dockv-button-solid-ol-color-focus: var(--dockv-color-#{$type}-light-active);
+    --dockv-button-solid-border-color: transparent;
+
+    // light 浅色填充
+    --dockv-button-light-font-color: var(--dockv-color-#{$type});
+    --dockv-button-light-bg-color: var(--dockv-color-#{$type}-light);
+    --dockv-button-light-bg-color-hover: var(--dockv-color-#{$type}-light-hover);
+    --dockv-button-light-bg-color-active: var(--dockv-color-#{$type}-light-active);
+    --dockv-button-light-ol-color-focus: var(--dockv-color-#{$type}-light-active);
+    --dockv-button-light-border-color: transparent;
+
+    // ghost 无背景
+    --dockv-button-ghost-font-color: var(--dockv-color-#{$type});
+    --dockv-button-ghost-bg-color: transparent;
+    --dockv-button-ghost-bg-color-hover: var(--dockv-color-fill-0);
+    --dockv-button-ghost-bg-color-active: var(--dockv-color-fill-1);
+    --dockv-button-ghost-ol-color-focus: var(--dockv-color-#{$type}-light-active);
+    --dockv-button-ghost-border-color: transparent;
+
+    // outline 透明背景 + 边框
+    --dockv-button-outline-font-color: var(--dockv-color-#{$type});
+    --dockv-button-outline-bg-color: transparent;
+    --dockv-button-outline-bg-color-hover: var(--dockv-color-fill-0);
+    --dockv-button-outline-bg-color-active: var(--dockv-color-fill-1);
+    --dockv-button-outline-ol-color-focus: var(--dockv-color-#{$type}-light-active);
+    --dockv-button-outline-border-color: var(--dockv-color-#{$type});
+
+    // soft 浅色背景 + 边框
+    --dockv-button-soft-font-color: var(--dockv-color-#{$type});
+    --dockv-button-soft-bg-color: var(--dockv-color-#{$type}-light);
+    --dockv-button-soft-bg-color-hover: var(--dockv-color-#{$type}-light-hover);
+    --dockv-button-soft-bg-color-active: var(--dockv-color-#{$type}-light-active);
+    --dockv-button-soft-ol-color-focus: var(--dockv-color-#{$type}-light-active);
+    --dockv-button-soft-border-color: var(--dockv-color-#{$type});
+
+    // neutral 单色填充（不读语义色，用灰度）
+    --dockv-button-neutral-font-color: var(--dockv-color-text-0);
+    --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
+    --dockv-button-neutral-bg-color-hover: var(--dockv-color-fill-1);
+    --dockv-button-neutral-bg-color-active: var(--dockv-color-fill-2);
+    --dockv-button-neutral-ol-color-focus: var(--dockv-color-fill-2);
+    --dockv-button-neutral-border-color: transparent;
+  }
+}
+
+// ===== 视觉表现层：读取色板变量 =====
+.dockv-button-solid {
+  color: var(--dockv-button-solid-font-color);
+  background: var(--dockv-button-solid-bg-color);
+  border-color: var(--dockv-button-solid-border-color);
+
+  &:hover {
+    background: var(--dockv-button-solid-bg-color-hover);
+  }
+  &:active {
+    background: var(--dockv-button-solid-bg-color-active);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--dockv-button-solid-ol-color-focus);
+  }
+  &:disabled {
+    background: var(--dockv-button-disabled-bg) !important;
+  }
+}
+
+.dockv-button-light {
+  color: var(--dockv-button-light-font-color);
+  background: var(--dockv-button-light-bg-color);
+  border-color: var(--dockv-button-light-border-color);
+
+  &:hover {
+    background: var(--dockv-button-light-bg-color-hover);
+  }
+  &:active {
+    background: var(--dockv-button-light-bg-color-active);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--dockv-button-light-ol-color-focus);
+  }
+  &:disabled {
+    background: var(--dockv-button-disabled-bg) !important;
+  }
+}
+
+.dockv-button-ghost {
+  color: var(--dockv-button-ghost-font-color);
+  background: var(--dockv-button-ghost-bg-color);
+  border-color: var(--dockv-button-ghost-border-color);
+
+  &:hover {
+    background: var(--dockv-button-ghost-bg-color-hover);
+  }
+  &:active {
+    background: var(--dockv-button-ghost-bg-color-active);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--dockv-button-ghost-ol-color-focus);
+  }
+}
+
+.dockv-button-outline {
+  color: var(--dockv-button-outline-font-color);
+  background: var(--dockv-button-outline-bg-color);
+  border-color: var(--dockv-button-outline-border-color);
+
+  &:hover {
+    background: var(--dockv-button-outline-bg-color-hover);
+  }
+  &:active {
+    background: var(--dockv-button-outline-bg-color-active);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--dockv-button-outline-ol-color-focus);
+  }
+}
+
+// 带彩色描边的变体（outline / soft）禁用时，描边同步换中性禁用色，
+// 避免"背景灰、边框仍彩色"。填充型变体（solid / light / ghost / neutral）本就无边框，不参与。
+.dockv-button.dockv-button-outline:disabled,
+.dockv-button.dockv-button-soft:disabled {
+  border-color: var(--dockv-button-disabled-border);
+}
+
+.dockv-button-soft {
+  color: var(--dockv-button-soft-font-color);
+  background: var(--dockv-button-soft-bg-color);
+  border-color: var(--dockv-button-soft-border-color);
+
+  &:hover {
+    background: var(--dockv-button-soft-bg-color-hover);
+  }
+  &:active {
+    background: var(--dockv-button-soft-bg-color-active);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--dockv-button-soft-ol-color-focus);
+  }
+}
+
+.dockv-button-neutral {
+  color: var(--dockv-button-neutral-font-color);
+  background: var(--dockv-button-neutral-bg-color);
+  border-color: var(--dockv-button-neutral-border-color);
+
+  &:hover {
+    background: var(--dockv-button-neutral-bg-color-hover);
+  }
+  &:active {
+    background: var(--dockv-button-neutral-bg-color-active);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--dockv-button-neutral-ol-color-focus);
+  }
+}
+
+// ===== 加载中：显示转圈光标提示用户"处理中，先别点" =====
+// 交互拦截在 JS 层 _handleClick 完成；这里不用 pointer-events: none——
+// 它会让光标穿透、"cursor: wait" 不生效。故此处只负责光标与造型。
+.dockv-button-loading {
+  cursor: wait;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  // 按压时不让 :active 再加深——loading 表示"正在处理"，不应有可交互的按压反馈。
+  // 让按下态保持 hover 颜色，视觉连续、不闪变。
+  &.dockv-button-solid:active {
+    background: var(--dockv-button-solid-bg-color-hover);
+  }
+  &.dockv-button-light:active {
+    background: var(--dockv-button-light-bg-color-hover);
+  }
+  &.dockv-button-ghost:active {
+    background: var(--dockv-button-ghost-bg-color-hover);
+  }
+  &.dockv-button-outline:active {
+    background: var(--dockv-button-outline-bg-color-hover);
+  }
+  &.dockv-button-soft:active {
+    background: var(--dockv-button-soft-bg-color-hover);
+  }
+  &.dockv-button-neutral:active {
+    background: var(--dockv-button-neutral-bg-color-hover);
+  }
+}
