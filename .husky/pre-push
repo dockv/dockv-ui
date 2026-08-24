@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# 推送前执行完整构建（类型检查 + JS + 样式 + 类型声明 + 文档 + Storybook），构建失败则阻止推送
+pnpm build:all
