@@ -42,7 +42,7 @@ danger     ✓       ✓       ✓        ✓       ✓       ✓
 <dv-button color="#39C5BB">初音未来绿</dv-button>
 ```
 
-自定义颜色使用 `color` 属性。`color` 为非空字符串时，render 中注入内联 `<style>`，使用 `color-mix()` 动态生成 hover / active / focus 态颜色。覆盖范围包括 `solid` / `light` / `ghost` / `outline` / `soft` 五种变体（不包含 `neutral`）。
+自定义颜色使用 `color` 属性。`color` 为非空字符串时，render 中注入内联 `<style>`，使用 `color-mix()` 动态生成 hover / active / focus 态颜色。
 
 ```
 color                         → 直接作为 solid 背景色

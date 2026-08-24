@@ -184,12 +184,12 @@ $button-types: "primary" "secondary" "tertiary" "success" "warning" "danger";
     --dockv-button-soft-ol-color-focus: var(--dockv-color-#{$type}-light-active);
     --dockv-button-soft-border-color: var(--dockv-color-#{$type});
 
-    // neutral 单色填充（不读语义色，用灰度）
-    --dockv-button-neutral-font-color: var(--dockv-color-text-0);
+    // neutral 灰底 + 彩色文字（背景保留灰阶"画布"，文字用语义色强调）
+    --dockv-button-neutral-font-color: var(--dockv-color-#{$type});
     --dockv-button-neutral-bg-color: var(--dockv-color-fill-0);
     --dockv-button-neutral-bg-color-hover: var(--dockv-color-fill-1);
     --dockv-button-neutral-bg-color-active: var(--dockv-color-fill-2);
-    --dockv-button-neutral-ol-color-focus: var(--dockv-color-fill-2);
+    --dockv-button-neutral-ol-color-focus: var(--dockv-color-#{$type}-light-active);
     --dockv-button-neutral-border-color: transparent;
   }
 }

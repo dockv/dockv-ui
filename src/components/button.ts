@@ -131,7 +131,7 @@ export class Button extends LitElement {
    * 计算内联样式字符串
    *
    * `color` 非空时注入一组 `--dockv-button-{variant}-*` 变量覆盖 SCSS 预定义色板，
-   * 交互态颜色用 color-mix 动态生成；`neutral` 变体不参与覆盖。
+   * 交互态颜色用 color-mix 动态生成。
    * `borderRadius` 非空时覆盖圆角变量。
    *
    * @returns CSS style 属性值
@@ -167,6 +167,9 @@ export class Button extends LitElement {
         `--dockv-button-soft-bg-color-hover: color-mix(in srgb, ${c} 20%, transparent)`,
         `--dockv-button-soft-bg-color-active: color-mix(in srgb, ${c} 30%, transparent)`,
         `--dockv-button-soft-border-color: ${c}`,
+        // neutral 灰底 + 彩色文字（背景保持灰阶，仅覆盖文字色与 focus 描边）
+        `--dockv-button-neutral-font-color: ${c}`,
+        `--dockv-button-neutral-ol-color-focus: color-mix(in srgb, ${c} 40%, transparent)`,
       );
     }
     if (this.borderRadius) {

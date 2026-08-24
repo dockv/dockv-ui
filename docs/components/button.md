@@ -61,7 +61,7 @@ title: Button 按钮
   <dv-button variant="ghost">无背景</dv-button>
   <dv-button variant="outline">边框</dv-button>
   <dv-button variant="soft">浅色+边框</dv-button>
-  <dv-button variant="neutral">单色填充</dv-button>
+  <dv-button variant="neutral">灰底彩字</dv-button>
 </div>
 
 ```html
@@ -70,7 +70,7 @@ title: Button 按钮
 <dv-button variant="ghost">无背景</dv-button>
 <dv-button variant="outline">边框</dv-button>
 <dv-button variant="soft">浅色+边框</dv-button>
-<dv-button variant="neutral">单色填充</dv-button>
+<dv-button variant="neutral">灰底彩字</dv-button>
 ```
 
 | 值        | 说明                       | 示例                                              |
@@ -80,16 +80,13 @@ title: Button 按钮
 | `ghost`   | 无背景，悬浮时才出现灰色底 | <dv-button variant="ghost">无背景</dv-button>     |
 | `outline` | 透明背景 + 描边            | <dv-button variant="outline">边框</dv-button>     |
 | `soft`    | 浅色背景 + 描边            | <dv-button variant="soft">浅色+边框</dv-button>   |
-| `neutral` | 灰色单色填充，不读语义色   | <dv-button variant="neutral">单色填充</dv-button> |
+| `neutral` | 灰底 + 语义色文字          | <dv-button variant="neutral">灰底彩字</dv-button> |
 
-## 组合矩阵（6 × 5 + 1）
+## 组合矩阵（6 × 6）
 
 `type` 与 `variant` 自由组合，可以覆盖绝大多数按钮场景。
 
-横向 6 种 `type`，纵向 5 种 `variant`，30 种组合。加上 `neutral` 变体，共 31 种组合。
-
-> [!warning] 注意
-> `neutral` 变体会忽略所有 `type` 和自定义 `color`，强制使用黑白灰色单色填充。
+6 种 `type` × 6 种 `variant`，共 36 种组合。
 
 | type \ variant |                            solid                             |                            light                             |                            ghost                             |                            outline                             |                            soft                             |                            neutral                             |
 | :------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :------------------------------------------------------------: | :---------------------------------------------------------: | :------------------------------------------------------------: |
@@ -153,7 +150,7 @@ title: Button 按钮
 
 ## 颜色（color）
 
-支持 `HEX`、`RGB`、`HSL` 三种格式。
+支持 `HEX`、`RGB`、`HSL` 三种格式，以及预设颜色变量。
 
 悬浮、按下、聚焦等交互态颜色由 `color-mix()` 自动生成，无需手动配置：
 
@@ -163,6 +160,7 @@ title: Button 按钮
   <dv-button color="hsl(354, 68%, 54%)" variant="outline">重音teto红</dv-button>
   <dv-button color="#4CAF50" variant="soft">自定义绿</dv-button>
   <dv-button color="var(--dockv-color-vocaloid-luotianyi)" variant="soft">使用预设色盘 - 洛天依蓝</dv-button>
+  <dv-button color="#0479b4" variant="neutral">DockV 蓝</dv-button>
 </div>
 
 ```html
@@ -173,6 +171,7 @@ title: Button 按钮
 <dv-button color="var(--dockv-color-vocaloid-luotianyi)" variant="soft">
   使用预设色盘 - 洛天依蓝
 </dv-button>
+<dv-button color="#0479b4" variant="neutral">DockV 蓝</dv-button>
 ```
 
 > [!info] 原理
