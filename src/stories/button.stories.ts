@@ -145,7 +145,7 @@ export const Variants: Story = {
       <dv-button variant="ghost">无背景</dv-button>
       <dv-button variant="outline">边框</dv-button>
       <dv-button variant="soft">浅色+边框</dv-button>
-      <dv-button variant="neutral">单色填充</dv-button>
+      <dv-button variant="neutral">灰底彩字</dv-button>
     </div>
   `,
 };
