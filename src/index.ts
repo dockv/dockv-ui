@@ -3,9 +3,19 @@ export { Icon } from "./components/icon.ts";
 
 // dv-button 按钮组件
 export { Button } from "./components/button.ts";
+export type { ButtonType, ButtonVariant, ButtonSize, NativeType } from "./components/button.ts";
+
+// dv-notification 通知组件
+export { Notification, NotificationCard } from "./components/notification.ts";
 export type {
-  ButtonType,
-  ButtonVariant,
-  ButtonSize,
-  NativeType,
-} from "./components/button.ts";
+  NotificationType,
+  NotificationPosition,
+  NotificationVariant,
+  NotificationOptions,
+  NotificationGlobalConfig,
+  NotificationGlobalConfigInput,
+  NotificationSnapshot,
+  ProgressOption,
+  ProgressColor,
+  ProgressColorStop,
+} from "./components/notification.ts";

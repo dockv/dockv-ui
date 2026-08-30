@@ -10,6 +10,7 @@ import Card from "../components/Card.vue";
 import ColorToken from "../components/ColorToken.vue";
 import FontToken from "../components/FontToken.vue";
 import IconSizeToken from "../components/IconSizeToken.vue";
+import NotificationPositionDemo from "../components/NotificationPositionDemo.vue";
 import Palette from "../components/Palette.vue";
 import RadiusToken from "../components/RadiusToken.vue";
 import SpacingToken from "../components/SpacingToken.vue";
@@ -23,6 +24,12 @@ import ThemeToggle from "../components/ThemeToggle.vue";
 const DockvButton = defineComponent({
   setup(_props, { slots }) {
     return () => h("dv-button", null, slots.default?.());
+  },
+});
+
+const DockvNotification = defineComponent({
+  setup(_props, { slots }) {
+    return () => h("dv-notification", null, slots.default?.());
   },
 });
 
@@ -53,9 +60,11 @@ export default {
     app.component("ColorToken", ColorToken);
     app.component("FontToken", FontToken);
     app.component("IconSizeToken", IconSizeToken);
+    app.component("NotificationPositionDemo", NotificationPositionDemo);
     app.component("RadiusToken", RadiusToken);
     app.component("SpacingToken", SpacingToken);
     app.component("ThemeToggle", ThemeToggle);
     app.component("dv-button", DockvButton);
+    app.component("dv-notification", DockvNotification);
   },
 } satisfies Theme;
