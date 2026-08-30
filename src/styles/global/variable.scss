@@ -17,6 +17,9 @@ body,
   --dockv-font-weight-normal: 400;
   --dockv-font-weight-bold: 600;
 
+  // 行高 (Line Height) 无单位乘数，随字号缩放（1.571 × md 字号 0.875rem ≈ 22px）
+  --dockv-line-height: 1.571;
+
   // 字体 (Font Family)
   --dockv-font-family-base:
     "Noto Sans",          /* English & Number & Symbol */

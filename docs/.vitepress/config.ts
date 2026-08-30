@@ -38,6 +38,12 @@ export default defineConfig({
         ]
       },
       {
+        text: '反馈类',
+        items: [
+          { text: 'Notification | 通知', link: '/components/notification' },
+        ]
+      },
+      {
         text: 'Tokens 设计变量',
         link: '/tokens'
       },

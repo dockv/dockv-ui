@@ -21,4 +21,10 @@
   </div>
 </Card>
 
+<Card title="Notification | 通知" link="/components/notification">
+  <div style="transform: scale(0.6); transform-origin: center; width: 320px; margin: 0 auto;">
+    <dv-notification type="info" title="新消息" content="你有 3 条未读通知"></dv-notification>
+  </div>
+</Card>
+
 </div>

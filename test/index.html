@@ -233,5 +233,351 @@
         document.getElementById("button-click-count").textContent = "dv-click 次数：" + count;
       });
     </script>
+
+    <hr />
+
+    <!-- ==================== Notification 测试 ==================== -->
+    <!-- 约定：一按钮一函数，函数名即按钮职责；事件按 id 显式绑定，不搞大 switch 分发 -->
+    <section id="notification-tests">
+      <h2>Notification · 基础用法</h2>
+      <div class="row">
+        <dv-button id="btn-n-info">info</dv-button>
+        <dv-button id="btn-n-success">success</dv-button>
+        <dv-button id="btn-n-warning">warning</dv-button>
+        <dv-button id="btn-n-error">error</dv-button>
+        <dv-button id="btn-n-no-type">不设置 type</dv-button>
+      </div>
+
+      <h2>Notification · 视觉变体（variant）</h2>
+      <div class="row">
+        <dv-button id="btn-v-normal">normal</dv-button>
+        <dv-button id="btn-v-soft">soft</dv-button>
+      </div>
+
+      <h2>Notification · 强调色（color / type 语义色）</h2>
+      <div class="row">
+        <dv-button id="btn-c-custom">自定义强调色</dv-button>
+        <dv-button id="btn-c-error">type=error 语义色</dv-button>
+      </div>
+
+      <h2>Notification · 图标（icon）</h2>
+      <div class="row">
+        <dv-button id="btn-i-custom">自定义图标</dv-button>
+        <dv-button id="btn-i-hidden">icon=false 隐藏</dv-button>
+        <dv-button id="btn-i-empty">icon='' 用默认</dv-button>
+      </div>
+
+      <h2>Notification · 位置（position）</h2>
+      <div class="row">
+        <dv-button id="btn-p-top">top</dv-button>
+        <dv-button id="btn-p-topLeft">topLeft</dv-button>
+        <dv-button id="btn-p-topRight">topRight</dv-button>
+        <dv-button id="btn-p-bottom">bottom</dv-button>
+        <dv-button id="btn-p-bottomLeft">bottomLeft</dv-button>
+        <dv-button id="btn-p-bottomRight">bottomRight</dv-button>
+      </div>
+
+      <h2>Notification · 停留与进度条（duration / progress）</h2>
+      <div class="row">
+        <dv-button id="btn-d-long">duration=10000</dv-button>
+        <dv-button id="btn-d-zero">duration=0 不自动关</dv-button>
+        <dv-button id="btn-prog-false">progress=false 关闭</dv-button>
+        <dv-button id="btn-prog-single">progress.color 单色</dv-button>
+        <dv-button id="btn-prog-stops">progress.color 分档</dv-button>
+        <dv-button id="btn-prog-top">progress 置顶</dv-button>
+      </div>
+
+      <h2>Notification · 暂停（pauseOnHover）</h2>
+      <div class="row">
+        <dv-button id="btn-pause-close">关闭暂停</dv-button>
+      </div>
+
+      <h2>Notification · 富内容（content DOM 节点）</h2>
+      <div class="row">
+        <dv-button id="btn-dom">带图片与链接的正文</dv-button>
+      </div>
+
+      <h2>Notification · 更新（update）</h2>
+      <div class="row">
+        <dv-button id="btn-update">就地更新内容</dv-button>
+      </div>
+
+      <h2>Notification · 关闭与查询（close / get / getAll / destroyAll）</h2>
+      <div class="row">
+        <dv-button id="btn-close-one">close 指定那条</dv-button>
+        <dv-button id="btn-get">get 单查</dv-button>
+        <dv-button id="btn-getAll">getAll 全查</dv-button>
+        <dv-button id="btn-destroy">destroyAll</dv-button>
+      </div>
+      <pre id="query-output-adv"></pre>
+
+      <h2>Notification · 回调（onClick / onClose）</h2>
+      <div class="row">
+        <dv-button id="btn-callback">打开带回调的通知</dv-button>
+        <code id="callback-count">onClick=0 onClose=0</code>
+      </div>
+
+      <h2>Notification · 重复 id / 更新不存在 id 抛错</h2>
+      <div class="row">
+        <dv-button id="btn-dup">open 重复 id</dv-button>
+        <dv-button id="btn-update-missing">update 不存在 id</dv-button>
+      </div>
+
+      <h2>Notification · 全局配置（config）</h2>
+      <div class="row">
+        <dv-button id="btn-config-chg">改全局（右下+偏移）</dv-button>
+        <dv-button id="btn-config-reset">还原全局</dv-button>
+      </div>
+
+      <script type="module">
+        // 显式 import 构建产物（模块缓存放量去重，不重复执行很多对应定义代码；
+        // 由于 module 按文档顺序执行，这里必然晚于顶部加载语句，DockvUI 全局已就绪）
+        import "../dist/dockv-ui.umd.js";
+        const N = DockvUI.Notification;
+        const logQuery = (msg) => {
+          document.getElementById("query-output-adv").textContent = msg;
+        };
+
+        /** 绑定单个按钮 => 单个处理函数
+         * @param {string} id - dv-button 的 id
+         * @param {Function} fn - 点击处理逻辑
+         */
+        function bindCmd(id, fn) {
+          document.getElementById(id).addEventListener("dv-click", fn);
+        }
+
+        // —— 基础用法 ——
+        bindCmd("btn-n-info", () => N.info({ title: "提示", content: "普通通知", duration: 4000 }));
+        bindCmd("btn-n-success", () =>
+          N.success({ title: "成功", content: "保存成功", duration: 4000 }),
+        );
+        bindCmd("btn-n-warning", () =>
+          N.warning({ title: "警告", content: "请注意", duration: 4000 }),
+        );
+        bindCmd("btn-n-error", () =>
+          N.error({ title: "失败", content: "权限不足", duration: 4000 }),
+        );
+        bindCmd("btn-n-no-type", () =>
+          N.open({ title: "不设置", content: "无图标，灰色第三色", duration: 4000 }),
+        );
+
+        // —— 视觉变体 ——
+        bindCmd("btn-v-normal", () =>
+          N.info({ title: "normal", content: "普通视觉", variant: "normal", duration: 4000 }),
+        );
+        bindCmd("btn-v-soft", () =>
+          N.info({ title: "soft", content: "多彩视觉", variant: "soft", duration: 4000 }),
+        );
+
+        // —— 强调色 ——
+        bindCmd("btn-c-custom", () =>
+          N.info({ title: "自定义", content: "初音未来绿", color: "#39C5BB", duration: 4000 }),
+        );
+        bindCmd("btn-c-error", () =>
+          N.open({ type: "error", title: "error", content: "错误语义色", duration: 4000 }),
+        );
+
+        // —— 图标 ——
+        bindCmd("btn-i-custom", () =>
+          N.info({
+            title: "自定义",
+            content: "用 home 图标",
+            icon: "material-symbols:home",
+            duration: 4000,
+          }),
+        );
+        bindCmd("btn-i-hidden", () =>
+          N.info({ title: "隐藏", content: "无图标", icon: false, duration: 4000 }),
+        );
+        bindCmd("btn-i-empty", () =>
+          N.info({ title: "默认", content: "info 默认图标", icon: "", duration: 4000 }),
+        );
+
+        // —— 位置 ——
+        bindCmd("btn-p-top", () =>
+          N.info({ position: "top", title: "top", content: "顶部", duration: 3000 }),
+        );
+        bindCmd("btn-p-topLeft", () =>
+          N.info({ position: "topLeft", title: "topLeft", content: "顶左", duration: 3000 }),
+        );
+        bindCmd("btn-p-topRight", () =>
+          N.info({ position: "topRight", title: "topRight", content: "顶右", duration: 3000 }),
+        );
+        bindCmd("btn-p-bottom", () =>
+          N.info({ position: "bottom", title: "bottom", content: "底部", duration: 3000 }),
+        );
+        bindCmd("btn-p-bottomLeft", () =>
+          N.info({ position: "bottomLeft", title: "bottomLeft", content: "底左", duration: 3000 }),
+        );
+        bindCmd("btn-p-bottomRight", () =>
+          N.info({
+            position: "bottomRight",
+            title: "bottomRight",
+            content: "底右",
+            duration: 3000,
+          }),
+        );
+
+        // —— 停留与进度条 ——
+        bindCmd("btn-d-long", () =>
+          N.info({ title: "10 秒", content: "停留 10s", duration: 10000 }),
+        );
+        bindCmd("btn-d-zero", () =>
+          N.info({ title: "常驻", content: "duration=0 不自动关", duration: 0 }),
+        );
+        bindCmd("btn-prog-false", () =>
+          N.info({ title: "无进度条", content: "progress=false", progress: false, duration: 8000 }),
+        );
+        bindCmd("btn-prog-single", () =>
+          N.info({
+            title: "单色",
+            content: "青色进度条",
+            progress: { color: "#39C5BB" },
+            duration: 8000,
+          }),
+        );
+        bindCmd("btn-prog-stops", () =>
+          N.info({
+            title: "分档",
+            content: "进度随剩余时间变色",
+            duration: 8000,
+            progress: {
+              color: [
+                { color: "#f56c6c", percentage: 20 },
+                { color: "#e6a23c", percentage: 40 },
+                { color: "#5cb87a", percentage: 60 },
+                { color: "#1989fa", percentage: 80 },
+                { color: "#6f7ad3", percentage: 100 },
+              ],
+            },
+          }),
+        );
+        bindCmd("btn-prog-top", () =>
+          N.info({
+            title: "置顶",
+            content: "进度条在上",
+            progress: { position: "top" },
+            duration: 8000,
+          }),
+        );
+
+        // —— 暂停 ——
+        bindCmd("btn-pause-close", () =>
+          N.info({
+            title: "关闭暂停",
+            content: "hover 不暂停倒计时",
+            pauseOnHover: false,
+            duration: 6000,
+          }),
+        );
+
+        // —— 富内容（原生 DOM 节点） ——
+        bindCmd("btn-dom", () => {
+          const wrap = document.createElement("div");
+          wrap.innerHTML = `<span>DockV UI</span> 详情见 <a href="https://ui.dockv.cc">官网</a>`;
+          N.info({ title: "富内容", content: wrap, duration: 8000 });
+        });
+
+        // —— 更新 ——
+        bindCmd("btn-update", () => {
+          const id = N.info({ title: "更新前", content: "1/3", duration: 12000 });
+          N.update(id, { content: "2/3" });
+          setTimeout(
+            () => N.update(id, { type: "success", title: "更新后", content: "3/3" }),
+            1200,
+          );
+        });
+
+        // —— 关闭 / 查询 / 销毁 ——
+        bindCmd("btn-close-one", () => {
+          const id = N.info({ title: "要被关闭", content: "2 秒后 close", duration: 0 });
+          setTimeout(() => N.close(id), 2000);
+        });
+        bindCmd("btn-get", () => {
+          const id = N.info({ title: "待查询", content: "用 get 查它", duration: 6000 });
+          const snap = N.get(id);
+          logQuery(
+            `get("${id}") -> title="${snap?.title}" remaining=${snap?.remaining}ms position=${snap?.position}`,
+          );
+        });
+        bindCmd("btn-getAll", () => {
+          const all = N.getAll();
+          logQuery(
+            `getAll().length=${all.length}\n` +
+              all
+                .map((n) => `- [${n.id}] "${n.title}" remaining=${n.remaining}ms ${n.position}`)
+                .join("\n"),
+          );
+        });
+        bindCmd("btn-destroy", () => {
+          N.destroyAll();
+          logQuery(`destroyAll 后 getAll().length=${N.getAll().length}`);
+        });
+
+        // —— 回调 ——
+        bindCmd("btn-callback", () => {
+          const counts = { click: 0, close: 0 };
+          N.open({
+            title: "带回调",
+            content: "点击通知体 / 关闭按钮 / 自动到期，观察计数",
+            duration: 0,
+            onClick: () => {
+              counts.click++;
+              document.getElementById("callback-count").textContent =
+                `onClick=${counts.click} onClose=${counts.close}`;
+            },
+            onClose: () => {
+              counts.close++;
+              document.getElementById("callback-count").textContent =
+                `onClick=${counts.click} onClose=${counts.close}`;
+            },
+          });
+        });
+
+        // —— 重复 id / 更新不存在 id ——
+        bindCmd("btn-dup", () => {
+          N.open({ id: "dup-adv", title: "第一条", duration: 10000 });
+          try {
+            N.open({ id: "dup-adv", title: "重复 id" });
+          } catch (err) {
+            N.error({
+              title: "捕获到错误",
+              content: err instanceof Error ? err.message : String(err),
+              duration: 4000,
+            });
+          }
+        });
+        bindCmd("btn-update-missing", () => {
+          try {
+            N.update("not-exist-id", { title: "xxx" });
+          } catch (err) {
+            N.error({
+              title: "捕获到错误",
+              content: err instanceof Error ? err.message : String(err),
+              duration: 4000,
+            });
+          }
+        });
+
+        // —— 全局配置 ——
+        bindCmd("btn-config-chg", () => {
+          N.config({ duration: 1500, position: "bottomRight", right: "64px", bottom: "48px" });
+          N.info({ title: "配置已改", content: "1.5s 后消失，右下角" });
+        });
+        bindCmd("btn-config-reset", () => {
+          N.config({ duration: 3000, position: "topRight", right: "24px", top: "24px" });
+          N.info({ title: "还原全局", content: "右上角，默认 3s" });
+        });
+      </script>
+    </section>
+
+    <h2>Notification · API 对照清单</h2>
+    <ul class="tip">
+      <li><code>open / info / success / warning / error</code>：创建通知</li>
+      <li><code>update(id)</code>：就地更新（改内容/类型/标题）</li>
+      <li><code>close(id) / destroyAll()</code>：关闭单个 / 全部</li>
+      <li><code>get(id) / getAll()</code>：查询存活通知（数量/标题/剩余时长/位置）</li>
+      <li><code>config()</code>：全局默认配置（时长/位置/偏移等）</li>
+    </ul>
   </body>
 </html>

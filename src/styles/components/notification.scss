@@ -1,0 +1,281 @@
+@use "../../styles/global/global.scss" as *;
+
+:host {
+  // 布局与外观
+  --dockv-notification-width: 320px;
+  --dockv-notification-padding: 14px 16px;
+  --dockv-notification-border-radius: var(--dockv-border-radius-md);
+  --dockv-notification-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --dockv-notification-icon-size: 24px;
+
+  // 进度条
+  --dockv-notification-progress: 100%;
+  --dockv-notification-progress-color: var(--dockv-notification-accent-color);
+  --dockv-notification-progress-position: bottom;
+  --dockv-notification-progress-height: 3px;
+
+  // 动画（进入 / 退出拆分两套时长与缓动，避免退出拖沓）
+  --dockv-notification-animation-duration: 240ms;
+  --dockv-notification-animation-exit-duration: 240ms;
+  --dockv-notification-animation-easing: cubic-bezier(0.62, 0.63, 0, 1.4); // 进入动画
+  --dockv-notification-animation-exit-easing: cubic-bezier(0.4, 0, 1, 1); // 退出动画
+  --dockv-notification-animation-offset: 24px;
+
+  display: block;
+  box-sizing: border-box;
+}
+
+// 视觉变体：背景必须用不透明，禁用半透明
+.dockv-notification-normal {
+  --dockv-notification-bg-color: var(--dockv-color-bg-3);
+  --dockv-notification-border-color: var(--dockv-color-border);
+}
+
+// soft 多彩模式下，背景和外边框也是跟随颜色走的，所以需要使用 color-mix 动态混合颜色
+.dockv-notification-soft {
+  --dockv-notification-bg-color: var(
+    --dockv-notification-soft-bg-color,
+    color-mix(in srgb, var(--dockv-notification-accent-color) 10%, var(--dockv-color-bg-3))
+  );
+  --dockv-notification-border-color: var(
+    --dockv-notification-soft-border-color,
+    var(--dockv-notification-accent-color)
+  );
+}
+
+// 各 type 的默认强调色（color 属性覆盖时由内联 style 覆盖 accent-color）
+// 对应到设计 token 的色盘上
+.dockv-notification-type-info {
+  --dockv-notification-accent-color: var(--dockv-color-primary);
+}
+.dockv-notification-type-success {
+  --dockv-notification-accent-color: var(--dockv-color-success);
+}
+.dockv-notification-type-warning {
+  --dockv-notification-accent-color: var(--dockv-color-warning);
+}
+.dockv-notification-type-error {
+  --dockv-notification-accent-color: var(--dockv-color-danger);
+}
+
+:where(.dockv-notification-card) {
+  // 默认兜底：未设置 type 时使用第三色（tertiary）
+  --dockv-notification-accent-color: var(--dockv-color-tertiary);
+}
+
+.dockv-notification-card {
+  box-sizing: border-box;
+  position: relative; // 进度条 absolute 定位锚点
+  display: flex;
+  gap: 10px;
+  width: var(--dockv-notification-width);
+  padding: var(--dockv-notification-padding);
+  background: var(--dockv-notification-bg-color);
+  border: 1px solid var(--dockv-notification-border-color);
+  border-radius: var(--dockv-notification-border-radius);
+  box-shadow: var(--dockv-notification-shadow);
+  color: var(--dockv-color-text-0);
+  font-size: var(--dockv-font-size-md);
+  line-height: var(--dockv-line-height);
+  overflow: hidden; // 保证进度条圆角裁剪
+  cursor: default;
+}
+
+.dockv-notification-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dockv-notification-icon-size);
+  height: var(--dockv-notification-icon-size);
+  flex-shrink: 0;
+  color: var(--dockv-notification-accent-color);
+}
+
+.dockv-notification-body {
+  flex: 1;
+  min-width: 0;
+  // 为右上角固定的关闭按钮（24px 宽 + 16px 右间距）预留空间，避免长正文被遮挡
+  // 按钮为绝对定位，标题的最右侧靠此处限制
+  margin-right: 48px;
+}
+
+.dockv-notification-title {
+  font-weight: var(--dockv-font-weight-bold);
+  font-size: var(--dockv-font-size-md);
+  line-height: var(--dockv-line-height);
+  color: var(--dockv-color-text-0);
+  margin-bottom: 2px;
+  word-break: break-word;
+}
+
+.dockv-notification-content {
+  color: var(--dockv-color-text-1);
+  word-break: break-word;
+}
+
+.dockv-notification-close {
+  position: absolute;
+  // 固定在容器右上角，边距与卡片 padding（14px 16px）一致
+  // 保证与左侧图标/标题的水平间距对齐
+  top: 14px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+// 进度条：由管理器按倒计时刷新 --dockv-notification-progress
+.dockv-notification-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--dockv-notification-progress, 100%);
+  height: var(--dockv-notification-progress-height);
+  background: var(--dockv-notification-progress-color, var(--dockv-notification-accent-color));
+  pointer-events: none;
+}
+/*
+  soft 变体边框与进度条同色（强调色），两者贴底融合会让进度条视觉变粗；
+  故进度条高度减掉边框厚度（1px），使 soft 与 normal 的进度条视觉厚度一致。
+  动态计算可以保留 CSS token 变量，方便开发者二次定义。 
+ */
+.dockv-notification-soft .dockv-notification-progress {
+  height: calc(var(--dockv-notification-progress-height) - 1px);
+}
+
+// 进度条置顶（progress.position = 'top'，管理器写入 data 属性）
+:host([data-progress-position="top"]) .dockv-notification-progress {
+  top: 0;
+  bottom: auto;
+}
+
+// 进入动画（fade + slide-in，方向由 data-position 决定）
+.dockv-notification-show {
+  animation: dockv-notif-enter-right var(--dockv-notification-animation-duration)
+    var(--dockv-notification-animation-easing) forwards;
+}
+
+:host([data-position="top"]) .dockv-notification-show {
+  animation-name: dockv-notif-enter-down;
+}
+:host([data-position="topLeft"]) .dockv-notification-show,
+:host([data-position="bottomLeft"]) .dockv-notification-show {
+  animation-name: dockv-notif-enter-left;
+}
+:host([data-position="topRight"]) .dockv-notification-show,
+:host([data-position="bottomRight"]) .dockv-notification-show {
+  animation-name: dockv-notif-enter-right;
+}
+:host([data-position="bottom"]) .dockv-notification-show {
+  animation-name: dockv-notif-enter-up;
+}
+
+// 退出动画（fade + translate back）
+.dockv-notification-hide {
+  animation: dockv-notif-exit-right var(--dockv-notification-animation-exit-duration)
+    var(--dockv-notification-animation-exit-easing) forwards;
+}
+
+:host([data-position="top"]) .dockv-notification-hide {
+  animation-name: dockv-notif-exit-down;
+}
+:host([data-position="topLeft"]) .dockv-notification-hide,
+:host([data-position="bottomLeft"]) .dockv-notification-hide {
+  animation-name: dockv-notif-exit-left;
+}
+:host([data-position="topRight"]) .dockv-notification-hide,
+:host([data-position="bottomRight"]) .dockv-notification-hide {
+  animation-name: dockv-notif-exit-right;
+}
+:host([data-position="bottom"]) .dockv-notification-hide {
+  animation-name: dockv-notif-exit-up;
+}
+
+@keyframes dockv-notif-enter-down {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--dockv-notification-animation-offset)));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dockv-notif-exit-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--dockv-notification-animation-offset)));
+  }
+}
+
+@keyframes dockv-notif-enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--dockv-notification-animation-offset));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dockv-notif-exit-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(var(--dockv-notification-animation-offset));
+  }
+}
+
+@keyframes dockv-notif-enter-left {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--dockv-notification-animation-offset)));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes dockv-notif-exit-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--dockv-notification-animation-offset)));
+  }
+}
+
+@keyframes dockv-notif-enter-right {
+  from {
+    opacity: 0;
+    transform: translateX(var(--dockv-notification-animation-offset));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes dockv-notif-exit-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(var(--dockv-notification-animation-offset));
+  }
+}
