@@ -6,6 +6,14 @@
 
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--dockv-spacing-md);">
 
+<Card title="Icon | 图标" link="/components/icon">
+  <div style="display: flex; gap: var(--dockv-spacing-sm);">
+    <dv-icon icon="material-symbols:home" size="xl" color="var(--dockv-color-primary)"></dv-icon>
+    <dv-icon icon="material-symbols:star" size="xl" color="var(--dockv-color-warning)"></dv-icon>
+    <dv-icon icon="material-symbols:check-circle" size="xl" color="var(--dockv-color-success)"></dv-icon>
+  </div>
+</Card>
+
 <Card title="Button | 按钮" link="/components/button">
   <div style="display: flex; gap: var(--dockv-spacing-sm);">
     <dv-button type="primary">按钮</dv-button>
@@ -13,12 +21,11 @@
   </div>
 </Card>
 
-<Card title="Icon | 图标" link="/components/icon">
-  <div style="display: flex; gap: var(--dockv-spacing-sm);">
-    <dv-icon icon="material-symbols:home" size="xl" color="var(--dockv-color-primary)"></dv-icon>
-    <dv-icon icon="material-symbols:star" size="xl" color="var(--dockv-color-warning)"></dv-icon>
-    <dv-icon icon="material-symbols:check-circle" size="xl" color="var(--dockv-color-success)"></dv-icon>
-  </div>
+<Card title="Divider | 分割线" link="/components/divider">
+  <dv-divider color="#666666" style="--dockv-divider-width: 2px;">
+    <dv-icon icon="material-symbols:safety-divider-rounded"></dv-icon>
+    <span style="margin-left: 6px;">分割线</span>
+  </dv-divider>
 </Card>
 
 <Card title="Notification | 通知" link="/components/notification">

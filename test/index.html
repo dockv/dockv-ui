@@ -579,5 +579,73 @@
       <li><code>get(id) / getAll()</code>：查询存活通知（数量/标题/剩余时长/位置）</li>
       <li><code>config()</code>：全局默认配置（时长/位置/偏移等）</li>
     </ul>
+
+    <hr />
+
+    <!-- ==================== Divider 测试 ==================== -->
+    <h2>Divider · 基础用法（默认横向无内容）</h2>
+    <div>
+      <p>上面的内容</p>
+      <dv-divider></dv-divider>
+      <p>下面的内容</p>
+    </div>
+
+    <h2>Divider · 带内容（slot：文字 / 图标混排）</h2>
+    <div class="row" style="flex-direction: column; align-items: stretch">
+      <dv-divider>或</dv-divider>
+      <dv-divider>
+        <dv-icon icon="material-symbols:sailing-outline-rounded"></dv-icon>
+        <span>已经划到世界尽头了哦</span>
+        <dv-icon icon="material-symbols:sailing-outline-rounded"></dv-icon>
+      </dv-divider>
+    </div>
+
+    <h2>Divider · 内容位置（contentPosition）</h2>
+    <div class="row" style="flex-direction: column; align-items: stretch">
+      <dv-divider contentPosition="left">靠左</dv-divider>
+      <dv-divider>居中（默认）</dv-divider>
+      <dv-divider contentPosition="right">靠右</dv-divider>
+      <dv-divider contentPosition="left" style="--dockv-divider-min-line: 30%">靠左 + 短线 30%</dv-divider>
+    </div>
+
+    <h2>Divider · 方向（direction=vertical）</h2>
+    <div class="row">
+      <dv-button variant="ghost">首页</dv-button>
+      <dv-divider direction="vertical"></dv-divider>
+      <dv-button variant="ghost">文档</dv-button>
+      <dv-divider direction="vertical"></dv-divider>
+      <dv-button variant="ghost">关于</dv-button>
+    </div>
+
+    <h2>Divider · 线型（borderStyle）与线宽（--dockv-divider-width）</h2>
+    <div class="row" style="flex-direction: column; align-items: stretch">
+      <dv-divider>实线</dv-divider>
+      <dv-divider borderStyle="dashed">虚线 1px（断点不明显）</dv-divider>
+      <dv-divider borderStyle="dashed" style="--dockv-divider-width: 3px">虚线 3px</dv-divider>
+      <dv-divider borderStyle="dotted" style="--dockv-divider-width: 4px">点线 4px</dv-divider>
+    </div>
+
+    <h2>Divider · 自定义颜色（color）</h2>
+    <div class="row" style="flex-direction: column; align-items: stretch">
+      <dv-divider color="var(--dockv-color-vocaloid-miku)">初音未来</dv-divider>
+      <dv-divider color="var(--dockv-color-vocaloid-luka)">巡音流歌</dv-divider>
+      <dv-divider color="#66CCFF">自定义蓝</dv-divider>
+    </div>
+
+    <h2>Divider · 间距控制（margin / margin-inline / 内容缝隙）</h2>
+    <div>
+      <p>上段内容</p>
+      <dv-divider style="margin: 24px 0">上下间距 24px</dv-divider>
+      <p>下段内容</p>
+    </div>
+    <div class="row" style="margin: 12px 0">
+      <span>首页</span>
+      <dv-divider direction="vertical" style="margin-inline: 12px"></dv-divider>
+      <span>文档</span>
+    </div>
+    <div class="row" style="flex-direction: column; align-items: stretch">
+      <dv-divider>默认缝隙（1em）</dv-divider>
+      <dv-divider><span style="padding: 0 24px">加宽缝隙</span></dv-divider>
+    </div>
   </body>
 </html>
