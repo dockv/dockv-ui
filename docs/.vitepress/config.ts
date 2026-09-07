@@ -38,6 +38,12 @@ export default defineConfig({
         ]
       },
       {
+        text: '布局',
+        items: [
+          { text: 'Divider | 分隔线', link: '/components/divider' },
+        ]
+      },
+      {
         text: '反馈类',
         items: [
           { text: 'Notification | 通知', link: '/components/notification' },

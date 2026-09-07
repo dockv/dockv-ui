@@ -1,0 +1,78 @@
+@use "../../styles/global/global.scss" as *;
+
+:host {
+  // 线型
+  --dockv-divider-border-style: solid;
+  // 内容靠左 / 靠右时，短线段占比
+  --dockv-divider-min-line: 15%;
+  // 线宽
+  --dockv-divider-width: 1px;
+
+  display: inline-block;
+  width: 100%;  // 始终占满父容器宽度
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+// 横向分割线
+.dockv-divider {
+  display: flex;
+  align-items: center;
+
+  .dockv-divider-line-before,
+  .dockv-divider-line-after {
+    flex: 1;
+    min-width: 0;
+    border-top: var(--dockv-divider-width) solid
+      var(--dockv-divider-color, var(--dockv-color-border));
+    border-top-style: var(--dockv-divider-border-style);
+  }
+  
+  // 给 slot 套一层父容器，防止样式丢失
+  .dockv-divider-content {
+    display: inline-flex; // 内容水平排布
+    align-items: center;
+    padding-inline: 1em; // 内容与两段线之间的缝隙（默认 1em）
+  }
+
+  // 无内容时隐藏内容层，防止内容与两段线之间有缝隙
+  &:not(.dockv-divider-has-content) .dockv-divider-content {
+    display: none;
+  }
+}
+
+// 内容位置通过调节两侧线的伸缩比例实现
+// 有内容时，两段线 flex:1 对称，内容自然居中
+// 无内容时，两段线拼成一条完整线
+// 位置偏移两侧始终有线，仅修改两侧的比例
+.dockv-divider.dockv-divider-has-content {
+  // 靠左
+  &.dockv-divider-left {
+    .dockv-divider-line-before {
+      flex: 0 0 var(--dockv-divider-min-line);
+    }
+  }
+
+  // 靠右
+  &.dockv-divider-right {
+    .dockv-divider-line-after {
+      flex: 0 0 var(--dockv-divider-min-line);
+    }
+  }
+}
+
+// 竖向分割线
+:host([direction="vertical"]) {
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  border-left: var(--dockv-divider-width) solid
+    var(--dockv-divider-color, var(--dockv-color-border));
+  border-left-style: var(--dockv-divider-border-style);
+  vertical-align: middle;
+
+  // 竖向不夹文字，隐藏内部的「线-内容-线」结构
+  .dockv-divider {
+    display: none;
+  }
+}
