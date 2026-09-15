@@ -193,6 +193,27 @@
       <dv-button circle type="warning">?</dv-button>
     </div>
 
+    <h2>Button · 形状内 logo 适配（square / circle）</h2>
+    <div class="row">
+      <dv-button type="secondary" icon="logos:npm" square></dv-button>
+      <dv-button type="secondary" icon="logos:sqlite" circle></dv-button>
+      <dv-button type="secondary" square>
+        <dv-icon>
+<svg xmlns="http://www.w3.org/2000/svg" width="0.67em" height="1em" viewBox="0 0 256 384">
+	<path d="M0 0h256v384H0z" fill="none" />
+	<path fill="#0acf83" d="M64 384c35.328 0 64-28.672 64-64v-64H64c-35.328 0-64 28.672-64 64s28.672 64 64 64" />
+	<path fill="#a259ff" d="M0 192c0-35.328 28.672-64 64-64h64v128H64c-35.328 0-64-28.672-64-64" />
+	<path fill="#f24e1e" d="M0 64C0 28.672 28.672 0 64 0h64v128H64C28.672 128 0 99.328 0 64" />
+	<path fill="#ff7262" d="M128 0h64c35.328 0 64 28.672 64 64s-28.672 64-64 64h-64z" />
+	<path fill="#1abcfe" d="M256 192c0 35.328-28.672 64-64 64s-64-28.672-64-64s28.672-64 64-64s64 28.672 64 64" />
+</svg>
+        </dv-icon>
+      </dv-button>
+      <dv-button type="secondary" circle>
+        <dv-icon src="https://ui.dockv.cc/logo.png"></dv-icon>
+      </dv-button>
+    </div>
+
     <h2>Button · 圆角（borderRadius）</h2>
     <div class="row">
       <dv-button borderRadius="0">直角</dv-button>
@@ -605,7 +626,9 @@
       <dv-divider contentPosition="left">靠左</dv-divider>
       <dv-divider>居中（默认）</dv-divider>
       <dv-divider contentPosition="right">靠右</dv-divider>
-      <dv-divider contentPosition="left" style="--dockv-divider-min-line: 30%">靠左 + 短线 30%</dv-divider>
+      <dv-divider contentPosition="left" style="--dockv-divider-min-line: 30%"
+        >靠左 + 短线 30%</dv-divider
+      >
     </div>
 
     <h2>Divider · 方向（direction=vertical）</h2>

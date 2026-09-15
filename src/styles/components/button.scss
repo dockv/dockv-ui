@@ -139,6 +139,18 @@
   border-radius: 9999px; // 大数值会被钳制为短边一半，正方形得正圆；不用 50%（宽高不等时是椭圆）
 }
 
+// 紧凑形状（square / circle）下约束图标不越界：
+// 常规图标高度撑满（高度优先）、宽度按比例自适应；而诸如 logos:amd 这类长条 logo
+// 宽高比悬殊，仅靠"高度撑满 + 宽度自适应"会让宽度冲出按钮。此处给图标容器封顶，
+// 同时限宽限高（max-width / max-height 均为 100%），长条 logo 被等比压回方形内完整显示。
+.dockv-button-square .dockv-button-icon,
+.dockv-button-circle .dockv-button-icon {
+  width: 100%;
+  max-width: calc(var(--dockv-button-height) - var(--dockv-button-icononly-pad) * 2);
+  height: 100%;
+  max-height: calc(var(--dockv-button-height) - var(--dockv-button-icononly-pad) * 2);
+}
+
 // ===== 语义色色板：每 type 预定义一组 --dockv-button-{variant}-* 变量 =====
 $button-types: "primary" "secondary" "tertiary" "success" "warning" "danger";
 

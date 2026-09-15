@@ -167,6 +167,11 @@ disabled 优先级高于 loading，两者同时为 true 时显示为禁用态。
 >
 > 有图标（无论属性还是 slot）时只渲染图标，不渲染文字；slot 图标优先级高于属性图标。实现上需在 `slotchange` 时判定 slot 内容类型（图标 / 文字 / 空）。
 
+> [!warning] 长条 logo 在紧凑形状内的适配
+> `dv-icon` 内部 svg 采用「高度撑满 + 宽度按 `width: auto` 比例放飞」（见 `icon.scss`），常规方形图标天然适配 `square` / `circle`；但宽高比悬殊的长条 logo（如 `logos:nvidia`、`logos:amd`）仅靠高度撑满会让宽度冲出按钮。
+>
+> 因此 `.dockv-button-square .dockv-button-icon`、`.dockv-button-circle .dockv-button-icon` 需同时约束 `max-width` / `max-height`，图标区域边长 = `--dockv-button-height - --dockv-button-icononly-pad * 2`，将图标等比缩放进方形内并四周均匀留白。该值做成变量便于外部按需调整留白量。
+
 ```html
 <dv-button icon="material-symbols:close" circle></dv-button>
 ```
