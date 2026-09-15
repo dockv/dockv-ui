@@ -16,8 +16,7 @@ title: Button 按钮
 </div>
 
 ```html
-<dv-button>按钮</dv-button>
-<dv-button type="primary" variant="solid">相同效果</dv-button>
+<dv-button>按钮</dv-button> <dv-button type="primary" variant="solid">相同效果</dv-button>
 ```
 
 ## 类型（type）
@@ -205,12 +204,8 @@ title: Button 按钮
 </div>
 
 ```html
-<dv-button icon="material-symbols:arrow-forward" iconPosition="right">
-  下一步
-</dv-button>
-<dv-button icon="material-symbols:open-in-new" iconPosition="right">
-  打开
-</dv-button>
+<dv-button icon="material-symbols:arrow-forward" iconPosition="right"> 下一步 </dv-button>
+<dv-button icon="material-symbols:open-in-new" iconPosition="right"> 打开 </dv-button>
 ```
 
 ### 纯图标按钮
@@ -285,6 +280,32 @@ title: Button 按钮
 > 3. 纯文字：只渲染第一个字符
 >
 > 有图标（无论属性还是 slot）时只渲染图标；纯文字时只显示首字符，避免文字在正方形 / 正圆内挤成一团。
+
+:::tip 长条 logo 的收敛机制
+放置宽高比悬殊的长条 logo（如 `logos:npm`、`logos:sqlite`）时，图标会自动等比缩放、收敛进按钮方形内并四周均匀留白，不会溢出按钮。
+
+`square` / `circle` 会同时限制图标区域的 `width` 与 `height`：图标区域边长 = 按钮高度 − 2 × `--dockv-button-icononly-pad`，使图标始终限制在按钮方形内；默认值足够常规尺寸图标留白，可根据需要覆盖。
+
+<div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center">
+  <dv-button type="secondary" icon="logos:npm" square></dv-button>
+  <dv-button type="secondary" icon="logos:sqlite" circle></dv-button>
+  <dv-button type="secondary" square>
+    <dv-icon>
+<svg xmlns="http://www.w3.org/2000/svg" width="0.67em" height="1em" viewBox="0 0 256 384">
+	<path d="M0 0h256v384H0z" fill="none" />
+	<path fill="#0acf83" d="M64 384c35.328 0 64-28.672 64-64v-64H64c-35.328 0-64 28.672-64 64s28.672 64 64 64" />
+	<path fill="#a259ff" d="M0 192c0-35.328 28.672-64 64-64h64v128H64c-35.328 0-64-28.672-64-64" />
+	<path fill="#f24e1e" d="M0 64C0 28.672 28.672 0 64 0h64v128H64C28.672 128 0 99.328 0 64" />
+	<path fill="#ff7262" d="M128 0h64c35.328 0 64 28.672 64 64s-28.672 64-64 64h-64z" />
+	<path fill="#1abcfe" d="M256 192c0 35.328-28.672 64-64 64s-64-28.672-64-64s28.672-64 64-64s64 28.672 64 64" />
+</svg>
+    </dv-icon>
+  </dv-button>
+  <dv-button type="secondary" circle>
+    <dv-icon src="https://ui.dockv.cc/logo.png"></dv-icon>
+  </dv-button>
+</div>
+:::
 
 纯文字在紧凑形状下只显示第一个字符：
 
