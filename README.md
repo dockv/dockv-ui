@@ -5,28 +5,18 @@
 <h1 align="center">DockV UI</h1>
 
 <div align="center">
-  <a href="https://github.com/dockv/dockv-ui/actions/workflows/deploy.yml" style="text-decoration: none">
-    <img alt="Build" src="https://github.com/dockv/dockv-ui/actions/workflows/deploy.yml/badge.svg?branch=main" />
-  </a>
-  <a href="LICENSE" style="text-decoration: none">
-    <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg" />
-  </a>
-  <a href="https://github.com/dockv/dockv-ui/discussions" style="text-decoration: none">
-    <img alt="Discussions" src="https://img.shields.io/github/discussions/dockv/dockv-ui?label=Discussions&color=green&logo=github&logoColor=white" />
-  </a>
-  <a href="https://github.com/dockv/dockv-ui/issues" style="text-decoration: none">
-    <img alt="Issues" src="https://img.shields.io/github/issues/dockv/dockv-ui?label=Issues&color=red&logo=github&logoColor=white" />
-  </a>
-  <a href="https://github.com/dockv/dockv-ui" style="text-decoration: none">
-    <img alt="GitHub" src="https://img.shields.io/badge/GitHub-dockv%2Fdockv--ui-181717?logo=github&logoColor=white" />
-  </a>
+
+[![](https://github.com/dockv/dockv-ui/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/dockv/dockv-ui/actions/workflows/deploy.yml) [![](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![](https://img.shields.io/github/discussions/dockv/dockv-ui?label=Discussions&color=green&logo=github&logoColor=white)](https://github.com/dockv/dockv-ui/discussions) [![](https://img.shields.io/github/issues/dockv/dockv-ui?label=Issues&color=red&logo=github&logoColor=white)](https://github.com/dockv/dockv-ui/issues) [![](https://img.shields.io/badge/GitHub-dockv%2Fdockv--ui-181717?logo=github&logoColor=white)](https://github.com/dockv/dockv-ui)
+
 </div>
 
 <hr>
 
 基于 [Lit](https://lit.dev/) Web Components 的现代化 UI 组件库，无框架依赖，可在任意前端项目中使用。
 
-> [!IMPORTANT] 开发阶段说明
+> [!IMPORTANT]
+>
+> **开发阶段说明**
 >
 > DockV UI 目前仍处于**快速开发与验证迭代阶段**，尚未发布正式 npm 包。以下情况可能发生：
 >
