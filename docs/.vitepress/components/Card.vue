@@ -46,6 +46,7 @@ defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--dockv-color-text-0); /* 防止组件文字颜色被 vitepress 样式覆盖 */
   min-height: 120px;
   padding: var(--dockv-spacing-lg);
 }
