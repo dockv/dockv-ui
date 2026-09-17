@@ -1,5 +1,5 @@
-# 构建 VitePress 站点并将其部署到 GitHub Pages 的示例工作流程
-name: Deploy VitePress site to Pages
+# 在 PR 中对 main 做构建验证，推送 main 时构建并部署 VitePress 文档站到 GitHub Pages
+name: Build & Deploy
 
 on:
   # 推送到 main 时运行（构建 + 部署）
@@ -12,57 +12,121 @@ on:
   # 允许你从 Actions 选项卡手动运行此工作流程
   workflow_dispatch:
 
-# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages
+# 最小权限：读取代码、写 Pages、签发生成页面令牌
+# 注：contents: write 仅 build job 需要（更新 preview Release），已下放到 build job 局部，顶层保持 read
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 只允许同时进行一次部署，跳过正在运行和最新队列之间的运行队列
-# 但是，不要取消正在进行的运行，因为我们希望允许这些生产部署完成
-concurrency:
-  group: pages
-  cancel-in-progress: false
+# 移除了全局串行 concurrency：若在这里设置并发组，PR 的 build 会被排队拖慢。
+# 并发控制改为只落在 deploy job 上（见下方），让 PR 检查 build 并行执行。
 
 jobs:
-  # 构建工作
+  # 构建工作：PR 与 main 都会触发；build 不做并发限制，多个 PR 可并行检查
   build:
     runs-on: ubuntu-latest
+    # 覆盖顶层：额外放权写文件（contents: write）用于更新 preview Release；
+    # job 级 permissions 为整体覆盖，故需连同上方 pages/id-token 一并声明
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    # 超时保护：避免构建无限挂起（默认无限制），超过 20 分钟强制终止
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0 # 如果未启用 lastUpdated，则不需要
-      - uses: pnpm/action-setup@v4 # 如果使用 pnpm，请取消此区域注释
+          fetch-depth: 0
+      # 安装并用缓存加速 pnpm（版本与本地一致为 11）
+      - uses: pnpm/action-setup@v6
         with:
-          version: 10
-      # - uses: oven-sh/setup-bun@v1 # 如果使用 Bun，请取消注释
+          version: 11
+      # 安装并缓存 Node 24（上述弃用警告源，确保运行时最新）
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: pnpm # 或 pnpm / yarn
+          cache: pnpm
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      # 构建全部产物：组件 JS/样式/类型声明 + 文档站 + Storybook
       - name: Build All (Components, Docs, Storybook)
         run: pnpm build:all
+      # 仅上传文档站产物，后续由 deploy job 发布到 GitHub Pages
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: docs/.vitepress/dist
+
+      # 打包组件库 dist 产物为一个 zip，作为 preview Release 的单一 asset
+      - name: Package dist
+        if: github.event_name == 'push' # 仅 push main 时更新预览产物，PR 检查不更新
+        run: |
+          mkdir -p release-assets
+          zip -r "release-assets/dockv-ui-preview.zip" dist
+
+      # 把 dist 产物附加到固定 preview prerelease（覆盖更新），实现"最新 main 构建即最新预览版"
+      - name: Update preview release
+        if: github.event_name == 'push' # 仅 push main 时更新，PR 检查不更新
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="preview"
+          BUILD_DATE="$(date -u +'%Y-%m-%d %H:%M UTC')"
+
+          # 首次运行若 preview Release 尚未创建则新建，并记录创建时间作为 commit 收集起点；
+          # 之后复用同一 Release，仅覆盖 zip 与 notes
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" \
+              --title "Preview (latest main)" \
+              --notes "最新 main 构建产物预览版。随每次推送到 main 自动更新。" \
+              --prerelease
+          fi
+
+          # 自"最新版本号 tag"以来的 commit（语义排序取最大 v* tag 作为积累边界）；
+          # 有版本号则收集 <tag>..HEAD，否则（尚无任何版本号）退回最近 10 条
+          PREV_TAG="$(git tag --merged HEAD --list 'v*' --sort=-v:refname | head -n 1 || true)"
+          if [ -n "${PREV_TAG}" ]; then
+            COMMITS="$(git log "${PREV_TAG}..HEAD" --pretty=format:'- %h %s')"
+          else
+            COMMITS="$(git log -n 10 --pretty=format:'- %h %s')"
+          fi
+
+          # 生成 notes：构建日期 + 自上次预览以来的 commit 列表
+          {
+            echo "## 构建日期"
+            echo "${BUILD_DATE}"
+            echo
+            echo "## 自上次预览以来的更新"
+            echo "${COMMITS}"
+          } > release-notes.md
+
+          # 覆盖 notes（--notes-file 会替换原有说明），并上传/覆盖 zip asset
+          gh release edit "$TAG" --notes-file release-notes.md
+          # --clobber 删除同名旧 asset 后重传，实现"最新构建覆盖预览"
+          gh release upload "$TAG" "release-assets/dockv-ui-preview.zip" --clobber
 
   # 部署工作（仅推送到 main 时执行；PR 只做构建检查，不部署）
   deploy:
     if: github.event_name == 'push'
+    # 只允许同一分支同时进行一次部署：跳过正在进行与最新队列之间的旧运行，
+    # 但不取消正在进行的运行，让已开始的部署正常完成；group 带上分支名，不同分支互不阻塞
+    concurrency:
+      group: pages-${{ github.ref }}
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    # 依赖 build 成功后才部署，保证「先构建、后发布」的时序
     needs: build
     runs-on: ubuntu-latest
     name: Deploy
+    timeout-minutes: 10
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
