@@ -12,7 +12,8 @@ on:
   # 允许你从 Actions 选项卡手动运行此工作流程
   workflow_dispatch:
 
-# 最小权限：仅读取代码、写 Pages、签发生成页面所需令牌
+# 最小权限：读取代码、写 Pages、签发生成页面令牌
+# 注：contents: write 仅 build job 需要（更新 preview Release），已下放到 build job 局部，顶层保持 read
 permissions:
   contents: read
   pages: write
@@ -25,6 +26,12 @@ jobs:
   # 构建工作：PR 与 main 都会触发；build 不做并发限制，多个 PR 可并行检查
   build:
     runs-on: ubuntu-latest
+    # 覆盖顶层：额外放权写文件（contents: write）用于更新 preview Release；
+    # job 级 permissions 为整体覆盖，故需连同上方 pages/id-token 一并声明
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     # 超时保护：避免构建无限挂起（默认无限制），超过 20 分钟强制终止
     timeout-minutes: 20
     steps:
@@ -54,6 +61,54 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: docs/.vitepress/dist
+
+      # 打包组件库 dist 产物为一个 zip，作为 preview Release 的单一 asset
+      - name: Package dist
+        if: github.event_name == 'push' # 仅 push main 时更新预览产物，PR 检查不更新
+        run: |
+          mkdir -p release-assets
+          zip -r "release-assets/dockv-ui-preview.zip" dist
+
+      # 把 dist 产物附加到固定 preview prerelease（覆盖更新），实现"最新 main 构建即最新预览版"
+      - name: Update preview release
+        if: github.event_name == 'push' # 仅 push main 时更新，PR 检查不更新
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="preview"
+          BUILD_DATE="$(date -u +'%Y-%m-%d %H:%M UTC')"
+
+          # 首次运行若 preview Release 尚未创建则新建，并记录创建时间作为 commit 收集起点；
+          # 之后复用同一 Release，仅覆盖 zip 与 notes
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" \
+              --title "Preview (latest main)" \
+              --notes "最新 main 构建产物预览版。随每次推送到 main 自动更新。" \
+              --prerelease
+          fi
+
+          # 自"最新版本号 tag"以来的 commit（语义排序取最大 v* tag 作为积累边界）；
+          # 有版本号则收集 <tag>..HEAD，否则（尚无任何版本号）退回最近 10 条
+          PREV_TAG="$(git tag --merged HEAD --list 'v*' --sort=-v:refname | head -n 1 || true)"
+          if [ -n "${PREV_TAG}" ]; then
+            COMMITS="$(git log "${PREV_TAG}..HEAD" --pretty=format:'- %h %s')"
+          else
+            COMMITS="$(git log -n 10 --pretty=format:'- %h %s')"
+          fi
+
+          # 生成 notes：构建日期 + 自上次预览以来的 commit 列表
+          {
+            echo "## 构建日期"
+            echo "${BUILD_DATE}"
+            echo
+            echo "## 自上次预览以来的更新"
+            echo "${COMMITS}"
+          } > release-notes.md
+
+          # 覆盖 notes（--notes-file 会替换原有说明），并上传/覆盖 zip asset
+          gh release edit "$TAG" --notes-file release-notes.md
+          # --clobber 删除同名旧 asset 后重传，实现"最新构建覆盖预览"
+          gh release upload "$TAG" "release-assets/dockv-ui-preview.zip" --clobber
 
   # 部署工作（仅推送到 main 时执行；PR 只做构建检查，不部署）
   deploy:

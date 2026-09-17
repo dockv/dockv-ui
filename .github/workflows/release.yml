@@ -1,0 +1,103 @@
+# 正式版 Release 流程：仅由手动打的 v* tag 触发（版本=tag，CI 不加后缀）
+# 预览版产物由 deploy.yml 在 push main 时更新（见该文件 preview step）
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write # 创建 Release 及上传 assets 所需
+
+concurrency:
+  # 同一 tag 只允许串行发布，避免并发创建 Release 冲突
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    # 超时保护：避免发布流程无限挂起，默认无限制
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # 需要完整历史用于收集本次 tag 之后的 commit
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 仅构建组件库（JS + 样式 + 类型声明），无需文档站/Storybook
+      - name: Build components
+        run: pnpm build
+
+      # 打包 dist 目录各产物为一个 zip，便于作为单一 Release asset 下载
+      - name: Package dist
+        run: |
+          mkdir -p release-assets
+          zip -r "release-assets/dockv-ui-${GITHUB_REF_NAME:-latest}.zip" dist
+
+      # 保留一份到 Actions artifact，供不装 git 的开发者直接从运行页下载
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: dockv-ui-dist
+          path: dist
+          if-no-files-found: error
+
+      - name: Publish tagged release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+
+          # 标记是否为预览版（含 -pre/-beta/-alpha/-rc 等 SemVer 预发布后缀），是则标 prerelease
+          PRERELEASE_FLAG=""
+          if [[ "${TAG}" =~ - ]] || [[ "${TAG}" =~ \.RC?[0-9] ]]; then
+            PRERELEASE_FLAG="--prerelease"
+          fi
+
+          # 收集自上一个 Release 以来的 commit，生成 release notes；首个 release 用 git log 全部commit
+          PREV_TAG="$(gh release list --limit 2 --json tagName --jq '.[1].tagName // empty')"
+          if [ -n "${PREV_TAG}" ]; then
+            RANGE="${PREV_TAG}..${TAG}"
+          else
+            RANGE=""
+          fi
+
+          # 按 Angular commit 风格归类；无 type 后缀的 merge 一并保留原始 subject
+          {
+            echo "# ${TAG}"
+            echo
+            echo "## ✨ 新功能 (feat)"
+            git log "${RANGE}" --grep="^feat" --pretty=format:"- %s" 2>/dev/null || true
+            echo
+            echo "## 🐛 修复 (fix)"
+            git log "${RANGE}" --grep="^fix" --pretty=format:"- %s" 2>/dev/null || true
+            echo
+            echo "## 📃 文档 (docs)"
+            git log "${RANGE}" --grep="^docs" --pretty=format:"- %s" 2>/dev/null || true
+            echo
+            echo "## ✨ 其他改动"
+            git log "${RANGE}" --pretty=format:"- %s" 2>/dev/null || true
+          } > release-notes.md
+
+          # 创建正式版 Release，assets 与仓库自动生成的源码包一同附加
+          gh release create "${TAG}" \
+            --title "${TAG}" \
+            --notes-file release-notes.md \
+            ${PRERELEASE_FLAG} \
+            "release-assets/dockv-ui-${GITHUB_REF_NAME:-latest}.zip"
