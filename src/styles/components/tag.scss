@@ -1,0 +1,495 @@
+@use "../../styles/global/global.scss" as *;
+
+:host {
+  // 尺寸预设（高度档位）
+  --dockv-tag-sm-height: 16px;
+  --dockv-tag-md-height: 20px;
+  --dockv-tag-lg-height: 24px;
+  --dockv-tag-xl-height: 28px;
+
+  // 默认尺寸（md）+ 水平内边距，供 .dockv-tag 读取；尺寸类再逐档覆盖
+  --dockv-tag-height: var(--dockv-tag-md-height);
+  --dockv-tag-padding-inline-start: 6px;
+  --dockv-tag-padding-inline-end: 6px;
+
+  // 间距
+  --dockv-tag-gap: 3px;
+
+  // 文字
+  --dockv-tag-font-size: var(--dockv-font-size-xs);
+  --dockv-tag-line-height: 1;
+  --dockv-tag-font-weight: var(--dockv-font-weight-normal);
+
+  // 造型与圆角
+  --dockv-tag-border-radius: var(--dockv-border-radius-sm);
+  --dockv-tag-border-width: 1px;
+
+  // 图标尺寸
+  --dockv-tag-icon-size: 1em;
+  // 图片尺寸：标签高度 - 边框宽度 * 2 - 内边距 * 2，在内边距改变时自适应标签内部高度
+  --dockv-tag-image-size: calc(
+    var(--dockv-tag-height) - var(--dockv-tag-border-width, 1px) * 2 - var(--dockv-tag-padding-block, 0px) * 2
+  );
+  --dockv-tag-image-radius: var(--dockv-tag-border-radius); // 图片圆角跟随标签圆角，单独设置变量允许覆盖
+
+  // 聚焦环（独立 Focus Token；未定义时回退主色保证可见）
+  // --dockv-color-focus 由组件代码动态计算生成
+  --dockv-tag-focus-color: var(--dockv-color-focus, var(--dockv-color-primary));
+  // 自定义色种子（color 属性写入，派生变量全部基于它 color-mix）
+  --dockv-tag-color: currentColor;
+
+  // 禁用态（组件内兜底值；全局有同名 token 时会被覆盖）
+  --dockv-tag-disabled-font-color: var(--dockv-color-text-3);
+  --dockv-tag-disabled-bg-color: var(--dockv-color-fill-0);
+  --dockv-tag-disabled-border-color: var(--dockv-color-border);
+
+  display: inline-flex;
+  box-sizing: border-box; // 单独组件兜底
+  vertical-align: middle;
+  max-width: 100%;
+}
+
+// 显隐只认 invisible（出现即隐藏；display: none 不占空间，但节点保留以便随时恢复）
+:host([invisible]) {
+  display: none;
+}
+
+.dockv-tag {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: var(--dockv-tag-height);
+  max-width: 100%;
+  min-width: 0;
+  padding-block: var(--dockv-tag-padding-block, 0);
+  padding-inline: var(--dockv-tag-padding-inline-start) var(--dockv-tag-padding-inline-end);
+
+  gap: var(--dockv-tag-gap);
+
+  border: var(--dockv-tag-border-width) solid transparent;
+  border-radius: var(--dockv-tag-border-radius);
+
+  font-family: inherit;
+  font-size: var(--dockv-tag-font-size);
+  font-weight: var(--dockv-tag-font-weight);
+  line-height: var(--dockv-tag-line-height);
+
+  color: var(--dockv-tag-font-color);
+  background: var(--dockv-tag-bg-color);
+  border-color: var(--dockv-tag-border-color);
+
+  // 默认禁止划选；selectable 类再放开（见下）
+  user-select: none;
+}
+
+// 文本划选（selectable）
+.dockv-tag.dockv-tag-selectable {
+  user-select: text;
+}
+
+// 聚焦环：checkable 时内部根节点可聚焦；closable 时关闭按钮可聚焦。
+// 负 offset 内嵌防兄弟 gap 环重叠。选中 / 变体统一使用同一 Focus Token。
+.dockv-tag:focus-visible {
+  outline: 2px solid var(--dockv-tag-focus-color);
+  outline-offset: 0.5px;
+}
+
+// 文本溢出防御（敲单行省略号，DOM 文本保持完整可读）
+.dockv-tag-text {
+  display: block; // 必须块级，ellipsis 才稳定生效
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap; // 永远单行，绝不撑高
+  text-overflow: ellipsis;
+  // 文本裁剪防护区：预留上下裁剪保护区，避免单行省略号时 line-height: 1 导致 y、g、p、q、j 等下延字符被裁切或被内边距/底边遮挡
+  padding-block: 0.25em;
+  margin-block: -0.25em;
+}
+
+// 前缀 / 后缀图标与图片容器
+.dockv-tag-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  // 图标默认 1em（跟字号）；图片时外层覆盖为 --dockv-tag-image-size
+  font-size: var(--dockv-tag-icon-size);
+  line-height: 0;
+}
+
+// 图片（dv-icon src）：限制高度随标签净高，宽度等比自适应，带圆角与裁剪
+// 由于 dv-icon 组件的 size="inherit" 问题没有修复，只能单独在这里限制图片尺寸
+.dockv-tag-image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--dockv-tag-image-size); // 只限制高度，宽度等比自适应，让长方形图片不会被拉伸或压缩
+  max-height: 100%;
+  width: auto;
+  border-radius: var(--dockv-tag-image-radius);
+  overflow: hidden; // 图片超出部分裁剪
+  line-height: 0;
+
+  dv-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: auto;
+    max-height: 100%;
+  }
+}
+
+// 关闭按钮
+.dockv-tag-close {
+  // 保持居中
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  // 放大按钮 svg 图标和 focus 区域
+  width: 1.1em;
+  height: 1.1em;
+
+  // 减小左右间距
+  margin-inline-start: -1px;
+  margin-inline-end: -2px;
+
+  padding: 0;
+  border: none;
+  border-radius: var(--dockv-tag-border-radius); //跟随标签圆角设置
+  background: transparent;
+  color: inherit;
+  font-size: var(--dockv-tag-font-size);
+  line-height: 0;
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.65;
+  transition: opacity 0.15s, transform 0.1s;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: transparent;
+    opacity: 1;
+  }
+  &:active {
+    background: transparent;
+    opacity: 0.35;
+    transform: scale(0.92);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--dockv-tag-focus-color);
+    outline-offset: 0px;
+    opacity: 1;
+  }
+}
+
+// 尺寸预设（sm / md / lg / xl）：高度 + 水平内边距 + 字号 + 间距
+.dockv-tag-sm {
+  --dockv-tag-height: var(--dockv-tag-sm-height);
+  --dockv-tag-padding-inline-start: 4px;
+  --dockv-tag-padding-inline-end: 4px;
+  --dockv-tag-gap: 2px;
+}
+.dockv-tag-md {
+  --dockv-tag-height: var(--dockv-tag-md-height);
+  --dockv-tag-padding-inline-start: 6px;
+  --dockv-tag-padding-inline-end: 6px;
+  --dockv-tag-gap: 3px;
+}
+.dockv-tag-lg {
+  --dockv-tag-height: var(--dockv-tag-lg-height);
+  --dockv-tag-padding-inline-start: 8px;
+  --dockv-tag-padding-inline-end: 8px;
+  --dockv-tag-gap: 4px;
+}
+.dockv-tag-xl {
+  --dockv-tag-height: var(--dockv-tag-xl-height);
+  --dockv-tag-padding-inline-start: 10px;
+  --dockv-tag-padding-inline-end: 10px;
+  --dockv-tag-gap: 4px;
+  --dockv-tag-font-size: var(--dockv-font-size-md);
+}
+
+// 形状：默认 round 圆角 (3px) / capsule 胶囊 (9999px) / sharp 直角 (0px)
+// 直接消费全局圆角变量
+.dockv-tag.dockv-tag-round {
+  --dockv-tag-border-radius: var(--dockv-border-radius-sm);
+}
+.dockv-tag.dockv-tag-capsule {
+  --dockv-tag-border-radius: var(--dockv-border-radius-full);
+}
+.dockv-tag.dockv-tag-sharp {
+  --dockv-tag-border-radius: var(--dockv-border-radius-sq);
+}
+
+// 视觉变体（优先消费预设色/Type注入的变量，未命中时基于 --dockv-tag-color 种子变量原生回退）
+.dockv-tag-light {
+  --dockv-tag-font-color: var(
+    --dockv-tag-light-font-color,
+    var(--dockv-tag-color)
+  );
+  --dockv-tag-bg-color: var(
+    --dockv-tag-light-bg-color,
+    color-mix(in srgb, var(--dockv-tag-color) 14%, transparent)
+  );
+  --dockv-tag-border-color: var(
+    --dockv-tag-light-border-color,
+    transparent
+  );
+}
+.dockv-tag-ghost {
+  --dockv-tag-font-color: var(
+    --dockv-tag-ghost-font-color,
+    var(--dockv-tag-color)
+  );
+  --dockv-tag-bg-color: var(
+    --dockv-tag-ghost-bg-color,
+    transparent
+  );
+  --dockv-tag-border-color: var(
+    --dockv-tag-ghost-border-color,
+    transparent
+  );
+}
+.dockv-tag-soft {
+  --dockv-tag-font-color: var(
+    --dockv-tag-soft-font-color,
+    var(--dockv-tag-color)
+  );
+  --dockv-tag-bg-color: var(
+    --dockv-tag-soft-bg-color,
+    color-mix(in srgb, var(--dockv-tag-color) 14%, transparent)
+  );
+  --dockv-tag-border-color: var(
+    --dockv-tag-soft-border-color,
+    var(--dockv-tag-color)
+  );
+}
+.dockv-tag-outline {
+  --dockv-tag-font-color: var(
+    --dockv-tag-outline-font-color,
+    var(--dockv-tag-color)
+  );
+  --dockv-tag-bg-color: var(
+    --dockv-tag-outline-bg-color,
+    transparent
+  );
+  --dockv-tag-border-color: var(
+    --dockv-tag-outline-border-color,
+    var(--dockv-tag-color)
+  );
+}
+.dockv-tag-solid {
+  --dockv-tag-font-color: var(
+    --dockv-tag-solid-font-color,
+    var(--dockv-color-white)
+  );
+  --dockv-tag-bg-color: var(
+    --dockv-tag-solid-bg-color,
+    var(--dockv-tag-color)
+  );
+  --dockv-tag-border-color: var(
+    --dockv-tag-solid-border-color,
+    transparent
+  );
+  // solid 深底白字，字重微升保证可读
+  --dockv-tag-font-weight: var(--dockv-font-weight-bold);
+}
+.dockv-tag-neutral {
+  --dockv-tag-font-color: var(
+    --dockv-tag-neutral-font-color,
+    var(--dockv-tag-color)
+  );
+  --dockv-tag-bg-color: var(
+    --dockv-tag-neutral-bg-color,
+    var(--dockv-color-fill-0)
+  );
+  --dockv-tag-border-color: var(
+    --dockv-tag-neutral-border-color,
+    transparent
+  );
+}
+
+// 选中态（checkable + checked）：变体成对翻转（Symmetric Pairs）
+// ghost ⇄ light、outline ⇄ soft、neutral ⇄ solid
+.dockv-tag.dockv-tag-checked {
+  // 1. ghost ⇄ light 互换
+  &.dockv-tag-ghost {
+    --dockv-tag-font-color: var(--dockv-tag-light-font-color);
+    --dockv-tag-bg-color: var(--dockv-tag-light-bg-color);
+    --dockv-tag-border-color: var(--dockv-tag-light-border-color);
+  }
+  &.dockv-tag-light {
+    --dockv-tag-font-color: var(--dockv-tag-ghost-font-color);
+    --dockv-tag-bg-color: var(--dockv-tag-ghost-bg-color);
+    --dockv-tag-border-color: var(--dockv-tag-ghost-border-color);
+  }
+
+  // 2. outline ⇄ soft 互换
+  &.dockv-tag-outline {
+    --dockv-tag-font-color: var(--dockv-tag-soft-font-color);
+    --dockv-tag-bg-color: var(--dockv-tag-soft-bg-color);
+    --dockv-tag-border-color: var(--dockv-tag-soft-border-color);
+  }
+  &.dockv-tag-soft {
+    --dockv-tag-font-color: var(--dockv-tag-outline-font-color);
+    --dockv-tag-bg-color: var(--dockv-tag-outline-bg-color);
+    --dockv-tag-border-color: var(--dockv-tag-outline-border-color);
+  }
+
+  // 3. neutral ⇄ solid 互换
+  &.dockv-tag-neutral {
+    --dockv-tag-font-color: var(--dockv-tag-solid-font-color);
+    --dockv-tag-bg-color: var(--dockv-tag-solid-bg-color);
+    --dockv-tag-border-color: var(--dockv-tag-solid-border-color);
+    --dockv-tag-font-weight: var(--dockv-font-weight-bold);
+  }
+  &.dockv-tag-solid {
+    --dockv-tag-font-color: var(--dockv-tag-neutral-font-color);
+    --dockv-tag-bg-color: var(--dockv-tag-neutral-bg-color);
+    --dockv-tag-border-color: var(--dockv-tag-neutral-border-color);
+    --dockv-tag-font-weight: var(--dockv-font-weight-normal);
+  }
+}
+
+// 禁用态：覆盖中间层为禁用色，阻断视觉与交互
+.dockv-tag.dockv-tag-disabled {
+  --dockv-tag-font-color: var(--dockv-tag-disabled-font-color);
+  --dockv-tag-bg-color: var(--dockv-tag-disabled-bg-color);
+  --dockv-tag-border-color: var(--dockv-tag-disabled-border-color);
+
+  cursor: not-allowed; // 调整鼠标指针为禁用状态
+
+  .dockv-tag-close {
+    cursor: not-allowed;
+    opacity: 0.4;
+    // 禁用态下，关闭按钮不响应 hover 事件
+    &:hover {
+      background: transparent;
+      opacity: 0.4;
+    }
+  }
+}
+
+// 状态语义色（type）
+$tag-types: "success" "warning" "danger";
+
+@each $type in $tag-types {
+  .dockv-tag-type-#{$type} {
+    --dockv-tag-focus-color: var(--dockv-color-#{$type});
+    
+    --dockv-tag-solid-font-color: var(--dockv-color-white);
+    --dockv-tag-solid-bg-color: var(--dockv-color-#{$type});
+    --dockv-tag-solid-border-color: transparent;
+
+    --dockv-tag-light-font-color: var(--dockv-color-#{$type});
+    --dockv-tag-light-bg-color: var(--dockv-color-#{$type}-light);
+    --dockv-tag-light-border-color: transparent;
+
+    --dockv-tag-ghost-font-color: var(--dockv-color-#{$type});
+    --dockv-tag-ghost-bg-color: transparent;
+    --dockv-tag-ghost-border-color: transparent;
+
+    --dockv-tag-outline-font-color: var(--dockv-color-#{$type});
+    --dockv-tag-outline-bg-color: transparent;
+    --dockv-tag-outline-border-color: var(--dockv-color-#{$type});
+
+    --dockv-tag-soft-font-color: var(--dockv-color-#{$type});
+    --dockv-tag-soft-bg-color: var(--dockv-color-#{$type}-light);
+    --dockv-tag-soft-border-color: var(--dockv-color-#{$type});
+
+    --dockv-tag-neutral-font-color: var(--dockv-color-#{$type});
+    --dockv-tag-neutral-bg-color: var(--dockv-color-fill-0);
+    --dockv-tag-neutral-border-color: transparent;
+  }
+}
+// 16 + 1 种内置预设色盘，优先度高于语义色（type）
+// 每种颜色直接消费全局色盘，明暗主题靠全局双色盘自动切换。
+// 浅色（light / soft）用同色调 12% 透明度渐变。
+// 白色属于特殊标签，不走循环生成，后面单独配置。
+$tag-colors: "grey" "blue" "light-blue" "cyan" "teal" "green" "light-green" "lime" "yellow"
+  "amber" "orange" "red" "pink" "purple" "violet" "indigo";
+
+@each $name in $tag-colors {
+  .dockv-tag-color-#{$name} {
+    --dockv-tag-focus-color: hsla(var(--dockv-#{$name}-5), 1);
+
+    --dockv-tag-solid-font-color: var(--dockv-color-white);
+    --dockv-tag-solid-bg-color: hsla(var(--dockv-#{$name}-5), 1);
+    --dockv-tag-solid-border-color: transparent;
+
+    --dockv-tag-light-font-color: hsla(var(--dockv-#{$name}-5), 1);
+    --dockv-tag-light-bg-color: hsla(var(--dockv-#{$name}-5), 0.14);
+    --dockv-tag-light-border-color: transparent;
+
+    --dockv-tag-ghost-font-color: hsla(var(--dockv-#{$name}-5), 1);
+    --dockv-tag-ghost-bg-color: transparent;
+    --dockv-tag-ghost-border-color: transparent;
+
+    --dockv-tag-outline-font-color: hsla(var(--dockv-#{$name}-5), 1);
+    --dockv-tag-outline-bg-color: transparent;
+    --dockv-tag-outline-border-color: hsla(var(--dockv-#{$name}-5), 1);
+
+    --dockv-tag-soft-font-color: hsla(var(--dockv-#{$name}-5), 1);
+    --dockv-tag-soft-bg-color: hsla(var(--dockv-#{$name}-5), 0.14);
+    --dockv-tag-soft-border-color: hsla(var(--dockv-#{$name}-5), 1);
+
+    --dockv-tag-neutral-font-color: hsla(var(--dockv-#{$name}-5), 1);
+    --dockv-tag-neutral-bg-color: var(--dockv-color-fill-0);
+    --dockv-tag-neutral-border-color: transparent;
+  }
+}
+
+// white：使用 grey-1（底色）与 grey-8（文本），区别于 grey（grey-5）
+// 不使用 grey-0（亮色贴近纯白） 和 grey-9（亮色贴近纯黑），与默认文档底色以及文字颜色做区分
+.dockv-tag-color-white {
+  --dockv-tag-focus-color: hsla(var(--dockv-grey-8), 1);
+
+  --dockv-tag-solid-font-color: var(--dockv-color-black);
+  --dockv-tag-solid-bg-color: var(--dockv-color-white);
+  --dockv-tag-solid-border-color: hsla(var(--dockv-grey-8), 0.25);
+
+  --dockv-tag-light-font-color: hsla(var(--dockv-grey-8), 1);
+  --dockv-tag-light-bg-color: hsla(var(--dockv-grey-1), 0.7);
+  --dockv-tag-light-border-color: hsla(var(--dockv-grey-8), 0.15);
+
+  --dockv-tag-ghost-font-color: hsla(var(--dockv-grey-8), 1);
+  --dockv-tag-ghost-bg-color: transparent;
+  --dockv-tag-ghost-border-color: transparent;
+
+  --dockv-tag-outline-font-color: hsla(var(--dockv-grey-8), 1);
+  --dockv-tag-outline-bg-color: transparent;
+  --dockv-tag-outline-border-color: hsla(var(--dockv-grey-8), 0.45);
+
+  --dockv-tag-soft-font-color: hsla(var(--dockv-grey-8), 1);
+  --dockv-tag-soft-bg-color: hsla(var(--dockv-grey-1), 0.7);
+  --dockv-tag-soft-border-color: hsla(var(--dockv-grey-8), 0.35);
+
+  --dockv-tag-neutral-font-color: hsla(var(--dockv-grey-8), 1);
+  --dockv-tag-neutral-bg-color: hsla(var(--dockv-grey-1), 0.5);
+  --dockv-tag-neutral-border-color: transparent;
+}
+// 既未显式声明 color 也未声明 type 时（纯默认态），聚焦环回退 primary 主题色
+.dockv-tag.dockv-tag-default-color {
+  --dockv-tag-focus-color: var(--dockv-color-focus, var(--dockv-color-primary));
+}
+
+// 高对比度下 forced-colors
+@media (forced-colors: active) {
+  .dockv-tag {
+    border-color: Highlight; // 强制使用系统 Highlight 保持感知
+  }
+  .dockv-tag-close {
+    background: transparent; // 关闭所有背景
+  }
+}
