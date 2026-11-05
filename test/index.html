@@ -670,5 +670,245 @@
       <dv-divider>默认缝隙（1em）</dv-divider>
       <dv-divider><span style="padding: 0 24px">加宽缝隙</span></dv-divider>
     </div>
+
+    <hr />
+
+    <!-- ==================== Tag 测试 ==================== -->
+    <h2>Tag · 基础用法（默认 grey + light）</h2>
+    <div class="row">
+      <dv-tag>默认标签</dv-tag>
+      <dv-tag>灰色标签</dv-tag>
+    </div>
+
+    <h2>Tag · 17 种预设色盘（color）</h2>
+    <div class="row">
+      <dv-tag color="grey">grey</dv-tag>
+      <dv-tag color="blue">blue</dv-tag>
+      <dv-tag color="light-blue">light-blue</dv-tag>
+      <dv-tag color="cyan">cyan</dv-tag>
+      <dv-tag color="teal">teal</dv-tag>
+      <dv-tag color="green">green</dv-tag>
+      <dv-tag color="light-green">light-green</dv-tag>
+      <dv-tag color="lime">lime</dv-tag>
+      <dv-tag color="yellow">yellow</dv-tag>
+      <dv-tag color="amber">amber</dv-tag>
+      <dv-tag color="orange">orange</dv-tag>
+      <dv-tag color="red">red</dv-tag>
+      <dv-tag color="pink">pink</dv-tag>
+      <dv-tag color="purple">purple</dv-tag>
+      <dv-tag color="violet">violet</dv-tag>
+      <dv-tag color="indigo">indigo</dv-tag>
+      <dv-tag color="white">white</dv-tag>
+    </div>
+
+    <h2>Tag · 自定义颜色（HEX / RGB / HSL / var）</h2>
+    <div class="row">
+      <dv-tag color="#39C5BB">初音未来绿</dv-tag>
+      <dv-tag color="rgb(255, 87, 51)" variant="soft">任意 RGB</dv-tag>
+      <dv-tag color="hsl(354, 68%, 54%)" variant="outline">重音teto红</dv-tag>
+      <dv-tag color="var(--dockv-color-vocaloid-luotianyi)">引用色盘</dv-tag>
+    </div>
+    <p class="tip">查看控制台：非法颜色值应输出 console.error 并回退默认灰色。</p>
+    <div class="row">
+      <dv-tag color="not-a-color">非法颜色</dv-tag>
+    </div>
+
+    <h2>Tag · 状态语义（type）</h2>
+    <div class="row">
+      <dv-tag type="success">成功</dv-tag>
+      <dv-tag type="warning">警告</dv-tag>
+      <dv-tag type="danger">危险</dv-tag>
+      <dv-tag type="danger" color="blue">color 优先</dv-tag>
+    </div>
+
+    <h2>Tag · 6 档变体（variant）</h2>
+    <div class="row">
+      <dv-tag variant="light">light</dv-tag>
+      <dv-tag variant="ghost">ghost</dv-tag>
+      <dv-tag variant="soft">soft</dv-tag>
+      <dv-tag variant="outline">outline</dv-tag>
+      <dv-tag variant="solid">solid</dv-tag>
+      <dv-tag variant="neutral">neutral</dv-tag>
+    </div>
+
+    <h2>Tag · 尺寸（size）</h2>
+    <div class="row">
+      <dv-tag size="sm">小</dv-tag>
+      <dv-tag size="md">中</dv-tag>
+      <dv-tag size="lg">大</dv-tag>
+      <dv-tag size="xl">超大</dv-tag>
+    </div>
+    <p class="tip">sm（16px）下检查 y / g / p / b / h 等上下伸笔画是否被裁剪。</p>
+
+    <h2>Tag · 长文本单行省略</h2>
+    <div class="row">
+      <dv-tag style="max-width: 120px">这是一段很长很长的标签文本内容</dv-tag>
+      <dv-tag size="xl" style="max-width: 160px">This is a very long tag text content</dv-tag>
+    </div>
+
+    <h2>Tag · 形状（默认 / round / capsule / sharp）</h2>
+    <div class="row">
+      <dv-tag size="xl" variant="solid">默认</dv-tag>
+      <dv-tag size="xl" variant="solid" round>round</dv-tag>
+      <dv-tag size="xl" variant="solid" capsule>capsule</dv-tag>
+      <dv-tag size="xl" variant="solid" sharp>sharp</dv-tag>
+      <dv-tag size="xl" style="--dockv-tag-border-radius: 12px" color="blue">自定义 12px</dv-tag>
+    </div>
+
+    <h2>Tag · 图标（prefix-icon / suffix-icon）</h2>
+    <div class="row">
+      <dv-tag prefix-icon="material-symbols:home" color="blue">首页</dv-tag>
+      <dv-tag suffix-icon="material-symbols:chevron-right" color="green">更多</dv-tag>
+      <dv-tag
+        prefix-icon="material-symbols:star"
+        suffix-icon="material-symbols:check"
+        color="amber"
+        >星级</dv-tag
+      >
+    </div>
+
+    <h2>Tag · 图片（prefix-image / suffix-image）</h2>
+    <div class="row">
+      <dv-tag prefix-image="https://ui.dockv.cc/logo.png" size="sm">小尺寸</dv-tag>
+      <dv-tag prefix-image="https://ui.dockv.cc/logo.png" color="blue">默认尺寸</dv-tag>
+      <dv-tag suffix-image="https://ui.dockv.cc/logo.png" size="lg" color="green">后缀图</dv-tag>
+      <dv-tag suffix-image="https://ui.dockv.cc/logo.png" capsule color="purple">
+        胶囊 + 圆角图
+      </dv-tag>
+    </div>
+    <p class="tip">同时配置 image 与 icon 时应渲染图片（src &gt; icon）。</p>
+    <div class="row">
+      <dv-tag
+        prefix-icon="material-symbols:home"
+        prefix-image="https://ui.dockv.cc/logo.png"
+        color="blue"
+        >图片优先</dv-tag
+      >
+    </div>
+
+    <h2>Tag · 可关闭（closable）</h2>
+    <div class="row">
+      <dv-tag closable>可关闭</dv-tag>
+      <dv-tag closable color="blue">可关闭-蓝</dv-tag>
+      <dv-tag closable type="danger" variant="outline" id="tag-prevent-close">阻止隐藏</dv-tag>
+    </div>
+    <p class="tip">「阻止隐藏」点击 × 后应弹出确认框，取消则不隐藏。</p>
+
+    <h2>Tag · 可选中（checkable）</h2>
+    <div class="row">
+      <dv-tag checkable variant="ghost" color="blue">ghost ⇄ light</dv-tag>
+      <dv-tag checkable checked variant="ghost" color="blue">ghost ⇄ light（已选）</dv-tag>
+      <dv-tag checkable variant="outline" color="green">outline ⇄ soft</dv-tag>
+      <dv-tag checkable checked variant="outline" color="green">outline ⇄ soft（已选）</dv-tag>
+      <dv-tag checkable variant="neutral" type="danger">neutral ⇄ solid</dv-tag>
+      <dv-tag checkable checked variant="neutral" type="danger">neutral ⇄ solid（已选）</dv-tag>
+    </div>
+    <p class="tip">
+      检查点：① 切换时无尺寸/位置跳动；② 键盘 Tab 聚焦后 Space / Enter 可切换；③ 不派发 dv-click。
+    </p>
+
+    <h2>Tag · 只读选中（checked）</h2>
+    <div class="row">
+      <dv-tag checked color="green" variant="neutral">只读选中</dv-tag>
+      <dv-tag checked variant="solid" type="danger">只读 solid</dv-tag>
+    </div>
+
+    <h2>Tag · 禁用（disabled）</h2>
+    <div class="row">
+      <dv-tag disabled>禁用标签</dv-tag>
+      <dv-tag color="blue" disabled>禁用蓝</dv-tag>
+      <dv-tag closable disabled>禁用关闭</dv-tag>
+      <dv-tag checkable disabled>禁用选中</dv-tag>
+      <dv-tag checkable checked disabled>禁用已选</dv-tag>
+    </div>
+    <p class="tip">检查点：点击无任何事件；Tab 可聚焦但不响应；鼠标为 not-allowed。</p>
+
+    <h2>Tag · 显隐（invisible）</h2>
+    <div class="row" id="tag-invisible-row">
+      <dv-tag>可见 A</dv-tag>
+      <dv-tag invisible>应不可见</dv-tag>
+      <dv-tag>可见 B</dv-tag>
+    </div>
+    <p class="tip">隐藏标签应不占空间（A 与 B 紧邻），DOM 节点仍在。</p>
+    <div class="row">
+      <dv-button size="sm" id="btn-tag-toggle">切换中间标签显隐</dv-button>
+    </div>
+
+    <h2>Tag · 文本划选（selectable）</h2>
+    <div class="row">
+      <dv-tag>不可划选</dv-tag>
+      <dv-tag selectable>可划选文本</dv-tag>
+    </div>
+
+    <h2>Tag · 可关闭 + 可选中互斥降级</h2>
+    <div class="row">
+      <dv-tag closable checkable color="blue">两者同时声明</dv-tag>
+    </div>
+    <p class="tip">按 checkable 处理，不渲染关闭按钮；控制台应输出 console.warn（任何环境）。</p>
+
+    <h2>Tag · 事件（dv-click / dv-close / dv-change）</h2>
+    <div class="row" id="tag-event-row">
+      <dv-tag id="tag-event-click" color="blue">监听 dv-click</dv-tag>
+      <dv-tag id="tag-event-close" closable color="red">监听 dv-close</dv-tag>
+      <dv-tag id="tag-event-change" checkable color="green">监听 dv-change</dv-tag>
+    </div>
+    <p class="tip" id="tag-event-log">事件日志将输出到这里。</p>
+
+    <h2>Tag · API 对照清单</h2>
+    <ul class="tip">
+      <li><code>color / variant / type / size</code>：颜色、变体、状态语义、尺寸</li>
+      <li><code>capsule / round / sharp</code>：形状三选一</li>
+      <li><code>prefix-icon / suffix-icon / prefix-image / suffix-image</code>：前后缀</li>
+      <li><code>closable / checkable / checked</code>：交互（closable 与 checkable 互斥）</li>
+      <li><code>selectable / invisible / disabled</code>：划选、显隐、禁用</li>
+      <li><code>dv-click / dv-close / dv-change</code>：事件</li>
+      <li><code>::part(tag / text / prefix / suffix / image / close)</code>：样式钩子</li>
+    </ul>
+
+    <script type="module">
+      // 阻止自动隐藏：dv-close 中 preventDefault
+      const preventCloseTag = document.querySelector("#tag-prevent-close");
+      preventCloseTag.addEventListener("dv-close", (e) => {
+        if (!confirm("确定移除该标签？")) e.preventDefault();
+      });
+
+      // 显隐切换
+      const invisibleRow = document.querySelector("#tag-invisible-row");
+      document.querySelector("#btn-tag-toggle").addEventListener("dv-click", () => {
+        const target = invisibleRow.querySelectorAll("dv-tag")[1];
+        target.invisible = !target.invisible;
+        console.log("[dv-tag] invisible =", target.invisible);
+      });
+
+      // 事件日志
+      const log = document.querySelector("#tag-event-log");
+      const write = (msg) => {
+        log.textContent = msg;
+        console.log("[dv-tag]", msg);
+      };
+
+      document.querySelector("#tag-event-click").addEventListener("dv-click", (e) => {
+        write(`dv-click: text="${e.detail.text}" checked=${e.detail.checked}`);
+      });
+
+      document.querySelector("#tag-event-close").addEventListener("dv-close", (e) => {
+        const fromKeyboard = e.detail.originalEvent instanceof KeyboardEvent;
+        write(`dv-close: text="${e.detail.text}" fromKeyboard=${fromKeyboard}`);
+      });
+
+      const changeTag = document.querySelector("#tag-event-change");
+      changeTag.addEventListener("dv-change", (e) => {
+        const fromKeyboard = e.detail.originalEvent instanceof KeyboardEvent;
+        write(
+          `dv-change: checked=${e.detail.checked}（切换后新值）` +
+            ` fromKeyboard=${fromKeyboard}`,
+        );
+      });
+
+      // 验证 checkable 模式下不派发 dv-click
+      changeTag.addEventListener("dv-click", () => {
+        write("异常：checkable 模式下不应触发 dv-click");
+      });
+    </script>
   </body>
 </html>

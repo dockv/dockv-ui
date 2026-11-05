@@ -28,6 +28,14 @@
   </dv-divider>
 </Card>
 
+<Card title="Tag | 标签" link="/components/tag">
+  <div style="display: flex; gap: var(--dockv-spacing-sm); flex-wrap: wrap;">
+    <dv-tag prefix-icon="material-symbols:tag">标签</dv-tag>
+    <dv-tag round variant="soft" color="#39C5BB" suffix-icon="material-symbols:check-circle">成功</dv-tag>
+    <dv-tag variant="solid" color="pink">分类</dv-tag>
+  </div>
+</Card>
+
 <Card title="Notification | 通知" link="/components/notification">
   <div style="transform: scale(0.6); transform-origin: center; width: 320px; margin: 0 auto;">
     <dv-notification type="info" title="新消息" content="你有 3 条未读通知"></dv-notification>

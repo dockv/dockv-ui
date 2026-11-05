@@ -44,6 +44,12 @@ export default defineConfig({
         ]
       },
       {
+        text: '展示',
+        items: [
+          { text: 'Tag | 标签', link: '/components/tag' },
+        ]
+      },
+      {
         text: '反馈类',
         items: [
           { text: 'Notification | 通知', link: '/components/notification' },

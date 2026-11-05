@@ -13,6 +13,17 @@ export type {
   DividerBorderStyle,
 } from "./components/divider.ts";
 
+// dv-tag 标签组件
+export { Tag } from "./components/tag.ts";
+export type {
+  TagType,
+  TagVariant,
+  TagSize,
+  TagColor,
+  TagEventDetail,
+  TagCloseEventDetail,
+} from "./components/tag.ts";
+
 // dv-notification 通知组件
 export { Notification, NotificationCard } from "./components/notification.ts";
 export type {

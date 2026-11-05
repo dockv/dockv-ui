@@ -15,6 +15,8 @@ import Palette from "../components/Palette.vue";
 import RadiusToken from "../components/RadiusToken.vue";
 import SpacingToken from "../components/SpacingToken.vue";
 import ThemeToggle from "../components/ThemeToggle.vue";
+import TagMatrix from "../components/TagMatrix.vue";
+import TagSizeShapeMatrix from "../components/TagSizeShapeMatrix.vue";
 
 /**
  * 显式把自定义元素注册为 Vue 组件。
@@ -30,6 +32,12 @@ const DockvButton = defineComponent({
 const DockvNotification = defineComponent({
   setup(_props, { slots }) {
     return () => h("dv-notification", null, slots.default?.());
+  },
+});
+
+const DockvTag = defineComponent({
+  setup(_props, { slots }) {
+    return () => h("dv-tag", null, slots.default?.());
   },
 });
 
@@ -64,7 +72,10 @@ export default {
     app.component("RadiusToken", RadiusToken);
     app.component("SpacingToken", SpacingToken);
     app.component("ThemeToggle", ThemeToggle);
+    app.component("TagMatrix", TagMatrix);
+    app.component("TagSizeShapeMatrix", TagSizeShapeMatrix);
     app.component("dv-button", DockvButton);
     app.component("dv-notification", DockvNotification);
+    app.component("dv-tag", DockvTag);
   },
 } satisfies Theme;
