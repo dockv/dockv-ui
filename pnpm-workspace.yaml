@@ -1,3 +1,14 @@
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
+minimumReleaseAgeExclude:
+  - '@storybook/addon-a11y@10.6.6'
+  - '@storybook/addon-docs@10.6.6'
+  - '@storybook/addon-onboarding@10.6.6'
+  - '@storybook/addon-themes@10.6.6'
+  - '@storybook/addon-vitest@10.6.6'
+  - '@storybook/builder-vite@10.6.6'
+  - '@storybook/react-dom-shim@10.6.6'
+  - '@storybook/web-components-vite@10.6.6'
+  - '@storybook/web-components@10.6.6'
+  - storybook@10.6.6
