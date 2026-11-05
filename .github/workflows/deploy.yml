@@ -39,15 +39,15 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      # 安装并用缓存加速 pnpm（版本与本地一致为 11）
+      # 安装并用缓存加速 pnpm
       - uses: pnpm/action-setup@v6
         with:
-          version: 11
-      # 安装并缓存 Node 24（上述弃用警告源，确保运行时最新）
+          version: 11.10.0
+      # 安装并缓存 Node 26（确保运行时最新）
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           cache: pnpm
       - name: Setup Pages
         uses: actions/configure-pages@v6
