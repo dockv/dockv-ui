@@ -270,20 +270,16 @@ export class NotificationCard extends LitElement {
   };
 
   /**
-   * 计算内联样式：`color` 非空时注入强调色变量，
-   * 覆盖 type 默认强调色并派生 soft 背景/边框（与按钮 `color` 同一套 color-mix 思路）
+   * 计算内联样式：`color` 非空时仅注入 1 行种子变量 `--dockv-notification-accent-color`。
+   *
+   * soft 变体的背景 / 边框不在此处显式派生，交由 `notification.scss` 中
+   * `var(--dockv-notification-soft-*, color-mix(...))` 的 CSS 原生回退链自动计算，
+   * 与 Tag 组件保持一致的「JS 播种、CSS 派生」模型，避免重复计算与内联样式膨胀。
+   *
    * @returns CSS style 属性值
    */
   private _getInlineStyle(): string {
-    const parts: string[] = [];
-    if (this.color) {
-      parts.push(`--dockv-notification-accent-color: ${this.color}`);
-      parts.push(
-        `--dockv-notification-soft-bg-color: color-mix(in srgb, ${this.color} 10%, var(--dockv-color-bg-3))`,
-      );
-      parts.push(`--dockv-notification-soft-border-color: ${this.color}`);
-    }
-    return parts.join(";");
+    return this.color ? `--dockv-notification-accent-color: ${this.color}` : "";
   }
 
   /**
