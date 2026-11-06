@@ -97,7 +97,7 @@ function openCallbackDemo() {
   closeCount.value = 0;
   Notification.success({
     title: "保存成功",
-    content: "点击通知体或等它关闭，看下方计数变化",
+    content: "点击通知体累加 onClick；只点关闭按钮（x）时，onClick 应保持 0",
     duration: 0, // 不自动关闭，方便手动点击通知体触发 onClick
     onClick: () => {
       clickCount.value++;
@@ -549,6 +549,11 @@ Notification.config({
 - `onClick`：点击通知体时触发。
 - `onClose`：通知关闭时触发（自动关闭和手动关闭都会触发）。
 
+> [!NOTE] 关闭按钮不会触发 onClick
+>
+> 点击关闭按钮时，`dv-click` 与原生 `click` 事件都会在关闭按钮处被拦截、不再向外冒泡，
+> 因此只会触发一次 `onClose`，不会触发 `onClick`。
+
 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
   <dv-button @dv-click="openCallbackDemo">触发回调</dv-button>
   <span>点击通知体：<b>{{ clickCount }}</b> 次</span>
@@ -640,7 +645,7 @@ Notification.success({
 
 #### 事件
 
-| 事件名     | 说明                        |
-| ---------- | --------------------------- |
-| `dv-close` | 关闭时触发（带 `id`）       |
-| `dv-click` | 点击通知体时触发（带 `id`） |
+| 事件名     | 说明                                    |
+| ---------- | --------------------------------------- |
+| `dv-close` | 关闭时触发（带 `id`）                   |
+| `dv-click` | 点击通知体时触发（带 `id`）；关闭按钮不触发 |
