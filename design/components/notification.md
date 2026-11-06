@@ -236,7 +236,7 @@ setTimeout(() => {
 
 写法与按钮 `variant` 心智一致（`soft` 同为"边框 + 浅背景"表现层）。外围 SCSS 用 `.dockv-notification-normal` / `.dockv-notification-soft` 两个 class 切换背景 / 边框变量。遵循按钮的设计边界：`variant` 只承载基础视觉表现层，更多风格交给上层组合，不无脑膨胀。
 
-整体强调色可用 `color` 属性覆盖（语义同按钮 `color`），在非空时覆盖 `type` 默认强调色，一并作用到图标、soft 背景/边框、进度条默认色等；标题/正文文字不动。实现为注入内联 `<style>` + `color-mix()` 派生各级颜色（btn/u 与按钮一致）。`progress.color` 是更细的局部覆盖，只改进度条、优先级高于 `color`。
+整体强调色可用 `color` 属性覆盖（语义同按钮 `color`），在非空时覆盖 `type` 默认强调色，一并作用到图标、soft 背景/边框、进度条默认色等；标题/正文文字不动。实现为**仅注入 1 行内联种子变量** `--dockv-notification-accent-color`，soft 背景/边框由 SCSS 的 `var(--dockv-notification-soft-*, color-mix(...))` 回退链自动派生（与 Tag 组件同一套「JS 播种、CSS 派生」模型）。`progress.color` 是更细的局部覆盖，只改进度条、优先级高于 `color`。
 
 ### 进度条（progress）
 
