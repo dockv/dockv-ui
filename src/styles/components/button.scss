@@ -207,19 +207,33 @@ $button-types: "primary" "secondary" "tertiary" "success" "warning" "danger";
 }
 
 // ===== 视觉表现层：读取色板变量 =====
+// 与 Tag 同构：type / 预设色由类注入具体色板变量；设置 `color` 时 JS 不再输出 type 类，
+// 仅注入 1 行种子 `--dockv-button-color`，下面各属性的 `var(具体, 种子派生)` 回退
+// 因此真正生效（`var()` 的 fallback 仅在变量未定义时使用）。
+// 回退值与原 JS 内联实现严格一一对应，保证视觉零漂移。
 .dockv-button-solid {
-  color: var(--dockv-button-solid-font-color);
-  background: var(--dockv-button-solid-bg-color);
-  border-color: var(--dockv-button-solid-border-color);
+  color: var(--dockv-button-solid-font-color, var(--dockv-color-white));
+  background: var(--dockv-button-solid-bg-color, var(--dockv-button-color));
+  border-color: var(--dockv-button-solid-border-color, transparent);
 
   &:hover {
-    background: var(--dockv-button-solid-bg-color-hover);
+    background: var(
+      --dockv-button-solid-bg-color-hover,
+      color-mix(in srgb, var(--dockv-button-color) 85%, #000)
+    );
   }
   &:active {
-    background: var(--dockv-button-solid-bg-color-active);
+    background: var(
+      --dockv-button-solid-bg-color-active,
+      color-mix(in srgb, var(--dockv-button-color) 75%, #000)
+    );
   }
   &:focus-visible {
-    outline: 2px solid var(--dockv-button-solid-ol-color-focus);
+    outline: 2px solid
+      var(
+        --dockv-button-solid-ol-color-focus,
+        color-mix(in srgb, var(--dockv-button-color) 60%, transparent)
+      );
   }
   &:disabled {
     background: var(--dockv-button-disabled-bg) !important;
@@ -227,53 +241,78 @@ $button-types: "primary" "secondary" "tertiary" "success" "warning" "danger";
 }
 
 .dockv-button-light {
-  color: var(--dockv-button-light-font-color);
-  background: var(--dockv-button-light-bg-color);
-  border-color: var(--dockv-button-light-border-color);
+  color: var(--dockv-button-light-font-color, var(--dockv-button-color));
+  background: var(
+    --dockv-button-light-bg-color,
+    color-mix(in srgb, var(--dockv-button-color) 10%, transparent)
+  );
+  border-color: var(--dockv-button-light-border-color, transparent);
 
   &:hover {
-    background: var(--dockv-button-light-bg-color-hover);
+    background: var(
+      --dockv-button-light-bg-color-hover,
+      color-mix(in srgb, var(--dockv-button-color) 20%, transparent)
+    );
   }
   &:active {
-    background: var(--dockv-button-light-bg-color-active);
+    background: var(
+      --dockv-button-light-bg-color-active,
+      color-mix(in srgb, var(--dockv-button-color) 30%, transparent)
+    );
   }
   &:focus-visible {
-    outline: 2px solid var(--dockv-button-light-ol-color-focus);
+    outline: 2px solid
+      var(
+        --dockv-button-light-ol-color-focus,
+        color-mix(in srgb, var(--dockv-button-color) 40%, transparent)
+      );
   }
   &:disabled {
     background: var(--dockv-button-disabled-bg) !important;
   }
 }
 
+// ghost / outline / neutral 的灰底与透明边框不随 `color` 变化，回退到中性灰阶。
 .dockv-button-ghost {
-  color: var(--dockv-button-ghost-font-color);
-  background: var(--dockv-button-ghost-bg-color);
-  border-color: var(--dockv-button-ghost-border-color);
+  color: var(--dockv-button-ghost-font-color, var(--dockv-button-color));
+  background: var(--dockv-button-ghost-bg-color, transparent);
+  border-color: var(--dockv-button-ghost-border-color, transparent);
 
   &:hover {
-    background: var(--dockv-button-ghost-bg-color-hover);
+    background: var(--dockv-button-ghost-bg-color-hover, var(--dockv-color-fill-0));
   }
   &:active {
-    background: var(--dockv-button-ghost-bg-color-active);
+    background: var(
+      --dockv-button-ghost-bg-color-active,
+      color-mix(in srgb, var(--dockv-button-color) 16%, transparent)
+    );
   }
   &:focus-visible {
-    outline: 2px solid var(--dockv-button-ghost-ol-color-focus);
+    outline: 2px solid
+      var(
+        --dockv-button-ghost-ol-color-focus,
+        color-mix(in srgb, var(--dockv-button-color) 40%, transparent)
+      );
   }
 }
 
 .dockv-button-outline {
-  color: var(--dockv-button-outline-font-color);
-  background: var(--dockv-button-outline-bg-color);
-  border-color: var(--dockv-button-outline-border-color);
+  color: var(--dockv-button-outline-font-color, var(--dockv-button-color));
+  background: var(--dockv-button-outline-bg-color, transparent);
+  border-color: var(--dockv-button-outline-border-color, var(--dockv-button-color));
 
   &:hover {
-    background: var(--dockv-button-outline-bg-color-hover);
+    background: var(--dockv-button-outline-bg-color-hover, var(--dockv-color-fill-0));
   }
   &:active {
-    background: var(--dockv-button-outline-bg-color-active);
+    background: var(--dockv-button-outline-bg-color-active, var(--dockv-color-fill-1));
   }
   &:focus-visible {
-    outline: 2px solid var(--dockv-button-outline-ol-color-focus);
+    outline: 2px solid
+      var(
+        --dockv-button-outline-ol-color-focus,
+        color-mix(in srgb, var(--dockv-button-color) 40%, transparent)
+      );
   }
 }
 
@@ -285,34 +324,51 @@ $button-types: "primary" "secondary" "tertiary" "success" "warning" "danger";
 }
 
 .dockv-button-soft {
-  color: var(--dockv-button-soft-font-color);
-  background: var(--dockv-button-soft-bg-color);
-  border-color: var(--dockv-button-soft-border-color);
+  color: var(--dockv-button-soft-font-color, var(--dockv-button-color));
+  background: var(
+    --dockv-button-soft-bg-color,
+    color-mix(in srgb, var(--dockv-button-color) 10%, transparent)
+  );
+  border-color: var(--dockv-button-soft-border-color, var(--dockv-button-color));
 
   &:hover {
-    background: var(--dockv-button-soft-bg-color-hover);
+    background: var(
+      --dockv-button-soft-bg-color-hover,
+      color-mix(in srgb, var(--dockv-button-color) 20%, transparent)
+    );
   }
   &:active {
-    background: var(--dockv-button-soft-bg-color-active);
+    background: var(
+      --dockv-button-soft-bg-color-active,
+      color-mix(in srgb, var(--dockv-button-color) 30%, transparent)
+    );
   }
   &:focus-visible {
-    outline: 2px solid var(--dockv-button-soft-ol-color-focus);
+    outline: 2px solid
+      var(
+        --dockv-button-soft-ol-color-focus,
+        color-mix(in srgb, var(--dockv-button-color) 40%, transparent)
+      );
   }
 }
 
 .dockv-button-neutral {
-  color: var(--dockv-button-neutral-font-color);
-  background: var(--dockv-button-neutral-bg-color);
-  border-color: var(--dockv-button-neutral-border-color);
+  color: var(--dockv-button-neutral-font-color, var(--dockv-button-color));
+  background: var(--dockv-button-neutral-bg-color, var(--dockv-color-fill-0));
+  border-color: var(--dockv-button-neutral-border-color, transparent);
 
   &:hover {
-    background: var(--dockv-button-neutral-bg-color-hover);
+    background: var(--dockv-button-neutral-bg-color-hover, var(--dockv-color-fill-1));
   }
   &:active {
-    background: var(--dockv-button-neutral-bg-color-active);
+    background: var(--dockv-button-neutral-bg-color-active, var(--dockv-color-fill-2));
   }
   &:focus-visible {
-    outline: 2px solid var(--dockv-button-neutral-ol-color-focus);
+    outline: 2px solid
+      var(
+        --dockv-button-neutral-ol-color-focus,
+        color-mix(in srgb, var(--dockv-button-color) 40%, transparent)
+      );
   }
 }
 
@@ -327,23 +383,32 @@ $button-types: "primary" "secondary" "tertiary" "success" "warning" "danger";
   }
 
   // 按压时不让 :active 再加深——loading 表示"正在处理"，不应有可交互的按压反馈。
-  // 让按下态保持 hover 颜色，视觉连续、不闪变。
+  // 让按下态保持 hover 颜色，视觉连续、不闪变。回退值与各变体 hover 保持一致。
   &.dockv-button-solid:active {
-    background: var(--dockv-button-solid-bg-color-hover);
+    background: var(
+      --dockv-button-solid-bg-color-hover,
+      color-mix(in srgb, var(--dockv-button-color) 85%, #000)
+    );
   }
   &.dockv-button-light:active {
-    background: var(--dockv-button-light-bg-color-hover);
+    background: var(
+      --dockv-button-light-bg-color-hover,
+      color-mix(in srgb, var(--dockv-button-color) 20%, transparent)
+    );
   }
   &.dockv-button-ghost:active {
-    background: var(--dockv-button-ghost-bg-color-hover);
+    background: var(--dockv-button-ghost-bg-color-hover, var(--dockv-color-fill-0));
   }
   &.dockv-button-outline:active {
-    background: var(--dockv-button-outline-bg-color-hover);
+    background: var(--dockv-button-outline-bg-color-hover, var(--dockv-color-fill-0));
   }
   &.dockv-button-soft:active {
-    background: var(--dockv-button-soft-bg-color-hover);
+    background: var(
+      --dockv-button-soft-bg-color-hover,
+      color-mix(in srgb, var(--dockv-button-color) 20%, transparent)
+    );
   }
   &.dockv-button-neutral:active {
-    background: var(--dockv-button-neutral-bg-color-hover);
+    background: var(--dockv-button-neutral-bg-color-hover, var(--dockv-color-fill-1));
   }
 }
