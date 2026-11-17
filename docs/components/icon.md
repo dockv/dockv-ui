@@ -93,6 +93,9 @@ title: Icon 图标
 <div style="font-size: 14px;">14px <dv-icon icon="material-symbols:home" size="inherit"></dv-icon></div>
 <div style="font-size: 18px;">18px <dv-icon icon="material-symbols:home" size="inherit"></dv-icon></div>
 <div style="font-size: 22px;">22px <dv-icon icon="material-symbols:home" size="inherit"></dv-icon></div>
+<div style="font-size: 14px;">14px <dv-icon src="https://picsum.photos/800" size="inherit"></dv-icon></div>
+<div style="font-size: 18px;">18px <dv-icon src="https://picsum.photos/800" size="inherit"></dv-icon></div>
+<div style="font-size: 22px;">22px <dv-icon src="https://picsum.photos/800" size="inherit"></dv-icon></div>
 
 ```html
 <div style="font-size: 14px;">
@@ -209,7 +212,7 @@ title: Icon 图标
 ```html
 <dv-icon src="https://raw.githubusercontent.com/gilbarbara/logos/refs/heads/main/logos/github-icon.svg" size="36px"></dv-icon> 
 <dv-icon src="https://dash.cloudflare.com/favicon.ico" size="36px"></dv-icon> 
-<dv-icon src="https://ui.dockv.cc/logo.png" size="36px"></dv-icon> 
+<dv-icon src="/logo.png" size="36px"></dv-icon> 
 ```
 
 图片模式与矢量图标（`icon`）的表现完全对齐：
