@@ -11,7 +11,7 @@ import { compile } from "sass-embedded";
 import { resolve, dirname } from "path";
 import { mkdirSync, writeFileSync } from "fs";
 
-const rootDir = resolve(import.meta.dirname, "."); // 根目录
+const rootDir = resolve(import.meta.dirname, ".."); // 包根目录（本文件位于 scripts/ 下）
 const srcIndex = resolve(rootDir, "src/styles/index.scss"); // SCSS 入口
 const srcDir = resolve(rootDir, "src/styles"); // SCSS 源目录（用于解析 @use）
 const distDir = resolve(rootDir, "dist"); // CSS 输出目录

@@ -99,7 +99,7 @@ dist/
 // build:types —— tsc -p tsconfig.build.json
 // declaration + emitDeclarationOnly，只产出 .d.ts 类型声明
 
-// build:styles —— tsx build-styles.ts
+// build:styles —— tsx scripts/build-styles.ts
 // 使用 sass-embedded 编译 src/styles/index.scss → dist/dockv-ui.css（全量样式）
 ```
 
