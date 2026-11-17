@@ -49,7 +49,10 @@ export class Button extends LitElement {
 
   /**
    * 自定义颜色，覆盖 `type` 默认色值
-   * 支持 HEX / RGB / HSL 三种格式
+   * 支持任意合法 CSS 颜色值（HEX / RGB / HSL / 命名颜色 / CSS 变量）
+   *
+   * 与 `Tag` 保持一致：不反射到宿主属性。设置了 `color` 时不再输出 type 色板类，
+   * 改为仅注入 `--dockv-button-color` 种子，由各变体类基于它 `color-mix()` 派生。
    */
   @property({ type: String })
   color = "";
@@ -130,8 +133,10 @@ export class Button extends LitElement {
   /**
    * 计算内联样式字符串
    *
-   * `color` 非空时注入一组 `--dockv-button-{variant}-*` 变量覆盖 SCSS 预定义色板，
-   * 交互态颜色用 color-mix 动态生成。
+   * `color` 非空时仅注入 1 行种子变量 `--dockv-button-color`，
+   * 各变体的文字 / 背景 / 描边及交互态颜色由 `button.scss` 中各变体类的
+   * `var(--dockv-button-{variant}-*, color-mix(...))` 回退链自动派生。
+   * 与 Tag 统一为「JS 播种、CSS 派生」模型。
    * `borderRadius` 非空时覆盖圆角变量。
    *
    * @returns CSS style 属性值
@@ -139,38 +144,7 @@ export class Button extends LitElement {
   private _getInlineStyle(): string {
     const parts: string[] = [];
     if (this.color) {
-      const c = this.color;
-      parts.push(
-        // solid 深色填充
-        "--dockv-button-solid-font-color: #ffffff",
-        `--dockv-button-solid-bg-color: ${c}`,
-        `--dockv-button-solid-bg-color-hover: color-mix(in srgb, ${c} 85%, #000)`,
-        `--dockv-button-solid-bg-color-active: color-mix(in srgb, ${c} 75%, #000)`,
-        `--dockv-button-solid-ol-color-focus: color-mix(in srgb, ${c} 60%, transparent)`,
-        // light 浅色填充
-        `--dockv-button-light-font-color: ${c}`,
-        `--dockv-button-light-bg-color: color-mix(in srgb, ${c} 10%, transparent)`,
-        `--dockv-button-light-bg-color-hover: color-mix(in srgb, ${c} 20%, transparent)`,
-        `--dockv-button-light-bg-color-active: color-mix(in srgb, ${c} 30%, transparent)`,
-        `--dockv-button-light-ol-color-focus: color-mix(in srgb, ${c} 40%, transparent)`,
-        // ghost 无背景（只覆盖文字色，背景保持透明 + 灰色 hover）
-        `--dockv-button-ghost-font-color: ${c}`,
-        `--dockv-button-ghost-bg-color-active: color-mix(in srgb, ${c} 16%, transparent)`,
-        `--dockv-button-ghost-ol-color-focus: color-mix(in srgb, ${c} 40%, transparent)`,
-        // outline 透明背景 + 边框
-        `--dockv-button-outline-font-color: ${c}`,
-        `--dockv-button-outline-border-color: ${c}`,
-        `--dockv-button-outline-ol-color-focus: color-mix(in srgb, ${c} 40%, transparent)`,
-        // soft 浅色背景 + 边框
-        `--dockv-button-soft-font-color: ${c}`,
-        `--dockv-button-soft-bg-color: color-mix(in srgb, ${c} 10%, transparent)`,
-        `--dockv-button-soft-bg-color-hover: color-mix(in srgb, ${c} 20%, transparent)`,
-        `--dockv-button-soft-bg-color-active: color-mix(in srgb, ${c} 30%, transparent)`,
-        `--dockv-button-soft-border-color: ${c}`,
-        // neutral 灰底 + 彩色文字（背景保持灰阶，仅覆盖文字色与 focus 描边）
-        `--dockv-button-neutral-font-color: ${c}`,
-        `--dockv-button-neutral-ol-color-focus: color-mix(in srgb, ${c} 40%, transparent)`,
-      );
+      parts.push(`--dockv-button-color: ${this.color}`);
     }
     if (this.borderRadius) {
       parts.push(`--dockv-button-border-radius: ${this.borderRadius}`);
@@ -258,7 +232,9 @@ export class Button extends LitElement {
 
     const classes = [
       "dockv-button",
-      `dockv-button-${this.type}`,
+      // 与 Tag 一致：显式 color 优先于 type 色板。此时不输出 type 类，让各变体类的
+      // `var(具体变量, 种子派生)` 回退生效；未设 color 时才用 type 色板类。
+      this.color ? "" : `dockv-button-${this.type}`,
       `dockv-button-${this.variant}`,
       `dockv-button-${this.size}`,
       this._iconOnly ? "dockv-button-icononly" : "",

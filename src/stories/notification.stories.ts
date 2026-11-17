@@ -485,5 +485,45 @@ export const QuerySnapshots: Story = {
   `,
 };
 
+/** 回调：点击通知体触发 onClick；点击关闭按钮只触发 onClose，不应触发 onClick */
+export const Callbacks: Story = {
+  render: () => {
+    let clickCount = 0;
+    let closeCount = 0;
+    const render = () => {
+      const el = document.getElementById("notification-callback-count");
+      if (!el) return;
+      el.textContent = `onClick=${clickCount} onClose=${closeCount}`;
+      el.style.color = clickCount > 0 ? "#ef4444" : "#10b981";
+    };
+    return html`
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center">
+        <dv-button
+          @dv-click=${() => {
+            clickCount = 0;
+            closeCount = 0;
+            render();
+            Notification.info({
+              title: "冒泡验证",
+              content: "只点右侧【✕】关闭按钮：预期 onClick=0、onClose=1",
+              duration: 0,
+              onClick: () => {
+                clickCount++;
+                render();
+              },
+              onClose: () => {
+                closeCount++;
+                render();
+              },
+            });
+          }}
+          >打开带回调的通知</dv-button
+        >
+        <code id="notification-callback-count">onClick=0 onClose=0</code>
+      </div>
+    `;
+  },
+};
+
 /** 类型引用（供 TS 检查 / 文档示例） */
 export type StoryTypes = NotificationType | NotificationVariant;

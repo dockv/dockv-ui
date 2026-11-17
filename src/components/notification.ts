@@ -1,6 +1,7 @@
 import { LitElement, html, unsafeCSS } from "lit";
 import type { TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { ref } from "lit/directives/ref.js";
 import styles from "../styles/components/notification.scss?inline";
 import "./icon.ts";
 import "./button.ts";
@@ -217,8 +218,35 @@ export class NotificationCard extends LitElement {
     );
   };
 
-  /** 点击通知体：派发 dv-click（携带 id） */
-  private _handleClick = (): void => {
+  /** 关闭按钮区域：用于判定点击源是否来自关闭按钮（由模板 @ref 赋值） */
+  private _closeWrapper: HTMLElement | null = null;
+
+  /**
+   * 点击源是否落在关闭按钮区域内
+   * 关闭按钮内部还有 `<dv-button>` 的一层 Shadow DOM，`event.target` 会被重定向，
+   * 因此需用 `composedPath()` 逐层比对
+   * @param e - 事件对象
+   * @returns 点击源是否落在关闭按钮区域内
+   */
+  private _isFromCloseBtn(e: Event): boolean {
+    return !!this._closeWrapper && e.composedPath().includes(this._closeWrapper);
+  }
+
+  /**
+   * 关闭按钮容器引用回调：缓存关闭按钮区域元素
+   * @param el - 关闭按钮容器（隐藏时为空）
+   */
+  private _setCloseWrapper = (el: Element | undefined): void => {
+    this._closeWrapper = (el as HTMLElement | undefined) ?? null;
+  };
+
+  /**
+   * 点击通知体：派发 dv-click（携带 id）
+   * 关闭按钮区域的点击不派发，避免关闭时误触发 `onClick`
+   * @param e - 原生点击事件
+   */
+  private _handleClick = (e: Event): void => {
+    if (this._isFromCloseBtn(e)) return;
     this.dispatchEvent(
       new CustomEvent("dv-click", {
         bubbles: true,
@@ -228,26 +256,30 @@ export class NotificationCard extends LitElement {
     );
   };
 
-  /** 点击关闭按钮：走退出动画 */
-  private _handleCloseBtn = (): void => {
+  /**
+   * 点击关闭按钮：拦截事件冒泡并走退出动画
+   *
+   * 关闭按钮（`<dv-button>`）会派发 `composed: true` 的 `dv-click`，且原生 `click` 同样会冒泡，
+   * 若不在关闭按钮容器处拦截，事件会穿透到卡片甚至宿主 `<dv-notification>`，
+   * 导致 `onClick` 被重复调用。因此在关闭按钮容器上同时拦截 `dv-click` 与 `click`。
+   * @param e - 关闭按钮派发的事件
+   */
+  private _handleCloseBtn = (e: Event): void => {
+    e.stopPropagation();
     this.startExit();
   };
 
   /**
-   * 计算内联样式：`color` 非空时注入强调色变量，
-   * 覆盖 type 默认强调色并派生 soft 背景/边框（与按钮 `color` 同一套 color-mix 思路）
+   * 计算内联样式：`color` 非空时仅注入 1 行种子变量 `--dockv-notification-accent-color`。
+   *
+   * soft 变体的背景 / 边框不在此处显式派生，交由 `notification.scss` 中
+   * `var(--dockv-notification-soft-*, color-mix(...))` 的 CSS 原生回退链自动计算，
+   * 与 Tag 组件保持一致的「JS 播种、CSS 派生」模型，避免重复计算与内联样式膨胀。
+   *
    * @returns CSS style 属性值
    */
   private _getInlineStyle(): string {
-    const parts: string[] = [];
-    if (this.color) {
-      parts.push(`--dockv-notification-accent-color: ${this.color}`);
-      parts.push(
-        `--dockv-notification-soft-bg-color: color-mix(in srgb, ${this.color} 10%, var(--dockv-color-bg-3))`,
-      );
-      parts.push(`--dockv-notification-soft-border-color: ${this.color}`);
-    }
-    return parts.join(";");
+    return this.color ? `--dockv-notification-accent-color: ${this.color}` : "";
   }
 
   /**
@@ -274,15 +306,19 @@ export class NotificationCard extends LitElement {
         ? html`<div class="dockv-notification-content">${this.content}</div>`
         : "";
 
+    // 关闭按钮容器同时拦截 dv-click（自定义事件）与原生 click，阻止其冒泡到卡片与宿主
     const closeEl = this.showClose
-      ? html`<div class="dockv-notification-close">
+      ? html`<div
+          class="dockv-notification-close"
+          ${ref(this._setCloseWrapper)}
+          @dv-click=${this._handleCloseBtn}
+          @click=${this._handleCloseBtn}>
           <dv-button
             type="tertiary"
             variant="ghost"
             size="xs"
             square
-            icon="material-symbols:close"
-            @dv-click=${this._handleCloseBtn}></dv-button>
+            icon="material-symbols:close"></dv-button>
         </div>`
       : "";
 

@@ -42,7 +42,7 @@ danger     ✓       ✓       ✓        ✓       ✓       ✓
 <dv-button color="#39C5BB">初音未来绿</dv-button>
 ```
 
-自定义颜色使用 `color` 属性。`color` 为非空字符串时，render 中注入内联 `<style>`，使用 `color-mix()` 动态生成 hover / active / focus 态颜色。
+自定义颜色使用 `color` 属性。与 `Tag` 同构：`color` 为非空字符串时，仅在内部 `button` 元素上注入 1 行种子变量 `--dockv-button-color`，并**不再输出 type 色板类**；各变体类写成 `var(--dockv-button-{variant}-*, 种子派生)`，用 `color-mix()` 动态派生 hover / active / focus 态颜色（与 Tag、Notification 同一套「JS 播种、CSS 派生」模型）。
 
 ```
 color                         → 直接作为 solid 背景色
@@ -53,6 +53,8 @@ color-mix(… 20%, transparent) → light hover
 color-mix(… 30%, transparent) → light active
 color-mix(… 40%, transparent) → focus outline
 ```
+
+> 不随 `color` 变化的属性（ghost / outline / neutral 的灰底与透明边框）直接在中性灰阶与 `transparent` 上回退，保持与 type 色板一致的表现。
 
 ### 图标集成
 

@@ -538,19 +538,22 @@
         // —— 回调 ——
         bindCmd("btn-callback", () => {
           const counts = { click: 0, close: 0 };
+          const render = () => {
+            document.getElementById("callback-count").textContent =
+              `onClick=${counts.click} onClose=${counts.close}`;
+          };
+          render();
           N.open({
             title: "带回调",
-            content: "点击通知体 / 关闭按钮 / 自动到期，观察计数",
+            content: "点击通知体累加 onClick；只点关闭按钮时 onClick 应保持 0",
             duration: 0,
             onClick: () => {
               counts.click++;
-              document.getElementById("callback-count").textContent =
-                `onClick=${counts.click} onClose=${counts.close}`;
+              render();
             },
             onClose: () => {
               counts.close++;
-              document.getElementById("callback-count").textContent =
-                `onClick=${counts.click} onClose=${counts.close}`;
+              render();
             },
           });
         });

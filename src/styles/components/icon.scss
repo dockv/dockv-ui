@@ -13,6 +13,13 @@
   transform: rotate(var(--dockv-icon-rotate, 0deg));
 }
 
+/* 图片模式：容器默认按继承字号定高（等价于 size="inherit"），
+   保证 img 的 height: 100% 始终有确定参照，避免按图片原始尺寸自举放大。
+   固定尺寸时行内 style 的 height 优先级更高，会覆盖这里的默认值。 */
+.dockv-icon-img {
+  height: 1em;
+}
+
 /* spin 旋转动画：以 rotate 的角度作为起点持续旋转 */
 .dockv-icon-spin {
   animation: dockv-icon-spin 2s linear infinite;
@@ -35,4 +42,20 @@
   width: auto;
   max-width: 100%;
   height: 100%;
+}
+
+/* 图片作为图标使用：与矢量图标行为对齐 */
+.dockv-icon img,
+::slotted(img) {
+  // 由容器高度决定图片高度（容器在 inherit 时为 1em，固定尺寸时为 size 值）
+  height: 100%;
+  max-height: 100%;
+  // 保持图片原始宽高比，避免被拉伸变形
+  object-fit: contain;
+  // 禁止拖拽出幽灵图与文本选中
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  // 屏蔽右键菜单（下载 / 复制图片等），与 SVG 图标一致
+  pointer-events: none;
 }

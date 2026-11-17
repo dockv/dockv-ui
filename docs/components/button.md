@@ -149,7 +149,7 @@ title: Button 按钮
 
 ## 颜色（color）
 
-支持 `HEX`、`RGB`、`HSL` 三种格式，以及预设颜色变量。
+支持任意合法 CSS 颜色值（`HEX`、`RGB`、`HSL`、命名颜色、`rgba()`、`hsl()` 等），以及预设颜色变量。
 
 悬浮、按下、聚焦等交互态颜色由 `color-mix()` 自动生成，无需手动配置：
 
@@ -175,6 +175,8 @@ title: Button 按钮
 
 > [!info] 原理
 > 这好比把"主题色"换成了你指定的颜色，hover / active / focus 的颜色是基于这个颜色按百分比混出来的，换色不用改任何样式代码。
+>
+> 实现上仅在内部 `button` 元素上注入 1 行种子变量 `--dockv-button-color`，各变体的文字 / 背景 / 描边及交互态颜色全部由 `button.scss` 中的 `color-mix()` 派生（与 Tag、Notification 同一套「JS 播种、CSS 派生」模型），不再逐个变量拼接内联样式。
 
 ## 图标（icon）
 

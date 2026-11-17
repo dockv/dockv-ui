@@ -70,29 +70,56 @@ jobs:
             PRERELEASE_FLAG="--prerelease"
           fi
 
-          # 收集自上一个 Release 以来的 commit，生成 release notes；首个 release 用 git log 全部commit
-          PREV_TAG="$(gh release list --limit 2 --json tagName --jq '.[1].tagName // empty')"
+          # 累计起点：当前 tag 之前最近的版本号 tag，与 deploy.yml 的 preview 计算方式一致。
+          # 不能用 gh release list 取"第二个 Release"：列表混有固定的 preview Release，
+          # 起点会被取成 preview 指向的旧 commit，导致 notes 整段错位、缺本次版本的提交。
+          # HEAD 已 checkout 到当前 tag，故 --merged HEAD 即"不晚于当前版本"的全部 tag。
+          PREV_TAG="$(git tag --merged HEAD --list 'v*' --sort=-v:refname | grep -vx "${TAG}" | head -n 1 || true)"
           if [ -n "${PREV_TAG}" ]; then
-            RANGE="${PREV_TAG}..${TAG}"
+            RANGE="${PREV_TAG}..HEAD"
           else
             RANGE=""
           fi
+          echo "release notes 比较区间：${RANGE:-<全部历史>}"
 
-          # 按 Angular commit 风格归类；无 type 后缀的 merge 一并保留原始 subject
+          # 提交信息形如「<emoji> <type>: <subject>」（如「✨ feat: 新增 Tag 标签组件」），
+          # 不能直接用 --grep="^feat"，因为行首是 emoji；改为先取全部标题再按类型过滤。
+          commit_lines() {
+            git log ${RANGE} --pretty=format:"- %s（%h）" 2>/dev/null || true
+            echo
+          }
+
+          section() {
+            commit_lines | grep -E "^[-] .* $1: " || true
+          }
+
+          tidy() {
+            sed -e '/^[[:space:]]*$/d'
+          }
+
+          # 按 Angular commit 风格分类；未命中类型的提交（ci/build/style/test/revert、merge 记录等）
+          # 统一归入"其他改动"，不与上面分类重复
           {
             echo "# ${TAG}"
             echo
             echo "## ✨ 新功能 (feat)"
-            git log "${RANGE}" --grep="^feat" --pretty=format:"- %s" 2>/dev/null || true
+            section feat | tidy
             echo
             echo "## 🐛 修复 (fix)"
-            git log "${RANGE}" --grep="^fix" --pretty=format:"- %s" 2>/dev/null || true
+            section fix | tidy
             echo
             echo "## 📃 文档 (docs)"
-            git log "${RANGE}" --grep="^docs" --pretty=format:"- %s" 2>/dev/null || true
+            section docs | tidy
+            echo
+            echo "## 🎈 性能优化 (perf)"
+            section perf | tidy
+            echo
+            echo "## 🦄 重构 (refactor)"
+            section refactor | tidy
             echo
             echo "## ✨ 其他改动"
-            git log "${RANGE}" --pretty=format:"- %s" 2>/dev/null || true
+            commit_lines | grep -Ev "^[-] .* (feat|fix|docs|perf|refactor): " | tidy || true
+            echo
           } > release-notes.md
 
           # 创建正式版 Release，assets 与仓库自动生成的源码包一同附加
