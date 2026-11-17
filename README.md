@@ -150,8 +150,9 @@ dockv-ui/
 ├── .github/workflows/            # CI 工作流
 │   └── deploy.yml
 ├── .storybook/                   # Storybook 配置
+├── scripts/                      # 构建脚本
+│   └── build-styles.ts           # 样式编译脚本
 ├── AGENTS.md                     # 项目规则
-├── build-styles.ts               # 样式构建脚本
 ├── package.json                  # 包配置与命令脚本
 ├── tsconfig.json                 # TypeScript 配置
 ├── tsconfig.build.json           # 类型声明构建配置

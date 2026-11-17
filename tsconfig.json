@@ -22,5 +22,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "vite.config.ts", "vitest.config.ts", "vitest.shims.d.ts", "build-styles.ts"]
+  "include": ["src", "vite.config.ts", "vitest.config.ts", "vitest.shims.d.ts", "scripts"]
 }

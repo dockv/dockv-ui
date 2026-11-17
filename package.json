@@ -44,7 +44,7 @@
     "build": "tsc --noEmit && pnpm build:components && pnpm build:styles && pnpm build:types",
     "build:types": "tsc -p tsconfig.build.json",
     "build:components": "tsc --noEmit && vite build && vite build --mode umd",
-    "build:styles": "tsx build-styles.ts",
+    "build:styles": "tsx scripts/build-styles.ts",
     "build:all": "pnpm build && pnpm build:docs && pnpm build:storybook",
     "build:docs": "vitepress build docs",
     "build:storybook": "storybook build",
