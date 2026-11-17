@@ -151,6 +151,42 @@ export const ImageSrc: Story = {
   `,
 };
 
+/** 图片模式继承父元素字体大小（#30）：高度跟随字号，不再撑爆容器 */
+export const ImageInheritSize: Story = {
+  render: () => html`
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 14px;">
+        14px 文字
+        <dv-icon src="https://picsum.photos/800" size="inherit"></dv-icon>
+        <dv-icon icon="material-symbols:home" size="inherit"></dv-icon>
+      </div>
+      <div style="font-size: 24px;">
+        24px 文字
+        <dv-icon src="https://picsum.photos/800" size="inherit"></dv-icon>
+        <dv-icon icon="material-symbols:home" size="inherit"></dv-icon>
+      </div>
+      <dv-icon src="https://picsum.photos/800"></dv-icon>
+      <dv-icon src="https://picsum.photos/800" size="xs"></dv-icon>
+    </div>
+  `,
+};
+
+/** 图片与矢量图标的鼠标行为对齐（#31）：均不可拖拽、不可选中、无右键菜单 */
+export const ImageInteraction: Story = {
+  render: () => html`
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <div>
+        <div>src 图片（不可拖拽 / 右键）</div>
+        <dv-icon src="https://picsum.photos/64" size="48px"></dv-icon>
+      </div>
+      <div>
+        <div>icon 矢量（基准行为）</div>
+        <dv-icon icon="material-symbols:image" size="48px"></dv-icon>
+      </div>
+    </div>
+  `,
+};
+
 /** 自定义 SVG 内容（slot 方式） */
 export const CustomSvg: Story = {
   render: () => html`
