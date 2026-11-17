@@ -149,7 +149,9 @@ export class Icon extends LitElement {
   protected override render() {
     const style = this._getInlineStyle();
     // spin 时给容器加动画 class，配合 --dockv-icon-rotate 做旋转起点
-    const spinClass = this.spin ? " dockv-icon-spin" : "";
+    const spinClass = this.spin ? "dockv-icon-spin" : "";
+    // 图片模式：容器需要默认高度兜底，避免 <img> 按原始尺寸撑开容器后自举放大
+    const imgClass = this.src ? "dockv-icon-img" : "";
 
     // 优先级通过 slot 的原生回退（fallback）机制实现：
     // light DOM 有内容 → 浏览器自动显示插槽内容；
@@ -162,7 +164,7 @@ export class Icon extends LitElement {
       fallback = unsafeHTML(this._svgHTML);
     }
 
-    return html`<span class="dockv-icon${spinClass}" style=${style}
+    return html`<span class="dockv-icon ${spinClass} ${imgClass}" style=${style}
       ><slot>${fallback}</slot></span
     >`;
   }
