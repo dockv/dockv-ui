@@ -295,19 +295,19 @@ title: Tag 标签
 使用 `prefix-image` 与 `suffix-image` 属性为标签添加前后缀图片。参数接收图片 URL，图片高度自动匹配标签内部净高（`fit` 填充模式），宽度按图片原始宽高比等比缩放，长方形与正方形图片都不会拉伸变形。
 
 <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center">
-  <dv-tag prefix-image="https://ui.dockv.cc/logo.png" size="sm">小尺寸头像</dv-tag>
-  <dv-tag prefix-image="https://ui.dockv.cc/logo.png" color="blue">默认尺寸头像</dv-tag>
-  <dv-tag suffix-image="https://ui.dockv.cc/logo.png" size="lg" color="green">大尺寸后缀图</dv-tag>
+  <dv-tag prefix-image="/logo.png" size="sm">小尺寸头像</dv-tag>
+  <dv-tag prefix-image="/logo.png" color="blue">默认尺寸头像</dv-tag>
+  <dv-tag suffix-image="/logo.png" size="lg" color="green">大尺寸后缀图</dv-tag>
 </div>
 
 ```html
-<dv-tag prefix-image="https://ui.dockv.cc/logo.png" size="sm">
+<dv-tag prefix-image="/logo.png" size="sm">
   小尺寸头像
 </dv-tag>
-<dv-tag prefix-image="https://ui.dockv.cc/logo.png" color="blue">
+<dv-tag prefix-image="/logo.png" color="blue">
   默认尺寸头像
 </dv-tag>
-<dv-tag suffix-image="https://ui.dockv.cc/logo.png" size="lg" color="green">
+<dv-tag suffix-image="/logo.png" size="lg" color="green">
   大尺寸后缀图
 </dv-tag>
 ```

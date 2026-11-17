@@ -50,7 +50,7 @@ export default defineConfig({
         ]
       },
       {
-        text: '反馈类',
+        text: '反馈',
         items: [
           { text: 'Notification | 通知', link: '/components/notification' },
         ]

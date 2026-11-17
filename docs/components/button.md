@@ -302,7 +302,7 @@ title: Button 按钮
     </dv-icon>
   </dv-button>
   <dv-button type="secondary" circle>
-    <dv-icon src="https://ui.dockv.cc/logo.png"></dv-icon>
+    <dv-icon src="/logo.png"></dv-icon>
   </dv-button>
 </div>
 :::

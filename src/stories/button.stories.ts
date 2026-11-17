@@ -315,7 +315,7 @@ export const SquareCircle: Story = {
         </dv-icon>
       </dv-button>
       <dv-button circle>
-        <dv-icon src="https://ui.dockv.cc/logo.png"></dv-icon>
+        <dv-icon src="https://picsum.photos/800"></dv-icon>
       </dv-button>
     </div>
   `,

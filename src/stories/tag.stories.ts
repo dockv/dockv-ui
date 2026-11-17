@@ -269,7 +269,7 @@ export const PrefixSuffix: Story = {
       <dv-tag prefix-icon="material-symbols:home" color="blue">首页</dv-tag>
       <dv-tag suffix-icon="material-symbols:chevron-right" color="green">更多</dv-tag>
       <dv-tag prefix-icon="material-symbols:star" suffix-icon="material-symbols:check" color="amber">星级</dv-tag>
-      <dv-tag prefix-image="https://ui.dockv.cc/logo.png" color="blue">带头像</dv-tag>
+      <dv-tag prefix-image="https://picsum.photos/800" color="blue">带头像</dv-tag>
     </div>
   `,
 };
@@ -392,18 +392,18 @@ export const LongText: Story = {
 export const ImageRadius: Story = {
   render: () => html`
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <dv-tag prefix-image="https://ui.dockv.cc/logo.png" color="blue">默认圆角</dv-tag>
-      <dv-tag prefix-image="https://ui.dockv.cc/logo.png" capsule color="purple">
+      <dv-tag prefix-image="https://picsum.photos/800" color="blue">默认圆角</dv-tag>
+      <dv-tag prefix-image="https://picsum.photos/800" capsule color="purple">
         胶囊 + 圆角图
       </dv-tag>
       <dv-tag
-        prefix-image="https://ui.dockv.cc/logo.png"
+        prefix-image="https://picsum.photos/800"
         style="--dockv-tag-border-radius: 8px"
         color="green">
         8px 圆角
       </dv-tag>
       <dv-tag
-        prefix-image="https://ui.dockv.cc/logo.png"
+        prefix-image="https://picsum.photos/800"
         style="--dockv-tag-image-radius: 9999px"
         color="orange">
         图片单独圆形
