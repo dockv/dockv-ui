@@ -87,6 +87,12 @@ Font Awesome 或 Iconfont 通过 slot 传入原生标签，`size` / `color` 由�
 <dv-icon src="/logo.svg" size="48px"></dv-icon> <dv-icon src="/favicon.ico" size="24px"></dv-icon>
 ```
 
+图片模式的样式与行为必须与矢量图标完全对齐：
+
+- `height: 100%` + `max-height: 100%` + `object-fit: contain`：只受 `size` 控制高度，宽度按原始比例自适应。`size="inherit"` 时行内样式不设高度，由容器 `height: 1em` 兜底，确保图片的 `100%` 高度始终有确定参照——否则图片会先按自身原始尺寸撑开容器，再反向放大 100%，形成自举放大。
+- `-webkit-user-drag: none` + `user-select: none`：防止图片被拖拽出幽灵图或被误选中。
+- `pointer-events: none`：屏蔽图片的右键菜单（下载 / 复制图片 / 复制链接），与 SVG 图标交互表现一致；鼠标事件仍由容器接收，无需事件穿透策略。
+
 ### 图标加载
 
 使用 `@iconify/iconify` 的 `loadIcons` 加载图标，带竞态保护（加载期间图标名被更换时丢弃过期结果）：
